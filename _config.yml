@@ -1,4 +1,4 @@
-title: Alan Mateus
+﻿title: Alan Mateus
 tagline: Desenvolvedor · Professor · Red Team em formação
 description: "Portfólio de Alan Mateus — sistemas de gestão, educação em TI e segurança ofensiva."
 url: "https://AlanMateus17.github.io"
@@ -31,7 +31,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-paginate
-- jekyll-feed
+  - jekyll-feed
 
 # Markdown
 markdown: kramdown
