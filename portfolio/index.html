@@ -1,0 +1,42 @@
+---
+layout: default
+title: Portfólio
+description: "23 sistemas de gestão do ecossistema Aura — PDV, delivery, saúde, finanças e mais. Todos construídos em Clean Architecture com .NET e Next.js."
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Portfólio</p>
+    <h1 class="page-hero__title">23 sistemas.<br><em style="font-weight:300;color:var(--accent)">Uma arquitetura.</em></h1>
+    <p class="page-hero__desc">O ecossistema Aura — sistemas SaaS multi-tenant interconectados, construídos em Clean Architecture + .NET + Next.js.</p>
+  </div>
+</header>
+<section>
+  <div class="container">
+    <div class="portfolio-filters fade-in">
+      <button class="filter-btn active" data-filter="all">Todos (23)</button>
+      <button class="filter-btn" data-filter="dev">Em desenvolvimento</button>
+      <button class="filter-btn" data-filter="plan">Planejados</button>
+    </div>
+    <div class="portfolio-grid">
+      {% assign sistemas = "AuraPOS|PDV multi-tenant com RLS. Vendas, estoque, fiscal.|dev|.NET 10,PostgreSQL,Next.js,Docker,Redis,SignalR;Aura Delivery|Gestão de pedidos com geolocalização e rastreio em tempo real.|dev|.NET,PostGIS,SignalR,Next.js;AuraWealth|Finanças pessoais e empresariais com rebalanceamento ARCA automático.|dev|.NET,PostgreSQL,Next.js;AuraVet|Clínicas veterinárias — prontuários, agenda, vacinas e lembretes.|plan|.NET,PostgreSQL,Next.js;AuraFix|Assistência técnica — ordens de serviço, diagnóstico e histórico.|plan|.NET,PostgreSQL,Next.js;Momentos & Cupido|Plataforma de relacionamentos com timeline, NFC e convites interativos.|plan|.NET,Next.js,NFC;Loja Virtual|E-commerce completo com catálogo, carrinho e pagamento integrado.|plan|.NET,Next.js,Stripe;AuraCondo|Gestão de condomínios — taxas, manutenção, assembleias e comunicados.|plan|.NET,PostgreSQL,Next.js;AuraObra|Controle de obras e construção civil — cronograma, custos, equipes.|plan|.NET,PostgreSQL,Next.js;AuraEdu|Plataforma educacional — cursos, aulas, progresso e certificados.|plan|.NET,PostgreSQL,Next.js;AuraAgenda|Agendamentos online para qualquer tipo de serviço com recorrência.|plan|.NET,PostgreSQL,Next.js;AgileFlow|Gestão de projetos Kanban/Scrum/RAD — exceção de stack.|plan|React,Node.js,GraphQL;AuraArquiteto|Diagnóstico de sistemas por IA e geração de arquitetura.|plan|.NET,OpenAI,Next.js" | split: ";" %}
+      {% for sistema in sistemas %}
+        {% assign parts = sistema | split: "|" %}
+        <div class="sistema-card fade-in" data-status="{{ parts[2] }}">
+          <div class="sistema-card__header">
+            <h3 class="sistema-card__name">{{ parts[0] }}</h3>
+            {% if parts[2] == "dev" %}
+            <span class="sistema-card__status status--dev">Em dev</span>
+            {% else %}
+            <span class="sistema-card__status status--plan">Planejado</span>
+            {% endif %}
+          </div>
+          <p class="sistema-card__desc">{{ parts[1] }}</p>
+          <div class="sistema-card__stack">
+            {% assign tags = parts[3] | split: "," %}
+            {% for tag in tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

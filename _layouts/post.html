@@ -1,0 +1,36 @@
+---
+layout: default
+---
+
+<div class="reading-progress" aria-hidden="true"></div>
+
+<header class="post-hero">
+  <div class="container">
+    <p class="post-hero__cat">{{ page.categories | first | default: 'Blog' }}</p>
+    <h1 class="post-hero__title">{{ page.title }}</h1>
+    <div class="post-hero__meta">
+      <span>{{ page.date | date: "%d/%m/%Y" }}</span>
+      <span>·</span>
+      <span>{{ page.content | number_of_words | divided_by: 200 | plus: 1 }} min de leitura</span>
+      {% if page.tags %}
+      <span>·</span>
+      {% for tag in page.tags %}<span>#{{ tag }}</span>{% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<article class="post-body">
+  {{ content }}
+</article>
+
+<div style="max-width:var(--prose-max);margin:0 auto;padding:0 1.5rem 4rem;">
+  <div style="border-top:1.5px solid var(--border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <a href="{{ '/blog/' | relative_url }}" class="btn btn--ghost">← Todos os posts</a>
+    <div style="display:flex;gap:0.5rem;">
+      {% for tag in page.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</div>

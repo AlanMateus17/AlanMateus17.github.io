@@ -1,0 +1,47 @@
+title: Alan Mateus
+tagline: Desenvolvedor · Professor · Red Team em formação
+description: "Portfólio de Alan Mateus — sistemas de gestão, educação em TI e segurança ofensiva."
+url: "https://AlanMateus17.github.io"
+baseurl: ""
+author:
+  name: Alan Mateus
+  github: AlanMateus17
+  linkedin: alan-souza-dev
+  location: Barbacena, MG — Brasil
+
+# Status atual (atualiza aqui, aparece no site automaticamente)
+status_now:
+  building: "AuraPOS — sistema de PDV multi-tenant"
+  studying: "Akitando #36 · Fase 0 do plano de estudos"
+  reading: "TCP/IP Illustrated Vol.1 — Stevens"
+
+# Configuração de blog
+permalink: /blog/:year/:month/:day/:title/
+paginate: 6
+paginate_path: "/blog/page:num/"
+
+# Coleções
+collections:
+  sistemas:
+    output: true
+    permalink: /portfolio/:name/
+
+# Plugins suportados pelo GitHub Pages
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+# Markdown
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Exclusões
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - README-DEV.md

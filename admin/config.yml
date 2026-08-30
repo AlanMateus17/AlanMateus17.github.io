@@ -1,0 +1,42 @@
+backend:
+  name: github
+  repo: AlanMateus17/AlanMateus17.github.io
+  branch: main
+  auth_type: pkce
+  app_id: SEU_GITHUB_APP_ID
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "posts"
+    label: "📝 Posts do Blog"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - label: "Categoria"
+        name: "categories"
+        widget: "select"
+        options: ["desenvolvimento", "ensino", "seguranca", "carreira"]
+        multiple: true
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Resumo", name: "excerpt", widget: "text" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "config"
+    label: "⚙️ Configurações do Site"
+    files:
+      - label: "Status Atual (aparece no Hero)"
+        name: "status"
+        file: "_config.yml"
+        fields:
+          - label: "Status agora"
+            name: "status_now"
+            widget: "object"
+            fields:
+              - { label: "Construindo", name: "building", widget: "string" }
+              - { label: "Estudando", name: "studying", widget: "string" }
+              - { label: "Lendo", name: "reading", widget: "string" }

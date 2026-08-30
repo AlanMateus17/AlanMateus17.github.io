@@ -1,0 +1,53 @@
+---
+layout: default
+title: Blog
+description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofensiva. Aprendendo em público."
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Blog</p>
+    <h1 class="page-hero__title">Aprendendo<br><em style="font-weight:300;color:var(--accent)">em público.</em></h1>
+    <p class="page-hero__desc">Desenvolvimento, ensino, segurança e carreira. Cada post nasce de um problema real.</p>
+  </div>
+</header>
+<section>
+  <div class="container">
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:3rem;" class="fade-in">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="desenvolvimento">Desenvolvimento</button>
+      <button class="filter-btn" data-filter="ensino">Ensino</button>
+      <button class="filter-btn" data-filter="seguranca">Segurança</button>
+      <button class="filter-btn" data-filter="carreira">Carreira</button>
+    </div>
+    {% if site.posts.size > 0 %}
+    <div class="blog-list">
+      {% for post in site.posts %}
+      <article class="blog-post-item fade-in">
+        <span class="blog-post-item__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+        <div>
+          <p class="blog-post-item__cat">{{ post.categories | first | default: 'Blog' }}</p>
+          <h2 class="blog-post-item__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+          <p class="blog-post-item__excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>
+          {% if post.tags %}
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.75rem;">
+            {% for tag in post.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        <div class="blog-post-item__meta">
+          <p class="blog-post-item__date">{{ post.date | date: "%d/%m/%Y" }}</p>
+          <p class="blog-post-item__read">{{ post.content | number_of_words | divided_by: 200 | plus: 1 }} min</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center;padding:5rem 2rem;border:1.5px dashed var(--border);border-radius:var(--radius-xl);" class="fade-in">
+      <p style="font-family:var(--font-mono);color:var(--text-light);font-size:.8rem;margin-bottom:1rem;">// primeiros artigos chegando em breve</p>
+      <h3 style="margin-bottom:.5rem;">Enquanto isso...</h3>
+      <p style="color:var(--text-muted);margin-bottom:2rem;max-width:44ch;margin:0 auto 2rem;">Estou documentando tudo no vault Obsidian. O blog começa quando o AuraPOS entrar em produção.</p>
+      <a href="/sobre/" class="btn btn--brand">Conheça a trajetória</a>
+    </div>
+    {% endif %}
+  </div>
+</section>

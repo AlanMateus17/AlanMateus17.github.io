@@ -1,0 +1,58 @@
+---
+layout: default
+title: Segurança Ofensiva
+description: "Trilha de estudos em segurança ofensiva — eJPT, OSCP e além. Writeups, notas e laboratório."
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Segurança Ofensiva</p>
+    <h1 class="page-hero__title">Red Team<br><em style="font-weight:300;color:var(--accent)">em formação.</em></h1>
+    <p class="page-hero__desc">Trilha eJPT → OSCP → CRTO → além. Cada sistema que construo passa por threat modeling. Aqui ficam os writeups e notas de estudo.</p>
+  </div>
+</header>
+<section>
+  <div class="container" style="max-width:860px;">
+    <div class="fade-in seguranca-grid" style="margin-bottom:4rem;">
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;">
+        <p style="font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:1rem;">Trilha de certificações</p>
+        <div class="trail">
+          {% assign certs = "eJPT|INE — pentest básico e metodologia|active;OSCP|OffSec PEN-200 — metodologia completa e AD|plan;CRTO|Zero-Point Security — C2 e red team|plan;CRTP|Altered Security — AD kill chain|plan;OSEP|OffSec PEN-300 — evasion avançada|plan" | split: ";" %}
+          {% for cert in certs %}
+            {% assign c = cert | split: "|" %}
+            <div class="trail-item trail-item--{{ c[2] }}">
+              <p class="trail-cert">{{ c[0] }}</p>
+              <div class="trail-dot"></div>
+              <div class="trail-body">
+                <p class="trail-title">{{ c[0] }}</p>
+                <p class="trail-sub">{{ c[1] }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <p class="section-eyebrow">Laboratório</p>
+        <h3 style="margin-bottom:1rem;">Setup de estudos</h3>
+        <div style="display:flex;flex-direction:column;gap:.75rem;">
+          {% assign lab = "Kali Linux|VM no Acer Nitro AN515-45;BloodHound CE|via Docker no WSL2;TryHackMe|trilha Jr Pentester;PortSwigger Web Academy|labs de web security;HackTheBox|máquinas ativas" | split: ";" %}
+          {% for item in lab %}
+            {% assign i = item | split: "|" %}
+            <div style="display:flex;justify-content:space-between;padding:.6rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);font-size:.875rem;">
+              <span style="font-weight:500;">{{ i[0] }}</span>
+              <span style="color:var(--text-muted);font-family:var(--font-mono);font-size:.78rem;">{{ i[1] }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-in">
+      <p class="section-eyebrow">Writeups</p>
+      <h3 style="margin-bottom:1.5rem;">Notas de laboratório</h3>
+      <div style="text-align:center;padding:3rem 2rem;border:1.5px dashed var(--border);border-radius:var(--radius-xl);">
+        <p style="font-family:var(--font-mono);color:var(--text-light);font-size:.8rem;">// writeups chegando à medida que avanço na trilha</p>
+        <p style="color:var(--text-muted);margin-top:.75rem;max-width:42ch;margin:1rem auto 0;">Cada máquina resolvida ou técnica documentada vai aparecer aqui. Comece acompanhando o blog.</p>
+      </div>
+    </div>
+  </div>
+</section>

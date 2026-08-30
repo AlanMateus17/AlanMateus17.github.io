@@ -1,0 +1,71 @@
+---
+layout: default
+title: Contato
+description: "Entre em contato com Alan Mateus — projetos de desenvolvimento, assistência técnica ou colaboração."
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Contato</p>
+    <h1 class="page-hero__title">Vamos<br><em style="font-weight:300;color:var(--accent)">conversar.</em></h1>
+    <p class="page-hero__desc">Projeto de desenvolvimento, parceria, dúvida sobre os materiais de ensino ou só um olá — qualquer motivo é válido.</p>
+  </div>
+</header>
+<section>
+  <div class="container" style="max-width:900px;">
+    <div class="contact-grid fade-in">
+      <div>
+        <h3 style="margin-bottom:1.5rem;">Envie uma mensagem</h3>
+        <form class="contact-form" action="https://formspree.io/f/mljedzov" method="POST">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="assunto">Assunto</label>
+            <select id="assunto" name="assunto">
+              <option value="">Selecione um assunto</option>
+              <option>Projeto de desenvolvimento</option>
+              <option>Assistência técnica</option>
+              <option>Material educacional</option>
+              <option>Colaboração / parceria</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mensagem">Mensagem</label>
+            <textarea id="mensagem" name="mensagem" placeholder="Descreva o que você precisa..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn--brand" style="align-self:flex-start;">Enviar mensagem →</button>
+        </form>
+      </div>
+      <div>
+        <h3 style="margin-bottom:1.5rem;">Links diretos</h3>
+        <div class="contact-links">
+          <a href="https://wa.me/5532984138614" class="contact-link" target="_blank" rel="noopener">
+            <span class="contact-link__icon">💬</span>
+            <div><p class="contact-link__label">WhatsApp</p><p class="contact-link__value">Resposta mais rápida</p></div>
+          </a>
+          <a href="https://github.com/AlanMateus17" class="contact-link" target="_blank" rel="noopener">
+            <span class="contact-link__icon">🐙</span>
+            <div><p class="contact-link__label">GitHub</p><p class="contact-link__value">AlanMateus17</p></div>
+          </a>
+          <a href="https://linkedin.com/in/alan-souza-dev" class="contact-link" target="_blank" rel="noopener">
+            <span class="contact-link__icon">💼</span>
+            <div><p class="contact-link__label">LinkedIn</p><p class="contact-link__value">alan-souza-dev</p></div>
+          </a>
+          <a href="mailto:alandesouzasilva04@gmail.com" class="contact-link">
+            <span class="contact-link__icon">✉️</span>
+            <div><p class="contact-link__label">E-mail</p><p class="contact-link__value">alandesouzasilva04@gmail.com</p></div>
+          </a>
+        </div>
+        <div style="margin-top:2rem;padding:1.25rem;background:var(--highlight-bg);border:1.5px solid var(--highlight);border-radius:var(--radius);font-size:.875rem;">
+          <strong>Tempo de resposta:</strong> geralmente em até 24 horas nos dias úteis.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
