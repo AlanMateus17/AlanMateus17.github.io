@@ -4,3 +4,12 @@ _site/
 .jekyll-metadata
 Gemfile.lock
 .DS_Store
+
+# Seguranca - nunca commitar
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+secrets.yml
+*.p12
