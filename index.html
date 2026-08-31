@@ -58,7 +58,9 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
   <div class="container">
     <div class="stats__grid">
       <div class="stat fade-in">
-        <p class="stat__num" data-target="9" data-suffix="+">9+</p>
+        {% assign current_year = site.time | date: '%Y' | plus: 0 %}
+        {% assign teaching_years = current_year | minus: site.teaching_start_year %}
+        <p class="stat__num" data-target="{{ teaching_years }}" data-suffix="+">{{ teaching_years }}+</p>
         <p class="stat__label">anos ensinando</p>
       </div>
       <div class="stat fade-in">

@@ -1,0 +1,30 @@
+# Configuração do Staticman v3 (GitHub App)
+# Depois de instalar o app em github.com/apps/staticman-net neste repositório,
+# tudo que cair aqui como comentário vira um Pull Request pra você aprovar.
+
+comments:
+  allowedFields: ["name", "email", "message", "date"]
+  branch: "main"
+  commitMessage: "Novo comentário de {fields.name}"
+  filename: "entry{@timestamp}"
+  format: "yaml"
+  moderation: true          # comentário = vira PR, você decide se publica
+  path: "_data/comments/{options.slug}"
+  requiredFields: ["name", "message"]
+  transforms:
+    email: md5
+  generatedFields:
+    date:
+      type: date
+      options:
+        format: "iso8601"
+
+likes:
+  allowedFields: ["like"]
+  branch: "main"
+  commitMessage: "Nova curtida em {options.slug}"
+  filename: "like{@timestamp}"
+  format: "yaml"
+  moderation: false         # curtida entra direto, sem precisar aprovar
+  path: "_data/likes/{options.slug}"
+  requiredFields: ["like"]

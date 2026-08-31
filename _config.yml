@@ -20,6 +20,12 @@ permalink: /blog/:year/:month/:day/:title/
 paginate: 6
 paginate_path: "/blog/page:num/"
 
+# Ano em que começou a lecionar — usado pra calcular "X anos ensinando" sozinho, sem editar todo ano
+teaching_start_year: 2024
+
+# Staticman (comentários e curtidas com aprovação via PR no GitHub)
+staticman_url: "https://api.staticman.net/v3/entry/github/AlanMateus17/AlanMateus17.github.io/main"
+
 # Coleções
 collections:
   sistemas:
