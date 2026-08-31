@@ -23,23 +23,24 @@
   {% endif %}
 
   <form class="comment-form" id="comment-form"
-        action="{{ site.staticman_url }}/comments"
+        action="https://formspree.io/f/{{ site.formspree_id }}"
         method="POST">
-    <input type="hidden" name="options[slug]" value="{{ page.slug }}">
-    <input type="hidden" name="options[redirect]" value="{{ page.url | absolute_url }}#comentarios">
-    <!-- honeypot simples anti-spam: bots costumam preencher todo campo -->
+    <input type="hidden" name="_subject" value="Novo comentário no blog: {{ page.title }}">
+    <input type="hidden" name="post_slug" value="{{ page.slug }}">
+    <input type="hidden" name="post_url" value="{{ page.url | absolute_url }}">
+    <!-- honeypot simples anti-spam -->
     <p style="position:absolute;left:-9999px;">
-      <label>Não preencha este campo<input type="text" name="fields[_gotcha]"></label>
+      <label>Não preencha este campo<input type="text" name="_gotcha"></label>
     </p>
 
     <label class="comment-form__label" for="cf-name">Nome</label>
-    <input class="comment-form__input" id="cf-name" name="fields[name]" type="text" required maxlength="80">
+    <input class="comment-form__input" id="cf-name" name="name" type="text" required maxlength="80">
 
-    <label class="comment-form__label" for="cf-email">E-mail <span style="opacity:.6;">(não é publicado, só pro avatar)</span></label>
-    <input class="comment-form__input" id="cf-email" name="fields[email]" type="email" maxlength="120">
+    <label class="comment-form__label" for="cf-email">E-mail <span style="opacity:.6;">(não é publicado, só de contato)</span></label>
+    <input class="comment-form__input" id="cf-email" name="email" type="email" maxlength="120">
 
     <label class="comment-form__label" for="cf-message">Comentário</label>
-    <textarea class="comment-form__input" id="cf-message" name="fields[message]" rows="4" required maxlength="1000"></textarea>
+    <textarea class="comment-form__input" id="cf-message" name="message" rows="4" required maxlength="1000"></textarea>
 
     <p class="comment-form__note">Comentários passam por aprovação antes de aparecer no ar.</p>
 
@@ -67,7 +68,7 @@
         form.reset();
       } else {
         return res.json().then(function (data) {
-          throw new Error((data && data.message) || 'Erro ao enviar');
+          throw new Error((data && data.error) || 'Erro ao enviar');
         });
       }
     }).catch(function (err) {

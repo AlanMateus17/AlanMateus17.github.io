@@ -24,7 +24,8 @@ paginate_path: "/blog/page:num/"
 teaching_start_year: 2024
 
 # Staticman (comentários e curtidas com aprovação via PR no GitHub)
-staticman_url: "https://api.staticman.net/v3/entry/github/AlanMateus17/AlanMateus17.github.io/main"
+# Formspree (comentários chegam por e-mail; você aprova e adiciona manualmente no repo)
+formspree_id: "xaeyqrzd"
 
 # Coleções
 collections:

@@ -1,8 +1,7 @@
 <div class="likes">
-  {% assign like_count = site.data.likes[page.slug].size | default: 0 %}
-  <button type="button" class="likes__btn" id="like-btn" aria-pressed="false">
+  <button type="button" class="likes__btn" id="like-btn" aria-pressed="false" disabled>
     <span class="likes__icon" aria-hidden="true">♥</span>
-    <span class="likes__count" id="like-count">{{ like_count }}</span>
+    <span class="likes__count" id="like-count">–</span>
   </button>
   <span class="likes__label">curtidas</span>
 </div>
@@ -12,37 +11,48 @@
   var btn = document.getElementById('like-btn');
   if (!btn) return;
   var slug = {{ page.slug | jsonify }};
+  var namespace = 'alanmateus17-github-io';
   var storageKey = 'liked:' + slug;
   var countEl = document.getElementById('like-count');
+  var baseUrl = 'https://counterapi.com/api/' + namespace + '/like/' + slug;
 
-  if (localStorage.getItem(storageKey)) {
-    btn.setAttribute('aria-pressed', 'true');
-    btn.classList.add('is-liked');
-  }
+  // Carrega o valor atual sem incrementar (readOnly=true)
+  fetch(baseUrl + '?readOnly=true')
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      countEl.textContent = data.value || 0;
+      btn.disabled = false;
+      if (localStorage.getItem(storageKey)) {
+        btn.setAttribute('aria-pressed', 'true');
+        btn.classList.add('is-liked');
+      }
+    })
+    .catch(function () {
+      countEl.textContent = '0';
+      btn.disabled = false;
+    });
 
   btn.addEventListener('click', function () {
     if (localStorage.getItem(storageKey)) return; // já curtiu neste navegador
 
-    var body = new FormData();
-    body.append('options[slug]', slug);
-    body.append('fields[like]', 'true');
-
     btn.disabled = true;
-    fetch({{ site.staticman_url | jsonify }} + '/likes', {
-      method: 'POST',
-      body: body,
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (!res.ok) throw new Error('falhou');
-      localStorage.setItem(storageKey, '1');
-      btn.setAttribute('aria-pressed', 'true');
-      btn.classList.add('is-liked');
-      countEl.textContent = (parseInt(countEl.textContent, 10) || 0) + 1;
-    }).catch(function () {
-      // silencioso: curtida é algo leve, não vale interromper a leitura com erro
-    }).finally(function () {
-      btn.disabled = false;
-    });
+    fetch(baseUrl)
+      .then(function (res) {
+        if (!res.ok) throw new Error('falhou');
+        return res.json();
+      })
+      .then(function (data) {
+        localStorage.setItem(storageKey, '1');
+        btn.setAttribute('aria-pressed', 'true');
+        btn.classList.add('is-liked');
+        countEl.textContent = data.value || (parseInt(countEl.textContent, 10) || 0) + 1;
+      })
+      .catch(function () {
+        // silencioso: curtida é algo leve, não vale interromper a leitura com erro
+      })
+      .finally(function () {
+        btn.disabled = false;
+      });
   });
 })();
 </script>
