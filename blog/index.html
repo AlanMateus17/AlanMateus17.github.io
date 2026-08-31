@@ -12,17 +12,30 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
 </header>
 <section>
   <div class="container">
-    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:3rem;" class="fade-in">
+    <div class="most-read fade-in" id="most-read" hidden>
+      <p class="most-read__label">🔥 Mais lidos</p>
+      <div class="most-read__list" id="most-read-list"></div>
+    </div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;" class="fade-in">
       <button class="filter-btn active" data-filter="all">Todos</button>
       <button class="filter-btn" data-filter="desenvolvimento">Desenvolvimento</button>
       <button class="filter-btn" data-filter="ensino">Ensino</button>
       <button class="filter-btn" data-filter="seguranca">Segurança</button>
       <button class="filter-btn" data-filter="carreira">Carreira</button>
     </div>
+    <div class="blog-subnav fade-in">
+      <a href="{{ '/blog/tags/' | relative_url }}">Ver por tag →</a>
+      <a href="{{ '/blog/arquivo/' | relative_url }}">Arquivo completo →</a>
+    </div>
+    <div class="search-box fade-in">
+      <input type="search" id="blog-search-input" placeholder="Buscar por palavra-chave..." aria-label="Buscar posts">
+      <p class="search-box__empty" id="blog-search-empty" hidden>Nenhum post encontrado pra essa busca.</p>
+    </div>
     {% if site.posts.size > 0 %}
     <div class="blog-list">
       {% for post in site.posts %}
-      <article class="blog-post-item fade-in">
+      {% assign search_blob = post.title | append: ' ' | append: post.excerpt | strip_html | append: ' ' | append: post.tags | join: ' ' | downcase %}
+      <article class="blog-post-item fade-in" data-search="{{ search_blob | escape }}" data-slug="{{ post.slug }}">
         <span class="blog-post-item__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
         <div>
           <p class="blog-post-item__cat">{{ post.categories | first | default: 'Blog' }}</p>

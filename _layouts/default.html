@@ -13,6 +13,8 @@
   <meta property="og:description" content="{{ page.description | default: site.description }}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ page.url | prepend: site.url }}">
+  <meta property="og:image" content="{{ '/assets/img/og-default.png' | absolute_url }}">
+  <meta name="twitter:card" content="summary_large_image">
 
   <!-- Preconnect fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,6 +71,8 @@
             <li><a href="{{ '/sobre/' | relative_url }}" class="footer__link">Sobre</a></li>
             <li><a href="{{ '/portfolio/' | relative_url }}" class="footer__link">Portfólio</a></li>
             <li><a href="{{ '/blog/' | relative_url }}" class="footer__link">Blog</a></li>
+            <li><a href="{{ '/blog/tags/' | relative_url }}" class="footer__link">Tags</a></li>
+            <li><a href="{{ '/blog/arquivo/' | relative_url }}" class="footer__link">Arquivo</a></li>
             <li><a href="{{ '/ensino/' | relative_url }}" class="footer__link">Ensino</a></li>
           </ul>
         </div>
@@ -98,6 +102,8 @@
       </div>
     </div>
   </footer>
+
+  <button type="button" id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" hidden>↑</button>
 
   <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
 </body>

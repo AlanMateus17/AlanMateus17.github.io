@@ -1,0 +1,48 @@
+---
+layout: default
+title: Tags
+description: "Todos os posts do blog organizados por assunto."
+permalink: /blog/tags/
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Blog</p>
+    <h1 class="page-hero__title">Navegar<br><em style="font-weight:300;color:var(--accent)">por assunto.</em></h1>
+    <p class="page-hero__desc">Todos os posts, agrupados pelas tags que uso pra classificar cada um.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    {% assign tag_names = site.tags | sort %}
+    {% if tag_names.size > 0 %}
+      <div class="tags-nav fade-in">
+        {% for tag in tag_names %}
+          <a href="#tag-{{ tag[0] | slugify }}" class="tag tag--nav">#{{ tag[0] }} ({{ tag[1].size }})</a>
+        {% endfor %}
+      </div>
+
+      {% for tag in tag_names %}
+        <div class="tag-group" id="tag-{{ tag[0] | slugify }}">
+          <h2 class="tag-group__title">#{{ tag[0] }}</h2>
+          <div class="blog-list">
+            {% for post in tag[1] %}
+            <article class="blog-post-item fade-in">
+              <div>
+                <p class="blog-post-item__cat">{{ post.categories | first | default: 'Blog' }}</p>
+                <h3 class="blog-post-item__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+                <p class="blog-post-item__excerpt">{{ post.excerpt | strip_html | truncate: 140 }}</p>
+              </div>
+              <div class="blog-post-item__meta">
+                <p class="blog-post-item__date">{{ post.date | date: "%d/%m/%Y" }}</p>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="color:var(--text-muted);">Ainda não há posts com tags pra mostrar aqui.</p>
+    {% endif %}
+  </div>
+</section>

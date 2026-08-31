@@ -12,6 +12,8 @@ layout: default
       <span>{{ page.date | date: "%d/%m/%Y" }}</span>
       <span>·</span>
       <span>{{ page.content | number_of_words | divided_by: 200 | plus: 1 }} min de leitura</span>
+      <span>·</span>
+      <span id="post-view-count" data-slug="{{ page.slug }}">– visualizações</span>
       {% if page.tags %}
       <span>·</span>
       {% for tag in page.tags %}<span>#{{ tag }}</span>{% endfor %}
@@ -20,8 +22,14 @@ layout: default
   </div>
 </header>
 
+<nav class="toc" id="post-toc" aria-label="Sumário do post" hidden>
+  <p class="toc__title">Neste post</p>
+  <ol class="toc__list" id="post-toc-list"></ol>
+</nav>
+
 <article class="post-body">
   {{ content }}
+{% include share-buttons.html %}
 {% include related-posts.html %}
 {% include post-nav.html %}
 </article>

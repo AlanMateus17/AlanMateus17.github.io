@@ -2,11 +2,11 @@ backend:
   name: github
   repo: AlanMateus17/AlanMateus17.github.io
   branch: main
-  auth_type: pkce
-  app_id: SEU_GITHUB_APP_ID
+  base_url: "https://script.google.com/macros/s/AKfycbyt3T9Wa7c89szgKypyZ4eTC9d-JX39uhs2txwe4ifTF3KNiSaTnQL5GyIF72aukRA-yg/exec"
+  auth_endpoint: ""
 
-media_folder: "assets/images"
-public_folder: "/assets/images"
+media_folder: "assets/img/posts"
+public_folder: "/assets/img/posts"
 
 collections:
   - name: "posts"

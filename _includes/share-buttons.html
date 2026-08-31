@@ -1,0 +1,27 @@
+{% comment %}Usado dentro de _layouts/post.html — usa page.title e a URL absoluta do post{% endcomment %}
+{% assign post_url = page.url | absolute_url %}
+{% assign post_title = page.title | url_encode %}
+<div class="share-buttons">
+  <span class="share-buttons__label">Compartilhar:</span>
+  <a class="share-buttons__btn" target="_blank" rel="noopener"
+     href="https://wa.me/?text={{ post_title }}%20{{ post_url | url_encode }}"
+     aria-label="Compartilhar no WhatsApp">WhatsApp</a>
+  <a class="share-buttons__btn" target="_blank" rel="noopener"
+     href="https://twitter.com/intent/tweet?text={{ post_title }}&url={{ post_url | url_encode }}"
+     aria-label="Compartilhar no X (Twitter)">X</a>
+  <button type="button" class="share-buttons__btn" id="share-copy-link" data-url="{{ post_url }}">Copiar link</button>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('share-copy-link');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(btn.getAttribute('data-url')).then(function () {
+      var original = btn.textContent;
+      btn.textContent = 'Link copiado!';
+      setTimeout(function () { btn.textContent = original; }, 1800);
+    });
+  });
+})();
+</script>

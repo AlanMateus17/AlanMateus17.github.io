@@ -1,0 +1,20 @@
+---
+layout: default
+title: "Página não encontrada"
+permalink: /404.html
+---
+<header class="page-hero">
+  <div class="container" style="text-align:center;">
+    <p class="page-hero__eyebrow">Erro 404</p>
+    <h1 class="page-hero__title">Essa página não existe<br><em style="font-weight:300;color:var(--accent)">— ou já mudou de lugar.</em></h1>
+    <p class="page-hero__desc" style="margin:0 auto;">
+      Deve ter sido um link quebrado, um endereço digitado errado, ou algo que
+      eu reorganizei sem querer. De qualquer forma, dá uma olhada nesses caminhos:
+    </p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;">
+      <a href="{{ '/' | relative_url }}" class="btn btn--primary">Ir para a Home</a>
+      <a href="{{ '/blog/' | relative_url }}" class="btn btn--outline">Ver o Blog</a>
+      <a href="{{ '/contato/' | relative_url }}" class="btn btn--outline">Falar comigo</a>
+    </div>
+  </div>
+</header>

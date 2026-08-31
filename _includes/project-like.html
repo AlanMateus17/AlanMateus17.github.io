@@ -1,0 +1,6 @@
+{% comment %}Parâmetro: project_slug{% endcomment %}
+{% assign like_key = 'portfolio--' | append: project_slug %}
+<button type="button" class="project-like-btn" data-like-key="{{ like_key }}" aria-pressed="false">
+  <span class="project-like-btn__icon" aria-hidden="true">♥</span>
+  <span class="project-like-btn__count">–</span>
+</button>

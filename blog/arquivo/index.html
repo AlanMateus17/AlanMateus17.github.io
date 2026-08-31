@@ -1,0 +1,36 @@
+---
+layout: default
+title: Arquivo
+description: "Todos os posts do blog, organizados por ano."
+permalink: /blog/arquivo/
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Blog</p>
+    <h1 class="page-hero__title">Arquivo<br><em style="font-weight:300;color:var(--accent)">completo.</em></h1>
+    <p class="page-hero__desc">Todos os posts publicados, do mais recente ao mais antigo.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+    {% if site.posts.size > 0 %}
+      {% for year_group in posts_by_year %}
+        <div class="archive-year">
+          <h2 class="archive-year__title">{{ year_group.name }} <span class="archive-year__count">({{ year_group.items.size }})</span></h2>
+          <ul class="archive-list">
+            {% for post in year_group.items %}
+              <li class="archive-item">
+                <span class="archive-item__date">{{ post.date | date: "%d/%m" }}</span>
+                <a href="{{ post.url | relative_url }}" class="archive-item__title">{{ post.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="color:var(--text-muted);">Ainda não há posts publicados.</p>
+    {% endif %}
+  </div>
+</section>

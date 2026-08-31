@@ -184,3 +184,153 @@
     });
   });
 })();
+
+// --- Botão voltar ao topo (todo o site) ---
+(function () {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.hidden = window.scrollY < 500;
+  });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+
+// --- Curtidas nos cards do Portfólio (sem comentário, só contador) ---
+(function () {
+  const botoes = document.querySelectorAll('.project-like-btn');
+  if (!botoes.length) return;
+  const namespace = 'alanmateus17-github-io';
+
+  botoes.forEach((btn) => {
+    const key = btn.getAttribute('data-like-key');
+    const storageKey = 'liked:' + key;
+    const countEl = btn.querySelector('.project-like-btn__count');
+    const baseUrl = 'https://counterapi.com/api/' + namespace + '/like/' + key;
+
+    fetch(baseUrl + '?readOnly=true')
+      .then((res) => res.json())
+      .then((data) => {
+        countEl.textContent = data.value || 0;
+        if (localStorage.getItem(storageKey)) {
+          btn.setAttribute('aria-pressed', 'true');
+          btn.classList.add('is-liked');
+        }
+      })
+      .catch(() => { countEl.textContent = '0'; });
+
+    btn.addEventListener('click', () => {
+      if (localStorage.getItem(storageKey)) return;
+      btn.disabled = true;
+      fetch(baseUrl)
+        .then((res) => { if (!res.ok) throw new Error('falhou'); return res.json(); })
+        .then((data) => {
+          localStorage.setItem(storageKey, '1');
+          btn.setAttribute('aria-pressed', 'true');
+          btn.classList.add('is-liked');
+          countEl.textContent = data.value || (parseInt(countEl.textContent, 10) || 0) + 1;
+        })
+        .catch(() => {})
+        .finally(() => { btn.disabled = false; });
+    });
+  });
+})();
+
+// --- Sumário automático (TOC) nos posts longos ---
+(function () {
+  const body = document.querySelector('.post-body');
+  const toc = document.getElementById('post-toc');
+  const list = document.getElementById('post-toc-list');
+  if (!body || !toc || !list) return;
+
+  const headings = body.querySelectorAll('h2, h3');
+  if (headings.length < 3) return; // só mostra sumário se o post tiver estrutura suficiente
+
+  headings.forEach((h) => {
+    if (!h.id) {
+      h.id = h.textContent.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+    const li = document.createElement('li');
+    li.className = h.tagName === 'H3' ? 'toc__item toc__item--sub' : 'toc__item';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+
+  toc.hidden = false;
+})();
+
+// --- Contador de visualizações (incrementa a cada visita, sem exigir clique) ---
+(function () {
+  const el = document.getElementById('post-view-count');
+  if (!el) return;
+  const slug = el.getAttribute('data-slug');
+  const namespace = 'alanmateus17-github-io';
+  fetch('https://counterapi.com/api/' + namespace + '/view/' + slug)
+    .then((res) => res.json())
+    .then((data) => {
+      const n = data.value || 1;
+      el.textContent = n + (n === 1 ? ' visualização' : ' visualizações');
+    })
+    .catch(() => { el.textContent = ''; });
+})();
+
+// --- Busca simples na listagem do blog ---
+(function () {
+  const input = document.getElementById('blog-search-input');
+  if (!input) return;
+  const items = document.querySelectorAll('.blog-post-item[data-search]');
+  const vazio = document.getElementById('blog-search-empty');
+
+  input.addEventListener('input', () => {
+    const termo = input.value.trim().toLowerCase();
+    let visiveis = 0;
+    items.forEach((item) => {
+      const bate = !termo || item.getAttribute('data-search').includes(termo);
+      item.style.display = bate ? '' : 'none';
+      if (bate) visiveis++;
+    });
+    vazio.hidden = visiveis > 0;
+  });
+})();
+
+// --- Destaque de posts mais lidos (via contagem de views do CounterAPI) ---
+(function () {
+  const items = document.querySelectorAll('.blog-post-item[data-slug]');
+  const container = document.getElementById('most-read');
+  const list = document.getElementById('most-read-list');
+  if (!items.length || !container || !list) return;
+
+  const namespace = 'alanmateus17-github-io';
+  const leituras = [];
+
+  Promise.all(Array.from(items).map((item) => {
+    const slug = item.getAttribute('data-slug');
+    return fetch('https://counterapi.com/api/' + namespace + '/view/' + slug + '?readOnly=true')
+      .then((res) => res.json())
+      .then((data) => {
+        const titulo = item.querySelector('.blog-post-item__title a');
+        if (titulo && data.value) {
+          leituras.push({ titulo: titulo.textContent, url: titulo.getAttribute('href'), views: data.value });
+        }
+      })
+      .catch(() => {});
+  })).then(() => {
+    leituras.sort((a, b) => b.views - a.views);
+    const top = leituras.slice(0, 3).filter((p) => p.views > 1);
+    if (!top.length) return;
+    top.forEach((p) => {
+      const a = document.createElement('a');
+      a.href = p.url;
+      a.className = 'most-read__item';
+      a.textContent = p.titulo;
+      list.appendChild(a);
+    });
+    container.hidden = false;
+  });
+})();

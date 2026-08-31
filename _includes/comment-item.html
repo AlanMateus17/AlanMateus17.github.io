@@ -1,0 +1,40 @@
+{% comment %}
+  Parâmetros: id, c (dados do comentário), slug, all (todos os comentários do post)
+{% endcomment %}
+<div class="comment">
+  <div class="comment__head">
+    <span class="comment__name-group">
+      <span class="comment__name">{{ c.name }}</span>
+      {% if c.author %}<span class="comment__author-badge">Autor</span>{% endif %}
+    </span>
+    <span class="comment__date">{{ c.date | date: "%d/%m/%Y" }}</span>
+  </div>
+  {% assign msg_size = c.message | size %}
+  {% if msg_size > 400 %}
+    <p class="comment__body comment__body--collapsed" id="comment-body-{{ id }}">{{ c.message }}</p>
+    <button type="button" class="comment__toggle-btn" data-target="comment-body-{{ id }}">Ver comentário completo</button>
+  {% else %}
+    <p class="comment__body">{{ c.message }}</p>
+  {% endif %}
+  <div class="comment__actions">
+    {% include comment-like.html slug=slug comment_id=id %}
+    <button type="button" class="comment__reply-btn" data-comment-id="{{ id }}" data-comment-name="{{ c.name }}">Responder</button>
+  </div>
+
+  {% assign has_replies = false %}
+  {% for item in all %}
+    {% if item[1].parent == id %}{% assign has_replies = true %}{% endif %}
+  {% endfor %}
+
+  {% if has_replies %}
+    <div class="comment__replies">
+      {% for item in all %}
+        {% if item[1].parent == id %}
+          {% assign reply_id = item[0] %}
+          {% assign reply_c = item[1] %}
+          {% include comment-item.html id=reply_id c=reply_c slug=slug all=all %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
