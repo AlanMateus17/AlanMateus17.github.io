@@ -1,0 +1,44 @@
+---
+layout: default
+title: Loja
+description: "Materiais extras, mentorias e produtos digitais de Alan Mateus — além do conteúdo gratuito do site."
+permalink: /loja/
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Loja</p>
+    <h1 class="page-hero__title">Material extra,<br><em style="font-weight:300;color:var(--accent)">além do gratuito.</em></h1>
+    <p class="page-hero__desc">Tudo que já é gratuito no site continua gratuito. Aqui ficam pacotes extras, mentorias e produtos que exigem mais tempo meu pra preparar.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    {% if site.produtos.size > 0 %}
+      <div class="loja-grid">
+        {% for produto in site.produtos %}
+          <div class="loja-card fade-in">
+            <p class="loja-card__category">{{ produto.category }}</p>
+            <h3 class="loja-card__title">{{ produto.title }}</h3>
+            <p class="loja-card__excerpt">{{ produto.excerpt }}</p>
+            <div class="loja-card__footer">
+              <span class="loja-card__price">{{ produto.price }}</span>
+              {% if produto.checkout_url and produto.checkout_url != "#" %}
+                <a href="{{ produto.checkout_url }}" target="_blank" rel="noopener" class="btn btn--primary">Comprar</a>
+              {% else %}
+                <span class="loja-card__soon">Em breve</span>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p style="color:var(--text-muted);">Nenhum produto disponível no momento.</p>
+    {% endif %}
+
+    <p style="margin-top:3rem;color:var(--text-light);font-size:.85rem;text-align:center;">
+      Prefere conversar antes? <a href="/servicos/#orcamento" style="color:var(--accent);">Pede um orçamento</a> ou chama no
+      <a href="https://wa.me/{{ site.author.whatsapp }}" target="_blank" rel="noopener" style="color:var(--accent);">WhatsApp</a>.
+    </p>
+  </div>
+</section>

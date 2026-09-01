@@ -26,6 +26,36 @@ collections:
       - { label: "Resumo", name: "excerpt", widget: "text" }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
 
+  - name: "sistemas"
+    label: "💼 Portfólio"
+    folder: "_sistemas"
+    create: true
+    fields:
+      - { label: "Nome do sistema", name: "name", widget: "string" }
+      - { label: "Resumo curto (aparece no card)", name: "excerpt", widget: "text" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: [{ label: "Em desenvolvimento", value: "dev" }, { label: "Planejado", value: "plan" }]
+      - { label: "Stack (tecnologias)", name: "stack", widget: "list" }
+      - { label: "Estudo de caso completo", name: "body", widget: "markdown" }
+
+  - name: "produtos"
+    label: "🛒 Loja"
+    folder: "_produtos"
+    create: true
+    fields:
+      - { label: "Nome do produto", name: "title", widget: "string" }
+      - { label: "Preço", name: "price", widget: "string", hint: "Ex: R$ 19,90" }
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        options: ["Apostila", "Mentoria", "Curso", "Outro"]
+      - { label: "Link de compra", name: "checkout_url", widget: "string", hint: "Cole o link do Hotmart/Kiwify/Gumroad. Deixe # se ainda não tiver." }
+      - { label: "Imagem (opcional)", name: "image", widget: "image", required: false }
+      - { label: "Resumo curto (aparece no card)", name: "excerpt", widget: "text" }
+      - { label: "Descrição completa", name: "body", widget: "markdown" }
+
   - name: "config"
     label: "⚙️ Configurações do Site"
     files:

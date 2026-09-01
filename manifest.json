@@ -1,0 +1,15 @@
+{
+  "name": "Alan Mateus — Professor & Dev",
+  "short_name": "Alan Mateus",
+  "description": "Portfólio, blog e materiais didáticos de Alan Mateus.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0E3A45",
+  "theme_color": "#0E3A45",
+  "icons": [
+    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

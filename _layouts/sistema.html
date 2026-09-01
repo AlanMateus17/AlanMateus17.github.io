@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0E3A45">
+  <link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
+  <link rel="icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
+  <title>{{ page.name }} — Alan Mateus</title>
+  <meta name="description" content="{{ page.excerpt }}">
+  <meta name="author" content="Alan Mateus">
+  <meta property="og:title" content="{{ page.name }}">
+  <meta property="og:description" content="{{ page.excerpt }}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ '/assets/img/og-default.png' | absolute_url }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  {% seo %}
+</head>
+<body>
+  <nav class="nav" role="navigation" aria-label="Navegação principal">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">Alan Mateus</a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/sobre/" class="nav__link">Sobre</a></li>
+        <li><a href="/portfolio/" class="nav__link">Portfólio</a></li>
+        <li><a href="/blog/" class="nav__link">Blog</a></li>
+        <li><a href="/ensino/" class="nav__link">Ensino</a></li>
+        <li><a href="/seguranca/" class="nav__link">Segurança</a></li>
+        <li><a href="/curriculo/" class="nav__link">Currículo</a></li>
+        <li><a href="/contato/" class="nav__cta">Contato</a></li>
+      </ul>
+      <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <header class="post-hero">
+      <div class="container">
+        <p class="post-hero__cat">Portfólio</p>
+        <h1 class="post-hero__title">{{ page.name }}</h1>
+        <div class="post-hero__meta">
+          {% if page.status == "dev" %}
+            <span class="sistema-card__status status--dev">Em desenvolvimento</span>
+          {% else %}
+            <span class="sistema-card__status status--plan">Planejado</span>
+          {% endif %}
+          <span>·</span>
+          {% for tech in page.stack %}<span>#{{ tech }}</span>{% endfor %}
+        </div>
+      </div>
+    </header>
+
+    <article class="post-body">
+      <p style="font-size:1.1rem;color:var(--text-muted);">{{ page.excerpt }}</p>
+      {{ content }}
+    </article>
+
+    <div style="max-width:var(--prose-max);margin:2rem auto 4rem;padding:0 1.5rem;">
+      <a href="/portfolio/" class="btn btn--ghost">← Voltar pro Portfólio</a>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>© {{ 'now' | date: "%Y" }} <a href="/" style="color:var(--accent)">Alan Mateus</a>. Feito com Jekyll + GitHub Pages.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button type="button" id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" hidden>↑</button>
+  <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+</body>
+</html>

@@ -9,6 +9,7 @@ author:
   github: AlanMateus17
   linkedin: alan-souza-dev
   location: Barbacena, MG — Brasil
+  whatsapp: "5532984138614"
 
 # Status atual (atualiza aqui, aparece no site automaticamente)
 status_now:
@@ -28,11 +29,16 @@ teaching_start_year: 2024
 # Formspree (comentários chegam por e-mail; você aprova e adiciona manualmente no repo)
 formspree_id: "xaeyqrzd"
 
+# Formspree do formulário de orçamento (crie um formulário novo em formspree.io e cole o ID aqui)
+formspree_orcamento_id: "SEU_ID_AQUI"
+
 # Coleções
 collections:
   sistemas:
     output: true
     permalink: /portfolio/:name/
+  produtos:
+    output: false
 
 # Plugins suportados pelo GitHub Pages
 plugins:
