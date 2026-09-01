@@ -379,6 +379,14 @@ if ('serviceWorker' in navigator) {
     });
     if (iosClose) iosClose.addEventListener('click', function () { iosModal.hidden = true; });
     if (iosDone) iosDone.addEventListener('click', esconderPraSempre);
+    if (iosModal) {
+      iosModal.addEventListener('click', function (e) {
+        if (e.target === iosModal) iosModal.hidden = true; // clicou no fundo escuro
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && iosModal && !iosModal.hidden) iosModal.hidden = true;
+    });
     return;
   }
 

@@ -7,6 +7,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap');
 
+/* Garante que o atributo HTML "hidden" sempre esconda o elemento,
+   mesmo quando outra regra define display:flex/block/etc. nele. */
+[hidden] { display: none !important; }
+
 /* === TOKENS === */
 :root {
   --brand:        #0E3A45;
