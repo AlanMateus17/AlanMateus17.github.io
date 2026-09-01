@@ -36,7 +36,11 @@ description: "23 sistemas de gestão do ecossistema Aura — PDV, delivery, saú
             {% for tag in tags %}<span class="tag">{{ tag }}</span>{% endfor %}
           </div>
           {% assign project_slug = parts[0] | slugify %}
-          {% include project-like.html _fix=1 project_slug=project_slug %}
+          {% assign proj_like_key = 'portfolio--' | append: project_slug %}
+          <button type="button" class="project-like-btn" data-like-key="{{ proj_like_key }}" aria-pressed="false">
+            <span class="project-like-btn__icon" aria-hidden="true">♥</span>
+            <span class="project-like-btn__count">–</span>
+          </button>
         </div>
       {% endfor %}
     </div>

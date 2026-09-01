@@ -12,8 +12,84 @@
       {% for comment in post_comments %}
         {% assign c = comment[1] %}
         {% unless c.parent %}
-          {% assign comment_id = comment[0] %}
-          {% include comment-item.html _fix=1 comment_id=comment_id c=c slug=page.slug all=post_comments %}
+          {% assign top_id = comment[0] %}
+          <!-- DEBUG top_id=[{{ top_id }}] -->
+          {% for dbg in post_comments %}<!-- DEBUG item id=[{{ dbg[0] }}] parent=[{{ dbg[1].parent }}] -->{% endfor %}
+
+          <div class="comment">
+            <div class="comment__head">
+              <span class="comment__name-group">
+                <span class="comment__name">{{ c.name }}</span>
+                {% if c.author %}<span class="comment__author-badge">Autor</span>{% endif %}
+              </span>
+              <span class="comment__date">{{ c.date | date: "%d/%m/%Y" }}</span>
+            </div>
+
+            {% assign msg_size = c.message | size %}
+            {% if msg_size > 400 %}
+              <p class="comment__body comment__body--collapsed" id="comment-body-{{ top_id }}">{{ c.message }}</p>
+              <button type="button" class="comment__toggle-btn" data-target="comment-body-{{ top_id }}">Ver comentário completo</button>
+            {% else %}
+              <p class="comment__body">{{ c.message }}</p>
+            {% endif %}
+
+            <div class="comment__actions">
+              {% assign top_like_key = page.slug | append: '--c-' | append: top_id %}
+              <button type="button" class="comment__like-btn" data-like-key="{{ top_like_key }}" aria-pressed="false">
+                <span class="comment__like-icon" aria-hidden="true">♥</span>
+                <span class="comment__like-count">–</span>
+              </button>
+              <button type="button" class="comment__reply-btn" data-comment-id="{{ top_id }}" data-comment-name="{{ c.name }}">Responder</button>
+            </div>
+
+            {% assign top_id_str = top_id | append: '' %}
+            {% assign has_replies = false %}
+            {% for r in post_comments %}
+              {% assign r_parent_str = r[1].parent | append: '' %}
+              {% if r_parent_str == top_id_str and r[1].parent %}{% assign has_replies = true %}{% endif %}
+            {% endfor %}
+
+            {% if has_replies %}
+              <div class="comment__replies">
+                {% for r in post_comments %}
+                  {% assign r_parent_str2 = r[1].parent | append: '' %}
+                  {% if r_parent_str2 == top_id_str and r[1].parent %}
+                    {% assign reply_id = r[0] %}
+                    {% assign rc = r[1] %}
+                    <div class="comment">
+                      <div class="comment__head">
+                        <span class="comment__name-group">
+                          <span class="comment__name">{{ rc.name }}</span>
+                          {% if rc.author %}<span class="comment__author-badge">Autor</span>{% endif %}
+                        </span>
+                        <span class="comment__date">{{ rc.date | date: "%d/%m/%Y" }}</span>
+                      </div>
+
+                      <p class="comment__reply-to">↳ respondendo a <strong>{{ c.name }}</strong></p>
+
+                      {% assign reply_msg_size = rc.message | size %}
+                      {% if reply_msg_size > 400 %}
+                        <p class="comment__body comment__body--collapsed" id="comment-body-{{ reply_id }}">{{ rc.message }}</p>
+                        <button type="button" class="comment__toggle-btn" data-target="comment-body-{{ reply_id }}">Ver comentário completo</button>
+                      {% else %}
+                        <p class="comment__body">{{ rc.message }}</p>
+                      {% endif %}
+
+                      <div class="comment__actions">
+                        {% assign reply_like_key = page.slug | append: '--c-' | append: reply_id %}
+                        <button type="button" class="comment__like-btn" data-like-key="{{ reply_like_key }}" aria-pressed="false">
+                          <span class="comment__like-icon" aria-hidden="true">♥</span>
+                          <span class="comment__like-count">–</span>
+                        </button>
+                        <button type="button" class="comment__reply-btn" data-comment-id="{{ reply_id }}" data-comment-name="{{ rc.name }}">Responder</button>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
         {% endunless %}
       {% endfor %}
     </div>
@@ -100,6 +176,41 @@
       var alvo = document.getElementById(btn.getAttribute('data-target'));
       var recolhido = alvo.classList.toggle('comment__body--collapsed');
       btn.textContent = recolhido ? 'Ver comentário completo' : 'Ver menos';
+    });
+  });
+
+  // Curtidas individuais de cada comentário
+  var namespace = 'alanmateus17-github-io';
+  document.querySelectorAll('.comment__like-btn').forEach(function (btn) {
+    var key = btn.getAttribute('data-like-key');
+    var storageKey = 'liked:' + key;
+    var countEl = btn.querySelector('.comment__like-count');
+    var baseUrl = 'https://counterapi.com/api/' + namespace + '/like/' + key;
+
+    fetch(baseUrl + '?readOnly=true')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        countEl.textContent = data.value || 0;
+        if (localStorage.getItem(storageKey)) {
+          btn.setAttribute('aria-pressed', 'true');
+          btn.classList.add('is-liked');
+        }
+      })
+      .catch(function () { countEl.textContent = '0'; });
+
+    btn.addEventListener('click', function () {
+      if (localStorage.getItem(storageKey)) return;
+      btn.disabled = true;
+      fetch(baseUrl)
+        .then(function (res) { if (!res.ok) throw new Error('falhou'); return res.json(); })
+        .then(function (data) {
+          localStorage.setItem(storageKey, '1');
+          btn.setAttribute('aria-pressed', 'true');
+          btn.classList.add('is-liked');
+          countEl.textContent = data.value || (parseInt(countEl.textContent, 10) || 0) + 1;
+        })
+        .catch(function () {})
+        .finally(function () { btn.disabled = false; });
     });
   });
 
