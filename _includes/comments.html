@@ -13,7 +13,7 @@
         {% assign c = comment[1] %}
         {% unless c.parent %}
           {% assign comment_id = comment[0] %}
-          {% include comment-item.html comment_id=comment_id c=c slug=page.slug all=post_comments %}
+          {% include comment-item.html _fix=1 comment_id=comment_id c=c slug=page.slug all=post_comments %}
         {% endunless %}
       {% endfor %}
     </div>

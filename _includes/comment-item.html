@@ -25,7 +25,7 @@
     <p class="comment__body">{{ c.message }}</p>
   {% endif %}
   <div class="comment__actions">
-    {% include comment-like.html slug=slug comment_id=comment_id %}
+    {% include comment-like.html _fix=1 slug=slug comment_id=comment_id %}
     <button type="button" class="comment__reply-btn" data-comment-id="{{ comment_id }}" data-comment-name="{{ c.name }}">Responder</button>
   </div>
 
@@ -43,7 +43,7 @@
         {% if item_parent_str2 == current_id_str and item[1].parent %}
           {% assign reply_comment_id = item[0] %}
           {% assign reply_c = item[1] %}
-          {% include comment-item.html comment_id=reply_comment_id c=reply_c slug=slug all=all %}
+          {% include comment-item.html _fix=1 comment_id=reply_comment_id c=reply_c slug=slug all=all %}
         {% endif %}
       {% endfor %}
     </div>
