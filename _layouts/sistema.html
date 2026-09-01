@@ -23,7 +23,7 @@
 <body>
   <nav class="nav" role="navigation" aria-label="Navegação principal">
     <div class="nav__inner">
-      <a href="/" class="nav__logo">Alan Mateus</a>
+      <a href="/" class="nav__logo">Alan Mateus<span class="nav__logo-sub"> | AMtech Digital</span></a>
       <ul class="nav__links" id="nav-links" role="list">
         <li><a href="/sobre/" class="nav__link">Sobre</a></li>
         <li><a href="/portfolio/" class="nav__link">Portfólio</a></li>
@@ -69,12 +69,29 @@
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer__bottom">
-        <p>© {{ 'now' | date: "%Y" }} <a href="/" style="color:var(--accent)">Alan Mateus</a>. Feito com Jekyll + GitHub Pages.</p>
+        <p>© {{ 'now' | date: "%Y" }} <a href="/" style="color:var(--accent)">Alan Mateus | AMtech Digital</a>. Feito com Jekyll + GitHub Pages.</p>
       </div>
     </div>
   </footer>
 
   <button type="button" id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" hidden>↑</button>
+
+  <button type="button" id="install-app-btn" class="install-app-btn" hidden>
+    <span aria-hidden="true">⬇</span> Instalar app
+  </button>
+
+  <div id="ios-install-modal" class="ios-install-modal" hidden>
+    <div class="ios-install-modal__box">
+      <button type="button" id="ios-install-close" class="ios-install-modal__close" aria-label="Fechar">✕</button>
+      <p class="ios-install-modal__title">Instalar no iPhone/iPad</p>
+      <ol class="ios-install-modal__steps">
+        <li>Toca no ícone de compartilhar <strong>⬆️</strong> na barra do Safari</li>
+        <li>Escolhe <strong>"Adicionar à Tela de Início"</strong></li>
+        <li>Toca em <strong>"Adicionar"</strong> — pronto!</li>
+      </ol>
+      <button type="button" id="ios-install-done" class="btn btn--primary" style="width:100%;margin-top:1.25rem;justify-content:center;">Já instalei</button>
+    </div>
+  </div>
   <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
 </body>
 </html>

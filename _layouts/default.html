@@ -33,7 +33,7 @@
   <!-- NAVEGAÇÃO -->
   <nav class="nav" role="navigation" aria-label="Navegação principal">
     <div class="nav__inner">
-      <a href="{{ '/' | relative_url }}" class="nav__logo">Alan Mateus</a>
+      <a href="{{ '/' | relative_url }}" class="nav__logo">Alan Mateus<span class="nav__logo-sub"> | AMtech Digital</span></a>
 
       <ul class="nav__links" id="nav-links" role="list">
         <li><a href="{{ '/sobre/' | relative_url }}" class="nav__link">Sobre</a></li>
@@ -61,7 +61,7 @@
     <div class="container">
       <div class="footer__inner">
         <div class="footer__brand">
-          <a href="{{ '/' | relative_url }}" class="nav__logo">Alan Mateus</a>
+          <a href="{{ '/' | relative_url }}" class="nav__logo">Alan Mateus<span class="nav__logo-sub"> | AMtech Digital</span></a>
           <p class="footer__desc" style="margin-top:0.5rem;">
             Desenvolvedor, professor e eterno estudante.<br>
             Construindo em público desde 2026.
@@ -104,6 +104,7 @@
         <div>
           <p class="footer__title">Links externos</p>
           <ul class="footer__links">
+            <li><a href="{{ '/feed.xml' | relative_url }}" class="footer__link" target="_blank" rel="noopener">RSS ↗</a></li>
             <li><a href="https://github.com/{{ site.author.github }}" class="footer__link" target="_blank" rel="noopener">GitHub ↗</a></li>
             <li><a href="https://linkedin.com/in/{{ site.author.linkedin }}" class="footer__link" target="_blank" rel="noopener">LinkedIn ↗</a></li>
           </ul>
@@ -111,13 +112,30 @@
       </div>
 
       <div class="footer__bottom">
-        <p>© {{ 'now' | date: "%Y" }} <a href="{{ '/' | relative_url }}" style="color:var(--accent)">Alan Mateus</a>. Feito com Jekyll + GitHub Pages.</p>
+        <p>© {{ 'now' | date: "%Y" }} <a href="{{ '/' | relative_url }}" style="color:var(--accent)">Alan Mateus | AMtech Digital</a>. Feito com Jekyll + GitHub Pages.</p>
         <p style="font-family:var(--font-mono);font-size:0.72rem;">{{ site.author.location }}</p>
       </div>
     </div>
   </footer>
 
   <button type="button" id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" hidden>↑</button>
+
+  <button type="button" id="install-app-btn" class="install-app-btn" hidden>
+    <span aria-hidden="true">⬇</span> Instalar app
+  </button>
+
+  <div id="ios-install-modal" class="ios-install-modal" hidden>
+    <div class="ios-install-modal__box">
+      <button type="button" id="ios-install-close" class="ios-install-modal__close" aria-label="Fechar">✕</button>
+      <p class="ios-install-modal__title">Instalar no iPhone/iPad</p>
+      <ol class="ios-install-modal__steps">
+        <li>Toca no ícone de compartilhar <strong>⬆️</strong> na barra do Safari</li>
+        <li>Escolhe <strong>"Adicionar à Tela de Início"</strong></li>
+        <li>Toca em <strong>"Adicionar"</strong> — pronto!</li>
+      </ol>
+      <button type="button" id="ios-install-done" class="btn btn--primary" style="width:100%;margin-top:1.25rem;justify-content:center;">Já instalei</button>
+    </div>
+  </div>
 
   <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
 </body>

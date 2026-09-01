@@ -32,6 +32,9 @@ formspree_id: "xaeyqrzd"
 # Formspree do formulário de orçamento (crie um formulário novo em formspree.io e cole o ID aqui)
 formspree_orcamento_id: "SEU_ID_AQUI"
 
+# Formspree da newsletter (crie um formulário novo em formspree.io e cole o ID aqui)
+formspree_newsletter_id: "SEU_ID_AQUI"
+
 # Coleções
 collections:
   sistemas:

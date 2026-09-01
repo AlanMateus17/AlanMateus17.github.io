@@ -168,6 +168,14 @@ section + section { padding-top: 0; }
   transition: color var(--transition);
   letter-spacing: -0.01em;
 }
+.nav__logo-sub {
+  font-weight: 400;
+  opacity: 0.6;
+  font-size: 0.82em;
+}
+@media (max-width: 480px) {
+  .nav__logo-sub { display: none; }
+}
 .nav__logo span { color: var(--accent); }
 
 .nav__links {
@@ -1634,3 +1642,84 @@ pre { white-space: pre-wrap; word-break: break-all; }
 .loja-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .loja-card__price { font-weight: 700; font-size: 1.05rem; }
 .loja-card__soon { font-size: 0.8rem; color: var(--text-light); font-family: var(--font-mono); }
+
+/* === NEWSLETTER === */
+.newsletter {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  background: var(--surface);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+.newsletter__title { font-weight: 700; margin-bottom: 0.25rem; }
+.newsletter__desc { color: var(--text-muted); font-size: 0.85rem; }
+.newsletter__form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.newsletter__input {
+  padding: 0.65rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: inherit;
+  font-family: inherit;
+  min-width: 220px;
+}
+.newsletter__input:focus { outline: none; border-color: var(--accent); }
+.newsletter__status { width: 100%; font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem; }
+
+/* === INSTALAR APP === */
+.install-app-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  z-index: 40;
+  transition: transform var(--transition);
+}
+.install-app-btn:hover { transform: translateY(-3px); }
+.install-app-btn:disabled { opacity: 0.6; cursor: default; }
+
+.ios-install-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1.5rem;
+}
+.ios-install-modal__box {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  max-width: 360px;
+  width: 100%;
+  position: relative;
+}
+.ios-install-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.ios-install-modal__title { font-weight: 700; margin-bottom: 1rem; padding-right: 1.5rem; }
+.ios-install-modal__steps { padding-left: 1.25rem; display: grid; gap: 0.6rem; color: var(--text-muted); font-size: 0.9rem; }
