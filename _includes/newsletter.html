@@ -1,44 +1,4 @@
 <div class="newsletter">
-  <div class="newsletter__text">
-    <p class="newsletter__title">Quer saber quando sai post novo?</p>
-    <p class="newsletter__desc">Sem spam — só um aviso quando eu publicar algo novo no blog.</p>
-  </div>
-  <form id="newsletter-form" class="newsletter__form" action="https://formspree.io/f/{{ site.formspree_newsletter_id }}" method="POST">
-    <p style="position:absolute;left:-9999px;">
-      <label>Não preencha este campo<input type="text" name="_gotcha"></label>
-    </p>
-    <input type="email" name="email" required placeholder="seu@email.com" class="newsletter__input" aria-label="Seu e-mail">
-    <button type="submit" class="btn btn--primary newsletter__btn">Avisar</button>
-  </form>
-  <p class="newsletter__status" id="newsletter-status" hidden></p>
+  <!-- Formulário MailerLite: 34 assuntos + automação "Receber tudo" já configurados -->
+  <div class="ml-embedded" data-form="aIMuvp"></div>
 </div>
-
-<script>
-(function () {
-  var form = document.getElementById('newsletter-form');
-  if (!form || form.dataset.bound) return;
-  form.dataset.bound = '1';
-  var status = document.getElementById('newsletter-status');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    status.hidden = false;
-    status.textContent = 'Enviando...';
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (res.ok) {
-        status.textContent = 'Prontinho! Você recebe um aviso no próximo post.';
-        form.reset();
-      } else {
-        return res.json().then(function (data) {
-          throw new Error((data && data.error) || 'Erro ao enviar');
-        });
-      }
-    }).catch(function (err) {
-      status.textContent = 'Não deu pra cadastrar agora (' + err.message + '). Tenta de novo em instantes.';
-    });
-  });
-})();
-</script>
