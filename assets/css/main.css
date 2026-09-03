@@ -1727,3 +1727,77 @@ pre { white-space: pre-wrap; word-break: break-all; }
 }
 .ios-install-modal__title { font-weight: 700; margin-bottom: 1rem; padding-right: 1.5rem; }
 .ios-install-modal__steps { padding-left: 1.25rem; display: grid; gap: 0.6rem; color: var(--text-muted); font-size: 0.9rem; }
+
+/* === COMPARTILHAR (Story, LinkedIn, Citação, Certificado, Streak) === */
+.share-buttons__btn--story { background: var(--accent); color: var(--brand); border: none; font-weight: 700; }
+.share-buttons__btn--linkedin { background: #0A66C2; color: #fff; border: none; font-weight: 700; }
+
+.story-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center; z-index: 200;
+}
+.story-overlay__box {
+  background: var(--surface); padding: 2rem 2.5rem; border-radius: var(--radius-xl);
+  font-weight: 700; color: var(--text); max-width: 320px; text-align: center;
+}
+
+.quote-share-btn {
+  position: absolute;
+  background: var(--brand);
+  color: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 60;
+  box-shadow: var(--shadow-sm);
+  user-select: none;
+}
+
+.reading-cert-btn {
+  display: block;
+  margin: 2rem auto 0;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+.reading-cert-btn:hover { background: var(--accent); color: var(--brand); }
+
+.reading-streak-badge {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* === PAINEL DE STATUS DO PORTFÓLIO === */
+.status-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-xl);
+  margin-bottom: 1.5rem;
+  background: var(--surface);
+}
+.status-panel__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.status-panel__dot { width: 10px; height: 10px; border-radius: 50%; }
+.status-panel__dot--dev { background: var(--accent); }
+.status-panel__dot--plan { background: #C9A227; }

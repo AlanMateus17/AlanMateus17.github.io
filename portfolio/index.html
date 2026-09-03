@@ -12,8 +12,29 @@ description: "23 sistemas de gestão do ecossistema Aura — PDV, delivery, saú
 </header>
 <section>
   <div class="container">
+    {% assign sistemas = "AuraPOS|PDV multi-tenant com RLS. Vendas, estoque, fiscal.|dev|.NET 10,PostgreSQL,Next.js,Docker,Redis,SignalR;Aura Delivery|Gestão de pedidos com geolocalização e rastreio em tempo real.|dev|.NET,PostGIS,SignalR,Next.js;AuraWealth|Finanças pessoais e empresariais com rebalanceamento ARCA automático.|dev|.NET,PostgreSQL,Next.js;AuraVet|Clínicas veterinárias — prontuários, agenda, vacinas e lembretes.|plan|.NET,PostgreSQL,Next.js;AuraFix|Assistência técnica — ordens de serviço, diagnóstico e histórico.|plan|.NET,PostgreSQL,Next.js;Momentos & Cupido|Plataforma de relacionamentos com timeline, NFC e convites interativos.|plan|.NET,Next.js,NFC;Loja Virtual|E-commerce completo com catálogo, carrinho e pagamento integrado.|plan|.NET,Next.js,Stripe;AuraCondo|Gestão de condomínios — taxas, manutenção, assembleias e comunicados.|plan|.NET,PostgreSQL,Next.js;AuraObra|Controle de obras e construção civil — cronograma, custos, equipes.|plan|.NET,PostgreSQL,Next.js;AuraEdu|Plataforma educacional — cursos, aulas, progresso e certificados.|plan|.NET,PostgreSQL,Next.js;AuraAgenda|Agendamentos online para qualquer tipo de serviço com recorrência.|plan|.NET,PostgreSQL,Next.js;AgileFlow|Gestão de projetos Kanban/Scrum/RAD — exceção de stack.|plan|React,Node.js,GraphQL;AuraArquiteto|Diagnóstico de sistemas por IA e geração de arquitetura.|plan|.NET,OpenAI,Next.js" | split: ";" %}
+    {% assign total_dev = 0 %}
+    {% assign total_plan = 0 %}
+    {% for sistema in sistemas %}
+      {% assign parts = sistema | split: "|" %}
+      {% if parts[2] == "dev" %}{% assign total_dev = total_dev | plus: 1 %}{% else %}{% assign total_plan = total_plan | plus: 1 %}{% endif %}
+    {% endfor %}
+    <div class="status-panel fade-in">
+      <div class="status-panel__item">
+        <span class="status-panel__dot status-panel__dot--dev"></span>
+        <span><strong>{{ total_dev }}</strong> em desenvolvimento</span>
+      </div>
+      <div class="status-panel__item">
+        <span class="status-panel__dot status-panel__dot--plan"></span>
+        <span><strong>{{ total_plan }}</strong> planejados</span>
+      </div>
+      <div class="status-panel__item">
+        <span><strong>{{ sistemas.size }}</strong> sistemas no total</span>
+      </div>
+    </div>
+
     <div class="portfolio-filters fade-in">
-      <button class="filter-btn active" data-filter="all">Todos (23)</button>
+      <button class="filter-btn active" data-filter="all">Todos ({{ sistemas.size }})</button>
       <button class="filter-btn" data-filter="dev">Em desenvolvimento</button>
       <button class="filter-btn" data-filter="plan">Planejados</button>
     </div>

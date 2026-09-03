@@ -1,0 +1,37 @@
+---
+layout: default
+title: Cartão de Visita Digital
+description: "Escaneie e salve meu contato direto na sua agenda."
+permalink: /contato/cartao/
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Contato</p>
+    <h1 class="page-hero__title">Cartão de<br><em style="font-weight:300;color:var(--accent)">visita digital.</em></h1>
+    <p class="page-hero__desc">Aponte a câmera do celular pro QR code, ou baixe o contato direto.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container" style="max-width:420px;text-align:center;">
+    <div id="vcard-qr" style="background:#fff;padding:1.5rem;border-radius:var(--radius-xl);display:inline-block;"></div>
+    <p style="margin-top:1.5rem;color:var(--text-muted);font-size:.9rem;">
+      Escaneando, o contato já é salvo direto na agenda — sem precisar digitar nada.
+    </p>
+    <a href="/assets/alan-mateus.vcf" download="alan-mateus.vcf" class="btn btn--primary" style="margin-top:1rem;">
+      Baixar contato (.vcf)
+    </a>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  var vcard = "BEGIN:VCARD\nVERSION:3.0\nN:Mateus;Alan;;;\nFN:Alan Mateus\nORG:Grupo AMtech Digital\nTITLE:Professor de Informática & Desenvolvedor\nTEL;TYPE=CELL:+5532984138614\nURL:https://alanmateus17.github.io\nADR:;;Barbacena;MG;;;Brasil\nEND:VCARD";
+
+  new QRCode(document.getElementById("vcard-qr"), {
+    text: vcard,
+    width: 260,
+    height: 260,
+    correctLevel: QRCode.CorrectLevel.M
+  });
+</script>

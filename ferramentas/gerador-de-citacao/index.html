@@ -1,0 +1,112 @@
+---
+layout: default
+title: Gerador de Citação de Aula
+description: "Ferramenta gratuita: crie uma imagem bonita com uma frase motivacional pra postar nas redes da sua escola."
+permalink: /ferramentas/gerador-de-citacao/
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Ferramenta gratuita</p>
+    <h1 class="page-hero__title">Gerador de<br><em style="font-weight:300;color:var(--accent)">citação de aula.</em></h1>
+    <p class="page-hero__desc">Feito pra professores. Escreve uma frase, escolhe as cores, gera uma imagem pronta pra postar — sem cadastro, sem marca d'água.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container" style="max-width:600px;">
+    <div style="display:grid;gap:1rem;">
+      <label style="font-weight:600;font-size:.9rem;">Frase</label>
+      <textarea id="citacao-texto" rows="3" maxlength="200" placeholder="Escreva a frase aqui..."
+        style="padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);color:inherit;font-family:inherit;font-size:1rem;"></textarea>
+
+      <label style="font-weight:600;font-size:.9rem;">Assinatura (opcional)</label>
+      <input id="citacao-assinatura" type="text" maxlength="60" placeholder="Ex: Escola Municipal Tal, Prof. Fulano"
+        style="padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);color:inherit;font-family:inherit;">
+
+      <label style="font-weight:600;font-size:.9rem;">Cor de fundo</label>
+      <div style="display:flex;gap:.6rem;">
+        <button type="button" class="citacao-cor" data-cor1="#0E3A45" data-cor2="#0A161C" style="width:44px;height:44px;border-radius:50%;background:#0E3A45;border:3px solid var(--accent);cursor:pointer;"></button>
+        <button type="button" class="citacao-cor" data-cor1="#7C2D12" data-cor2="#431407" style="width:44px;height:44px;border-radius:50%;background:#7C2D12;border:3px solid transparent;cursor:pointer;"></button>
+        <button type="button" class="citacao-cor" data-cor1="#1E3A8A" data-cor2="#0F1E4A" style="width:44px;height:44px;border-radius:50%;background:#1E3A8A;border:3px solid transparent;cursor:pointer;"></button>
+        <button type="button" class="citacao-cor" data-cor1="#166534" data-cor2="#052E16" style="width:44px;height:44px;border-radius:50%;background:#166534;border:3px solid transparent;cursor:pointer;"></button>
+      </div>
+
+      <button type="button" id="citacao-gerar" class="btn btn--primary" style="margin-top:.5rem;justify-content:center;">Gerar imagem</button>
+    </div>
+
+    <canvas id="citacao-canvas" width="1080" height="1080" style="display:none;"></canvas>
+    <div id="citacao-preview" style="margin-top:2rem;text-align:center;"></div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var corAtual = { c1: '#0E3A45', c2: '#0A161C' };
+
+  document.querySelectorAll('.citacao-cor').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.citacao-cor').forEach(function (b) { b.style.borderColor = 'transparent'; });
+      btn.style.borderColor = '#00C2A8';
+      corAtual.c1 = btn.dataset.cor1;
+      corAtual.c2 = btn.dataset.cor2;
+    });
+  });
+
+  function wrapText(ctx, text, maxWidth) {
+    var words = text.split(' ');
+    var lines = [], current = '';
+    words.forEach(function (w) {
+      var test = (current + ' ' + w).trim();
+      if (ctx.measureText(test).width <= maxWidth) { current = test; }
+      else { lines.push(current); current = w; }
+    });
+    if (current) lines.push(current);
+    return lines;
+  }
+
+  document.getElementById('citacao-gerar').addEventListener('click', function () {
+    var texto = document.getElementById('citacao-texto').value.trim();
+    if (!texto) { alert('Escreve uma frase primeiro.'); return; }
+    var assinatura = document.getElementById('citacao-assinatura').value.trim();
+
+    var canvas = document.getElementById('citacao-canvas');
+    var W = 1080, H = 1080;
+    var ctx = canvas.getContext('2d');
+
+    var grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, corAtual.c1);
+    grad.addColorStop(1, corAtual.c2);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#00C2A8';
+    ctx.fillRect(0, 0, W, 12);
+    ctx.fillRect(0, H - 12, W, 12);
+
+    ctx.fillStyle = '#00C2A8';
+    ctx.font = 'bold 120px Georgia, serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('❝', 70, 260);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '46px Georgia, serif';
+    var linhas = wrapText(ctx, texto, W - 160);
+    var alturaLinha = 62;
+    var ty = (H - linhas.length * alturaLinha) / 2;
+    linhas.forEach(function (linha) { ctx.fillText(linha, 80, ty); ty += alturaLinha; });
+
+    if (assinatura) {
+      ctx.font = 'bold 26px sans-serif';
+      ctx.fillStyle = '#00C2A8';
+      ctx.fillText(assinatura, 80, H - 100);
+    }
+    ctx.font = '20px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.fillText('gerado em alanmateus17.github.io/ferramentas', 80, H - 50);
+
+    var url = canvas.toDataURL('image/png');
+    var preview = document.getElementById('citacao-preview');
+    preview.innerHTML = '<img src="' + url + '" style="max-width:100%;border-radius:12px;margin-bottom:1rem;">' +
+      '<br><a href="' + url + '" download="citacao-de-aula.png" class="btn btn--primary">Baixar imagem</a>';
+  });
+})();
+</script>

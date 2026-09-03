@@ -10,6 +10,21 @@
      href="https://twitter.com/intent/tweet?text={{ post_title }}&url={{ post_url | url_encode }}"
      aria-label="Compartilhar no X (Twitter)">X</a>
   <button type="button" class="share-buttons__btn" id="share-copy-link" data-url="{{ post_url }}">Copiar link</button>
+  <button type="button" class="share-buttons__btn share-buttons__btn--story" id="share-as-story">📱 Story</button>
+  <button type="button" class="share-buttons__btn share-buttons__btn--linkedin" id="share-as-linkedin">💼 LinkedIn</button>
+</div>
+
+<div id="quote-share-btn" class="quote-share-btn" hidden>❝ Compartilhar citação</div>
+<button type="button" id="reading-cert-btn" class="reading-cert-btn" hidden>🎓 Gerar certificado de leitura</button>
+<div id="reading-streak-badge" class="reading-streak-badge" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+<div id="story-generating-overlay" class="story-overlay" hidden>
+  <div class="story-overlay__box">
+    <p id="story-overlay-text">Gerando sua imagem...</p>
+  </div>
 </div>
 
 <script>
@@ -23,5 +38,409 @@
       setTimeout(function () { btn.textContent = original; }, 1800);
     });
   });
+})();
+</script>
+
+<script>
+// ===== Funções compartilhadas de geração de imagem =====
+(function () {
+  window.__amtechShare = {};
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  window.__amtechShare.roundRect = roundRect;
+
+  function wrapText(ctx, text, maxWidth) {
+    var words = text.split(' ');
+    var lines = [];
+    var current = '';
+    words.forEach(function (w) {
+      var test = (current + ' ' + w).trim();
+      if (ctx.measureText(test).width <= maxWidth) {
+        current = test;
+      } else {
+        lines.push(current);
+        current = w;
+      }
+    });
+    if (current) lines.push(current);
+    return lines;
+  }
+  window.__amtechShare.wrapText = wrapText;
+
+  function baixarOuCompartilhar(canvas, overlay, overlayText, linkCopiado, nomeArquivo) {
+    canvas.toBlob(function (blob) {
+      var arquivo = new File([blob], nomeArquivo, { type: 'image/png' });
+      if (linkCopiado) {
+        overlayText.textContent = 'Pronto! Link também copiado — cola no sticker de link do Instagram.';
+      } else {
+        overlayText.textContent = 'Pronto!';
+      }
+      setTimeout(function () {
+        overlay.hidden = true;
+        if (navigator.canShare && navigator.canShare({ files: [arquivo] })) {
+          navigator.share({ files: [arquivo], title: 'Compartilhar' }).catch(function () {});
+        } else {
+          var link = document.createElement('a');
+          link.download = nomeArquivo;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        }
+      }, linkCopiado ? 1400 : 200);
+    }, 'image/png');
+  }
+  window.__amtechShare.baixarOuCompartilhar = baixarOuCompartilhar;
+
+  function copiarLinkAtual() {
+    var copiado = false;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href).then(function () { copiado = true; }).catch(function () {});
+    }
+    return function () { return copiado; };
+  }
+  window.__amtechShare.copiarLinkAtual = copiarLinkAtual;
+})();
+</script>
+
+<script>
+// ===== Story (celular, retrato 1080x1920) =====
+(function () {
+  var storyBtn = document.getElementById('share-as-story');
+  if (!storyBtn) return;
+  var overlay = document.getElementById('story-generating-overlay');
+  var overlayText = document.getElementById('story-overlay-text');
+  var S = window.__amtechShare;
+
+  storyBtn.addEventListener('click', function () {
+    if (typeof html2canvas === 'undefined' || typeof QRCode === 'undefined') {
+      alert('Ainda carregando os recursos necessários — espera 2 segundos e tenta de novo.');
+      return;
+    }
+    overlay.hidden = false;
+    overlayText.textContent = 'Gerando sua imagem...';
+    var getCopiado = S.copiarLinkAtual();
+    var alvo = document.querySelector('.post-hero') || document.querySelector('main');
+
+    html2canvas(alvo, { backgroundColor: '#0E3A45', scale: 2, useCORS: true }).then(function (captura) {
+      var W = 1080, H = 1920;
+      var canvas = document.createElement('canvas');
+      canvas.width = W; canvas.height = H;
+      var ctx = canvas.getContext('2d');
+
+      var grad = ctx.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0, '#0E3A45');
+      grad.addColorStop(1, '#0A161C');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#00C2A8';
+      ctx.fillRect(0, 0, W, 14);
+      ctx.fillRect(0, H - 14, W, 14);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 34px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Alan Mateus | AMtech Digital', W / 2, 90);
+
+      var phoneW = 780, phoneX = (W - phoneW) / 2, phoneY = 180;
+      var escala = phoneW / captura.width;
+      var phoneH = Math.min(captura.height * escala, 1180);
+
+      ctx.fillStyle = '#050f14';
+      S.roundRect(ctx, phoneX - 14, phoneY - 14, phoneW + 28, phoneH + 28, 46);
+      ctx.fill();
+      ctx.save();
+      S.roundRect(ctx, phoneX, phoneY, phoneW, phoneH, 32);
+      ctx.clip();
+      ctx.drawImage(captura, phoneX, phoneY, phoneW, phoneH);
+      ctx.restore();
+
+      var qrContainer = document.createElement('div');
+      qrContainer.style.position = 'absolute';
+      qrContainer.style.left = '-9999px';
+      document.body.appendChild(qrContainer);
+      new QRCode(qrContainer, { text: window.location.href, width: 260, height: 260, correctLevel: QRCode.CorrectLevel.H });
+
+      setTimeout(function () {
+        var qrEl = qrContainer.querySelector('img') || qrContainer.querySelector('canvas');
+        var qrY = phoneY + phoneH + 60;
+        ctx.fillStyle = '#fff';
+        S.roundRect(ctx, W / 2 - 150, qrY, 300, 300, 16);
+        ctx.fill();
+        if (qrEl) ctx.drawImage(qrEl, W / 2 - 130, qrY + 20, 260, 260);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 30px sans-serif';
+        ctx.fillText('Aponte a câmera pra ler', W / 2, qrY + 350);
+        document.body.removeChild(qrContainer);
+        S.baixarOuCompartilhar(canvas, overlay, overlayText, getCopiado(), 'story-alanmateus.png');
+      }, 400);
+    }).catch(function () {
+      overlay.hidden = true;
+      alert('Não deu pra gerar a imagem agora. Tenta de novo em instantes.');
+    });
+  });
+})();
+</script>
+
+<script>
+// ===== Card pro LinkedIn (horizontal 1200x627) =====
+(function () {
+  var linkedinBtn = document.getElementById('share-as-linkedin');
+  if (!linkedinBtn) return;
+  var overlay = document.getElementById('story-generating-overlay');
+  var overlayText = document.getElementById('story-overlay-text');
+  var S = window.__amtechShare;
+
+  linkedinBtn.addEventListener('click', function () {
+    if (typeof html2canvas === 'undefined') {
+      alert('Ainda carregando os recursos necessários — espera 2 segundos e tenta de novo.');
+      return;
+    }
+    overlay.hidden = false;
+    overlayText.textContent = 'Gerando sua imagem...';
+    var getCopiado = S.copiarLinkAtual();
+    var alvo = document.querySelector('.post-hero') || document.querySelector('main');
+
+    html2canvas(alvo, { backgroundColor: '#0E3A45', scale: 2, useCORS: true }).then(function (captura) {
+      var W = 1200, H = 627;
+      var canvas = document.createElement('canvas');
+      canvas.width = W; canvas.height = H;
+      var ctx = canvas.getContext('2d');
+
+      var grad = ctx.createLinearGradient(0, 0, W, H);
+      grad.addColorStop(0, '#0E3A45');
+      grad.addColorStop(1, '#0A161C');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#00C2A8';
+      ctx.fillRect(0, 0, W, 10);
+      ctx.fillRect(0, H - 10, W, 10);
+
+      // metade esquerda: texto
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'left';
+      ctx.font = 'bold 26px sans-serif';
+      ctx.fillText('Alan Mateus | AMtech Digital', 60, 70);
+
+      var titulo = document.querySelector('.post-hero__title');
+      var tituloTexto = titulo ? titulo.textContent.trim() : document.title;
+      ctx.font = 'bold 42px sans-serif';
+      var linhas = S.wrapText(ctx, tituloTexto, 480);
+      var ty = 160;
+      linhas.slice(0, 4).forEach(function (linha) {
+        ctx.fillText(linha, 60, ty);
+        ty += 52;
+      });
+
+      ctx.font = '24px sans-serif';
+      ctx.fillStyle = '#00C2A8';
+      ctx.fillText('alanmateus17.github.io', 60, H - 60);
+
+      // metade direita: mockup pequeno da captura
+      var boxW = 480, boxH = 480, boxX = W - boxW - 60, boxY = (H - boxH) / 2;
+      var escala = Math.min(boxW / captura.width, boxH / captura.height);
+      var imgW = captura.width * escala, imgH = captura.height * escala;
+      var imgX = boxX + (boxW - imgW) / 2, imgY = boxY + (boxH - imgH) / 2;
+
+      ctx.fillStyle = '#050f14';
+      S.roundRect(ctx, boxX - 10, boxY - 10, boxW + 20, boxH + 20, 20);
+      ctx.fill();
+      ctx.save();
+      S.roundRect(ctx, imgX, imgY, imgW, imgH, 14);
+      ctx.clip();
+      ctx.drawImage(captura, imgX, imgY, imgW, imgH);
+      ctx.restore();
+
+      S.baixarOuCompartilhar(canvas, overlay, overlayText, getCopiado(), 'linkedin-alanmateus.png');
+    }).catch(function () {
+      overlay.hidden = true;
+      alert('Não deu pra gerar a imagem agora. Tenta de novo em instantes.');
+    });
+  });
+})();
+</script>
+
+<script>
+// ===== Citação em imagem (seleciona texto do post) =====
+(function () {
+  var quoteBtn = document.getElementById('quote-share-btn');
+  var postBody = document.querySelector('.post-body');
+  if (!quoteBtn || !postBody) return;
+  var overlay = document.getElementById('story-generating-overlay');
+  var overlayText = document.getElementById('story-overlay-text');
+  var S = window.__amtechShare;
+  var textoSelecionado = '';
+
+  document.addEventListener('mouseup', mostrarBotao);
+  document.addEventListener('touchend', mostrarBotao);
+
+  function mostrarBotao(e) {
+    var sel = window.getSelection();
+    var texto = sel.toString().trim();
+    if (!texto || texto.length < 10 || texto.length > 280) {
+      quoteBtn.hidden = true;
+      return;
+    }
+    // só ativa se a seleção estiver dentro do corpo do post
+    if (!postBody.contains(sel.anchorNode)) {
+      quoteBtn.hidden = true;
+      return;
+    }
+    textoSelecionado = texto;
+    var rect = sel.getRangeAt(0).getBoundingClientRect();
+    quoteBtn.style.top = (window.scrollY + rect.top - 46) + 'px';
+    quoteBtn.style.left = Math.max(10, rect.left + rect.width / 2 - 90) + 'px';
+    quoteBtn.hidden = false;
+  }
+
+  quoteBtn.addEventListener('mousedown', function (e) { e.preventDefault(); });
+  quoteBtn.addEventListener('click', function () {
+    quoteBtn.hidden = true;
+    overlay.hidden = false;
+    overlayText.textContent = 'Gerando sua imagem...';
+    var getCopiado = S.copiarLinkAtual();
+
+    var W = 1080, H = 1080;
+    var canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d');
+
+    var grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, '#0E3A45');
+    grad.addColorStop(1, '#0A161C');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#00C2A8';
+    ctx.fillRect(0, 0, W, 12);
+    ctx.fillRect(0, H - 12, W, 12);
+
+    ctx.fillStyle = '#00C2A8';
+    ctx.font = 'bold 120px Georgia, serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('❝', 70, 260);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '46px Georgia, serif';
+    var linhas = S.wrapText(ctx, textoSelecionado, W - 160);
+    var alturaLinha = 62;
+    var alturaTotal = linhas.length * alturaLinha;
+    var ty = (H - alturaTotal) / 2;
+    linhas.forEach(function (linha) {
+      ctx.fillText(linha, 80, ty);
+      ty += alturaLinha;
+    });
+
+    var tituloEl = document.querySelector('.post-hero__title');
+    var autorTexto = 'Alan Mateus — ' + (tituloEl ? tituloEl.textContent.trim() : document.title);
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillStyle = '#00C2A8';
+    var linhasAutor = S.wrapText(ctx, autorTexto, W - 160);
+    linhasAutor.slice(0, 2).forEach(function (linha, i) {
+      ctx.fillText(linha, 80, H - 100 + (i * 34));
+    });
+
+    S.baixarOuCompartilhar(canvas, overlay, overlayText, getCopiado(), 'citacao-alanmateus.png');
+  });
+})();
+</script>
+
+<script>
+// ===== Certificado de leitura (aparece perto do fim do post) =====
+(function () {
+  var certBtn = document.getElementById('reading-cert-btn');
+  var postBody = document.querySelector('.post-body');
+  if (!certBtn || !postBody) return;
+  var overlay = document.getElementById('story-generating-overlay');
+  var overlayText = document.getElementById('story-overlay-text');
+  var S = window.__amtechShare;
+  var jaMostrou = false;
+
+  window.addEventListener('scroll', function () {
+    if (jaMostrou) return;
+    var rect = postBody.getBoundingClientRect();
+    if (rect.bottom < window.innerHeight + 200) {
+      certBtn.hidden = false;
+      jaMostrou = true;
+    }
+  });
+
+  certBtn.addEventListener('click', function () {
+    overlay.hidden = false;
+    overlayText.textContent = 'Gerando seu certificado...';
+    var getCopiado = S.copiarLinkAtual();
+
+    var W = 1080, H = 1350;
+    var canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#F7FAFA';
+    ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = '#00C2A8';
+    ctx.lineWidth = 6;
+    ctx.strokeRect(40, 40, W - 80, H - 80);
+    ctx.strokeStyle = '#0E3A45';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(60, 60, W - 120, H - 120);
+
+    ctx.fillStyle = '#0E3A45';
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 30px sans-serif';
+    ctx.fillText('CERTIFICADO DE LEITURA', W / 2, 220);
+
+    ctx.fillStyle = '#00C2A8';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.fillText('Alan Mateus | AMtech Digital', W / 2, 270);
+
+    ctx.fillStyle = '#5C7266';
+    ctx.font = '28px sans-serif';
+    ctx.fillText('certifico que você leu até o fim:', W / 2, 420);
+
+    var tituloEl = document.querySelector('.post-hero__title');
+    var titulo = tituloEl ? tituloEl.textContent.trim() : document.title;
+    ctx.fillStyle = '#0E3A45';
+    ctx.font = 'bold 44px sans-serif';
+    var linhas = S.wrapText(ctx, titulo, W - 200);
+    var ty = 500;
+    linhas.slice(0, 4).forEach(function (linha) {
+      ctx.fillText(linha, W / 2, ty);
+      ty += 56;
+    });
+
+    var hoje = new Date().toLocaleDateString('pt-BR');
+    ctx.fillStyle = '#5C7266';
+    ctx.font = '22px sans-serif';
+    ctx.fillText(hoje, W / 2, H - 160);
+    ctx.fillStyle = '#00C2A8';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.fillText('alanmateus17.github.io', W / 2, H - 110);
+
+    S.baixarOuCompartilhar(canvas, overlay, overlayText, getCopiado(), 'certificado-leitura.png');
+  });
+})();
+</script>
+
+<script>
+// ===== Sequência de leitura (streak, localStorage) =====
+(function () {
+  var badge = document.getElementById('reading-streak-badge');
+  if (!badge) return;
+  var slug = window.location.pathname;
+  var chave = 'posts-lidos';
+  var lidos = JSON.parse(localStorage.getItem(chave) || '[]');
+  if (lidos.indexOf(slug) === -1) {
+    lidos.push(slug);
+    localStorage.setItem(chave, JSON.stringify(lidos));
+  }
+  if (lidos.length > 1) {
+    badge.textContent = 'Você já leu ' + lidos.length + ' posts aqui 🔥';
+    badge.hidden = false;
+  }
 })();
 </script>
