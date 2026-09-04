@@ -129,32 +129,6 @@
   });
 })();
 
-// --- Contador animado nas estatísticas ---
-(function() {
-  const nums = document.querySelectorAll('.stat__num[data-target]');
-  if (!nums.length) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const el = e.target;
-      const target = parseInt(el.dataset.target, 10);
-      const suffix = el.dataset.suffix || '';
-      let start = 0;
-      const step = Math.ceil(target / 40);
-      const timer = setInterval(() => {
-        start = Math.min(start + step, target);
-        el.textContent = start + suffix;
-        if (start >= target) clearInterval(timer);
-      }, 35);
-      observer.unobserve(el);
-    }),
-    { threshold: 0.5 }
-  );
-
-  nums.forEach(el => observer.observe(el));
-})();
-
 // --- Highlight de link ativo na navegação ---
 (function() {
   const path = window.location.pathname;

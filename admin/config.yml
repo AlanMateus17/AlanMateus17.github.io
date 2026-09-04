@@ -57,6 +57,7 @@ collections:
         widget: "select"
         options: [{ label: "Em desenvolvimento", value: "dev" }, { label: "Planejado", value: "plan" }]
       - { label: "Stack (tecnologias)", name: "stack", widget: "list" }
+      - { label: "Link do repositório no GitHub (deixe em branco até o repositório existir)", name: "repo_url", widget: "string", required: false }
       - { label: "Estudo de caso completo", name: "body", widget: "markdown" }
 
   - name: "produtos"

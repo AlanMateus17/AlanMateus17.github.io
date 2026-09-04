@@ -25,11 +25,6 @@
 </div>
 
 <div id="quote-share-btn" class="quote-share-btn" hidden>❝ Compartilhar citação</div>
-<button type="button" id="reading-cert-btn" class="reading-cert-btn" hidden aria-label="Gerar certificado de leitura deste post">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="6" stroke="currentColor" stroke-width="2"/><path d="M9 13.5L7 22l5-3 5 3-2-8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  Gerar certificado de leitura
-</button>
-<div id="reading-streak-badge" class="reading-streak-badge" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
@@ -141,14 +136,14 @@
     var getCopiado = S.copiarLinkAtual();
     var alvo = document.querySelector('.post-hero') || document.querySelector('main');
 
-    html2canvas(alvo, { backgroundColor: '#0E3A45', scale: 2, useCORS: true }).then(function (captura) {
+    html2canvas(alvo, { backgroundColor: '#0E2E38', scale: 2, useCORS: true }).then(function (captura) {
       var W = 1080, H = 1920;
       var canvas = document.createElement('canvas');
       canvas.width = W; canvas.height = H;
       var ctx = canvas.getContext('2d');
 
       var grad = ctx.createLinearGradient(0, 0, 0, H);
-      grad.addColorStop(0, '#0E3A45');
+      grad.addColorStop(0, '#0E2E38');
       grad.addColorStop(1, '#0A161C');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
@@ -220,14 +215,14 @@
     var getCopiado = S.copiarLinkAtual();
     var alvo = document.querySelector('.post-hero') || document.querySelector('main');
 
-    html2canvas(alvo, { backgroundColor: '#0E3A45', scale: 2, useCORS: true }).then(function (captura) {
+    html2canvas(alvo, { backgroundColor: '#0E2E38', scale: 2, useCORS: true }).then(function (captura) {
       var W = 1200, H = 627;
       var canvas = document.createElement('canvas');
       canvas.width = W; canvas.height = H;
       var ctx = canvas.getContext('2d');
 
       var grad = ctx.createLinearGradient(0, 0, W, H);
-      grad.addColorStop(0, '#0E3A45');
+      grad.addColorStop(0, '#0E2E38');
       grad.addColorStop(1, '#0A161C');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, W, H);
@@ -325,7 +320,7 @@
     var ctx = canvas.getContext('2d');
 
     var grad = ctx.createLinearGradient(0, 0, W, H);
-    grad.addColorStop(0, '#0E3A45');
+    grad.addColorStop(0, '#0E2E38');
     grad.addColorStop(1, '#0A161C');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
@@ -363,111 +358,6 @@
 })();
 </script>
 
-<script>
-// ===== Certificado de leitura (aparece perto do fim do post) =====
-(function () {
-  var certBtn = document.getElementById('reading-cert-btn');
-  var postBody = document.querySelector('.post-body');
-  if (!certBtn || !postBody) return;
-  var overlay = document.getElementById('story-generating-overlay');
-  var overlayText = document.getElementById('story-overlay-text');
-  var S = window.__amtechShare;
-  var jaMostrou = false;
-
-  window.addEventListener('scroll', function () {
-    if (jaMostrou) return;
-    var rect = postBody.getBoundingClientRect();
-    if (rect.bottom < window.innerHeight + 200) {
-      certBtn.hidden = false;
-      jaMostrou = true;
-    }
-  });
-
-  certBtn.addEventListener('click', function () {
-    if (typeof QRCode === 'undefined') {
-      alert('Ainda carregando os recursos necessários — espera 2 segundos e tenta de novo.');
-      return;
-    }
-    overlay.hidden = false;
-    overlayText.textContent = 'Gerando seu certificado...';
-    var getCopiado = S.copiarLinkAtual();
-
-    var W = 1080, H = 1600;
-    var canvas = document.createElement('canvas');
-    canvas.width = W; canvas.height = H;
-    var ctx = canvas.getContext('2d');
-
-    ctx.fillStyle = '#F7FAFA';
-    ctx.fillRect(0, 0, W, H);
-    ctx.strokeStyle = '#00C2A8';
-    ctx.lineWidth = 6;
-    ctx.strokeRect(40, 40, W - 80, H - 80);
-    ctx.strokeStyle = '#0E3A45';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(60, 60, W - 120, H - 120);
-
-    ctx.fillStyle = '#0E3A45';
-    ctx.textAlign = 'center';
-    ctx.font = 'bold 30px sans-serif';
-    ctx.fillText('CERTIFICADO DE LEITURA', W / 2, 220);
-
-    ctx.fillStyle = '#00C2A8';
-    ctx.font = 'bold 24px sans-serif';
-    ctx.fillText('Alan Mateus | AMtech Digital', W / 2, 270);
-
-    ctx.fillStyle = '#5C7266';
-    ctx.font = '28px sans-serif';
-    ctx.fillText('certifico que você leu até o fim:', W / 2, 420);
-
-    var tituloEl = document.querySelector('.post-hero__title');
-    var titulo = tituloEl ? tituloEl.textContent.trim() : document.title;
-    ctx.fillStyle = '#0E3A45';
-    ctx.font = 'bold 44px sans-serif';
-    var linhas = S.wrapText(ctx, titulo, W - 200);
-    var ty = 500;
-    linhas.slice(0, 4).forEach(function (linha) {
-      ctx.fillText(linha, W / 2, ty);
-      ty += 56;
-    });
-
-    var qrContainer = document.createElement('div');
-    qrContainer.style.position = 'absolute';
-    qrContainer.style.left = '-9999px';
-    document.body.appendChild(qrContainer);
-    new QRCode(qrContainer, { text: window.location.href, width: 260, height: 260, correctLevel: QRCode.CorrectLevel.H });
-
-    setTimeout(function () {
-      var qrEl = qrContainer.querySelector('img') || qrContainer.querySelector('canvas');
-      var qrY = 800;
-
-      ctx.fillStyle = '#fff';
-      S.roundRect(ctx, W / 2 - 150, qrY, 300, 300, 16);
-      ctx.fill();
-      ctx.strokeStyle = '#DDE8E5';
-      ctx.lineWidth = 2;
-      S.roundRect(ctx, W / 2 - 150, qrY, 300, 300, 16);
-      ctx.stroke();
-      if (qrEl) ctx.drawImage(qrEl, W / 2 - 130, qrY + 20, 260, 260);
-
-      ctx.fillStyle = '#5C7266';
-      ctx.font = '24px sans-serif';
-      ctx.fillText('Aponte a câmera pra reler este post', W / 2, qrY + 350);
-
-      document.body.removeChild(qrContainer);
-
-      var hoje = new Date().toLocaleDateString('pt-BR');
-      ctx.fillStyle = '#5C7266';
-      ctx.font = '22px sans-serif';
-      ctx.fillText(hoje, W / 2, H - 160);
-      ctx.fillStyle = '#00C2A8';
-      ctx.font = 'bold 24px sans-serif';
-      ctx.fillText('alanmateus17.github.io', W / 2, H - 110);
-
-      S.baixarOuCompartilhar(canvas, overlay, overlayText, getCopiado(), 'certificado-leitura.png');
-    }, 400);
-  });
-})();
-</script>
 <script>
 (function () {
   var pdfBtn = document.getElementById('download-pdf-btn');

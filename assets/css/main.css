@@ -2,7 +2,7 @@
    ALAN MATEUS — Design System
    Filosofia: "A mente que documenta tudo"
    Tipografia: Fraunces (display) + DM Sans (corpo) + JetBrains Mono (código)
-   Paleta: Teal profundo (#0E3A45) + branco frio + amarelo-realce (#FFD166)
+   Paleta: Teal profundo (#0E2E38) + branco frio + amarelo-realce (#FFD166)
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -664,17 +664,6 @@ section + section { padding-top: 0; }
   .log-entry { grid-template-columns: 1fr; gap: 0.75rem; }
   .log-entry__actions { flex-direction: row; align-items: center; justify-content: flex-start; }
 }
-.sistema-card__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 0.75rem;
-}
-.sistema-card__name {
-  font-size: 0.95rem;
-  font-weight: 700;
-  font-family: var(--font-display);
-}
 .sistema-card__status {
   font-size: 0.72rem;
   font-family: var(--font-mono);
@@ -695,60 +684,6 @@ section + section { padding-top: 0; }
 .status--dev::before   { background: var(--marker); }
 .status--plan  { color: var(--status-plan); }
 .status--plan::before  { background: transparent; border: 1.5px solid var(--status-plan); }
-
-.sistema-card__desc {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 1rem;
-  line-height: 1.55;
-}
-.sistema-card__stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-}
-
-/* === ENSINO === */
-.ensino-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-}
-.materia-card {
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  background: var(--surface);
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  transition: all var(--transition);
-}
-.materia-card:hover { border-color: var(--brand-mid); box-shadow: var(--shadow-sm); }
-.materia-card__icon { font-size: 1.75rem; color: var(--accent-teaching-text); }
-.materia-card__name { font-size: 0.95rem; font-weight: 700; }
-.materia-card__count {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-}
-.materia-card__link {
-  margin-top: auto;
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.8rem;
-  color: var(--brand);
-  font-weight: 500;
-}
-.materia-card__link::after {
-  content: '→';
-  display: inline-block;
-  max-width: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-width var(--transition), opacity var(--transition);
-}
-.materia-card:hover .materia-card__link::after { max-width: 1.2em; opacity: 1; margin-left: 0.3rem; }
 
 /* === CURRÍCULO === */
 .cv { background: var(--surface); }
@@ -850,7 +785,6 @@ section + section { padding-top: 0; }
 }
 
 /* === SEGURANÇA === */
-.trail-section { background: var(--surface); }
 .trail {
   display: flex;
   flex-direction: column;
@@ -977,7 +911,6 @@ section + section { padding-top: 0; }
   align-items: center;
   font-size: 0.78rem;
 }
-.footer__copy a { color: var(--accent); }
 
 /* === BLOG — lista === */
 .blog-list { display: flex; flex-direction: column; gap: 1.5rem; }
@@ -1110,21 +1043,11 @@ section + section { padding-top: 0; }
 .badge--open::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
 /* === ANIMAÇÕES DE ENTRADA === */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-
 /* === RESPONSIVO === */
 @media (max-width: 1024px) {
   .hero__inner { grid-template-columns: 1fr; }
   .hero__card { display: none; }
-  .stats__grid { grid-template-columns: repeat(2, 1fr); }
-  .frentes__grid,
-  .portfolio-grid,
-  .ensino-grid { grid-template-columns: repeat(2, 1fr); }
+  .frentes__grid { grid-template-columns: repeat(2, 1fr); }
   .posts-grid { grid-template-columns: 1fr 1fr; }
   .post-card--featured { grid-row: span 1; }
   .footer__inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -1157,8 +1080,6 @@ section + section { padding-top: 0; }
   .nav__toggle { display: flex; }
 
   .frentes__grid,
-  .portfolio-grid,
-  .ensino-grid,
   .servicos__grid { grid-template-columns: 1fr; }
   .posts-grid { grid-template-columns: 1fr; }
   .footer__inner { grid-template-columns: 1fr; }
@@ -1180,14 +1101,8 @@ section + section { padding-top: 0; }
   .hero__actions { flex-direction: column; }
   .hero__actions .btn { width: 100%; justify-content: center; }
 
-  /* Stats: 2x2 em coluna */
-  .stats__grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  .stat__num { font-size: 1.75rem; }
-
-  /* Frentes, portfólio, ensino, serviços: 1 coluna */
+  /* Frentes, serviços: 1 coluna */
   .frentes__grid,
-  .portfolio-grid,
-  .ensino-grid,
   .servicos__grid { grid-template-columns: 1fr; }
 
   /* Footer: 1 coluna */
@@ -1291,7 +1206,7 @@ pre { white-space: pre-wrap; word-break: break-all; }
   .install-app-btn, .theme-toggle { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .cv { padding: 0; }
-  .cv__header { background: #0E3A45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .cv__header { background: #0E2E38; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .page-hero { display: none !important; }
   .post-hero { background: #fff !important; color: #000 !important; padding: 1.5rem 0 !important; }
   .post-hero__title, .post-hero__cat, .post-hero__meta, .post-hero__meta span { color: #000 !important; }
@@ -1655,26 +1570,11 @@ pre { white-space: pre-wrap; word-break: break-all; }
 .post-body .callout--important { border-left-color: #d9534f; }
 
 /* === FAQ E GLOSSÁRIO === */
-.faq-list, .glossario-list { display: grid; gap: 1.75rem; }
-.faq-item h3, .glossario-item h3 { margin-bottom: 0.5rem; font-size: 1.05rem; }
-.faq-item p, .glossario-item p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; }
-
-/* === USES / NOW === */
-.uses-group, .now-group { margin-bottom: 2.25rem; }
-.uses-group h2, .now-group h2 { font-size: 1.1rem; margin-bottom: 0.75rem; }
-.uses-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
-.uses-list li {
-  color: var(--text-muted);
-  font-size: 0.92rem;
-  padding-left: 1.25rem;
-  position: relative;
-}
-.uses-list li::before {
-  content: "→";
-  position: absolute;
-  left: 0;
-  color: var(--accent-text);
-}
+.faq-list { display: flex; flex-direction: column; }
+.faq-item { padding: 1.5rem 0; border-bottom: 1px solid var(--rule); }
+.faq-list .faq-item:first-child { padding-top: 0; }
+.faq-item h3 { margin-bottom: 0.5rem; font-size: 1.05rem; }
+.faq-item p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; }
 
 /* === TIMELINE (Sobre) === */
 .timeline {
@@ -1743,20 +1643,6 @@ pre { white-space: pre-wrap; word-break: break-all; }
   gap: 1.5rem;
   justify-content: space-between;
 }
-.newsletter__title { font-weight: 700; margin-bottom: 0.25rem; }
-.newsletter__desc { color: var(--text-muted); font-size: 0.85rem; }
-.newsletter__form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.newsletter__input {
-  padding: 0.65rem 1rem;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: inherit;
-  font-family: inherit;
-  min-width: 220px;
-}
-.newsletter__input:focus { outline: none; border-color: var(--accent-text); }
-.newsletter__status { width: 100%; font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem; }
 
 /* === INSTALAR APP === */
 .install-app-btn {
@@ -1837,31 +1723,6 @@ pre { white-space: pre-wrap; word-break: break-all; }
   z-index: 60;
   box-shadow: var(--shadow-sm);
   user-select: none;
-}
-
-.reading-cert-btn {
-  display: block;
-  margin: 2rem auto 0;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  border: 1.5px solid var(--accent);
-  background: transparent;
-  color: var(--accent-text);
-  font-weight: 700;
-  cursor: pointer;
-}
-.reading-cert-btn:hover { background: var(--accent); color: var(--brand); }
-
-.reading-streak-badge {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-muted);
 }
 
 /* === PAINEL DE STATUS DO PORTFÓLIO === */

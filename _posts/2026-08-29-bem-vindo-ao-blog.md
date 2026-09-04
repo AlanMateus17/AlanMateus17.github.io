@@ -3,7 +3,7 @@ layout: post
 title: "Bem-vindo ao blog — por que vou construir tudo em público"
 date: 2026-08-29
 categories: [carreira]
-tags: [inicio, plano, aurapos, aprendizado]
+tags: [inicio, plano, kaixara, aprendizado]
 excerpt: "Este blog começa agora, antes do primeiro sistema estar em produção. Esse é o ponto — documentar desde o princípio, não quando tiver algo bonito pra mostrar."
 ---
 
@@ -15,7 +15,7 @@ Mas aprendi uma coisa estudando o Akita: o melhor conteúdo técnico nasce da do
 
 ## O que eu estou construindo
 
-Meu conjunto de sistemas — 23 SaaS planejados, começando pelo **AM Kaixara**, um ponto de venda multi-tenant com PostgreSQL + Row-Level Security, .NET 10, Clean Architecture e Next.js no frontend.
+Meu conjunto de sistemas — 13 SaaS planejados, começando pelo **AM Kaixara**, um ponto de venda multi-tenant com PostgreSQL + Row-Level Security, .NET 10, Clean Architecture e Next.js no frontend.
 
 Cada decisão de arquitetura — por que RLS em vez de `schema per tenant`, por que `Controllers` em vez de Minimal API, como modelar `TenantId` nas entidades de domínio — vai para este blog antes de ir para o código de produção.
 

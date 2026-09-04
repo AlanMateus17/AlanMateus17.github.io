@@ -3,6 +3,7 @@ layout: sistema
 name: "AM Rendara"
 excerpt: "Finanças pessoais e empresariais com rebalanceamento ARCA automático."
 status: "dev"
+repo_url: ""
 stack:
   - ".NET"
   - "PostgreSQL"

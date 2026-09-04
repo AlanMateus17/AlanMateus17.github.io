@@ -9,7 +9,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0E3A45">
+  <meta name="theme-color" content="#0E2E38">
   <link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
   <link rel="icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
   <link rel="apple-touch-icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
@@ -63,7 +63,26 @@
 
     <article class="post-body ruled-paper">
       <p style="font-size:1.1rem;color:var(--text-muted);">{{ page.excerpt }}</p>
+      {% if page.repo_url and page.repo_url != "" %}
+      <p>
+        <a href="{{ page.repo_url }}" target="_blank" rel="noopener" class="btn btn--brand">
+          Ver código no GitHub
+        </a>
+      </p>
+      {% endif %}
       {{ content }}
+
+      {% assign sistema_slug = page.name | remove: "AM " | slugify %}
+      {% assign posts_relacionados = site.posts | where_exp: "post", "post.tags contains sistema_slug" %}
+      {% if posts_relacionados.size > 0 %}
+      <h2>Documentado no blog</h2>
+      <p style="color:var(--text-muted);">Antes de virar código, cada decisão de arquitetura desse sistema passa pelo blog. Acompanhe o raciocínio:</p>
+      <ul>
+        {% for post in posts_relacionados %}
+        <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </article>
 
     <div style="max-width:var(--prose-max);margin:2rem auto 4rem;padding:0 1.5rem;">
