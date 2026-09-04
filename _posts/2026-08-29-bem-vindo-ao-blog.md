@@ -9,13 +9,13 @@ excerpt: "Este blog começa agora, antes do primeiro sistema estar em produção
 
 Este blog começa agora, antes do primeiro sistema estar em produção. Esse é o ponto.
 
-Existe uma tentação real de esperar. Esperar o AuraPOS estar no ar. Esperar ter algo "digno" de publicar. Esperar ter certeza do que falar.
+Existe uma tentação real de esperar. Esperar o AM Kaixara estar no ar. Esperar ter algo "digno" de publicar. Esperar ter certeza do que falar.
 
 Mas aprendi uma coisa estudando o Akita: o melhor conteúdo técnico nasce da documentação honesta de um problema real, não da retrospectiva polida depois que foi resolvido.
 
 ## O que eu estou construindo
 
-O ecossistema **Aura** — 23 sistemas SaaS planejados, começando pelo **AuraPOS**, um ponto de venda multi-tenant com PostgreSQL + Row-Level Security, .NET 10, Clean Architecture e Next.js no frontend.
+Meu conjunto de sistemas — 23 SaaS planejados, começando pelo **AM Kaixara**, um ponto de venda multi-tenant com PostgreSQL + Row-Level Security, .NET 10, Clean Architecture e Next.js no frontend.
 
 Cada decisão de arquitetura — por que RLS em vez de `schema per tenant`, por que `Controllers` em vez de Minimal API, como modelar `TenantId` nas entidades de domínio — vai para este blog antes de ir para o código de produção.
 
@@ -29,7 +29,7 @@ Três razões práticas:
 
 ## O que vem a seguir
 
-O próximo post vai cobrir a estrutura do banco de dados do AuraPOS — o schema inicial, como o RLS funciona na prática e os erros que já cometi na modelagem.
+O próximo post vai cobrir a estrutura do banco de dados do AM Kaixara — o schema inicial, como o RLS funciona na prática e os erros que já cometi na modelagem.
 
 ---
 

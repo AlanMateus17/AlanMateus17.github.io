@@ -1,13 +1,13 @@
 ---
 layout: sistema
-name: "Momentos & Cupido"
-excerpt: "Plataforma de relacionamentos com timeline, NFC e convites interativos."
+name: "AM Canteira"
+excerpt: "Controle de obras e construção civil — cronograma, custos, equipes."
 status: "plan"
 stack:
   - ".NET"
+  - "PostgreSQL"
   - "Next.js"
-  - "NFC"
-permalink: /portfolio/momentos-cupido/
+permalink: /portfolio/canteira/
 ---
 
 Esse projeto ainda não tem o estudo de caso detalhado escrito. Em breve: contexto, decisões técnicas e o que foi aprendido construindo.

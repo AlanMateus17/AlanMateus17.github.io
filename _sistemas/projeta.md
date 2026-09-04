@@ -1,13 +1,13 @@
 ---
 layout: sistema
-name: "AuraWealth"
-excerpt: "Finanças pessoais e empresariais com rebalanceamento ARCA automático."
-status: "dev"
+name: "AM Projeta"
+excerpt: "Diagnóstico de sistemas por IA e geração de arquitetura."
+status: "plan"
 stack:
   - ".NET"
-  - "PostgreSQL"
+  - "OpenAI"
   - "Next.js"
-permalink: /portfolio/aurawealth/
+permalink: /portfolio/projeta/
 ---
 
 Esse projeto ainda não tem o estudo de caso detalhado escrito. Em breve: contexto, decisões técnicas e o que foi aprendido construindo.

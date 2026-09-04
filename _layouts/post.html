@@ -20,8 +20,8 @@ layout: default
       {% endif %}
     </div>
     <div class="post-hero__reading-status" id="post-reading-status">
-      <span id="already-read-badge" class="reading-badge" hidden>✓ Você já leu este post</span>
-      <span id="already-liked-badge" class="reading-badge reading-badge--liked" hidden>♥ Você já curtiu este post</span>
+      <span id="already-read-badge" class="reading-badge" hidden><svg width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Você já leu este post</span>
+      <span id="already-liked-badge" class="reading-badge reading-badge--liked" hidden><svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 17.5s-6.5-4.2-8.5-8.2C-0.2 5.8 1.5 3 4.5 3c1.8 0 3 .9 3.7 1.9.2.3.6.3.8 0C9.7 3.9 10.9 3 12.7 3c3 0 4.7 2.8 3 6.3-2 4-8.5 8.2-8.5 8.2z"/></svg> Você já curtiu este post</span>
       <span id="reading-count-badge" class="reading-badge reading-badge--count" hidden></span>
     </div>
   </div>
@@ -52,7 +52,7 @@ layout: default
 
   var badgeContador = document.getElementById('reading-count-badge');
   if (badgeContador && historico.length > 1) {
-    badgeContador.textContent = 'Você já leu ' + historico.length + ' artigos aqui 🔥';
+    badgeContador.textContent = 'Você já leu ' + historico.length + ' artigos aqui';
     badgeContador.hidden = false;
   }
 })();
@@ -69,6 +69,13 @@ layout: default
 <article class="post-body">
   {{ content }}
 {% include share-buttons.html %}
+
+<div id="study-guide-widget" class="study-guide" hidden></div>
+{% include study-guide-data.html %}
+<script>
+  window.__studyGuide.renderizarContinuarWidget('study-guide-widget');
+</script>
+
 {% include related-posts.html %}
 {% include post-nav.html %}
 </article>

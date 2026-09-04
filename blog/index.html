@@ -6,14 +6,14 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Blog</p>
-    <h1 class="page-hero__title">Aprendendo<br><em style="font-weight:300;color:var(--accent)">em público.</em></h1>
+    <h1 class="page-hero__title">Aprendendo<br><em style="font-weight:300;color:var(--accent-text)">em público.</em></h1>
     <p class="page-hero__desc">Desenvolvimento, ensino, segurança e carreira. Cada post nasce de um problema real.</p>
   </div>
 </header>
 <section>
   <div class="container">
     <div class="most-read fade-in" id="most-read" hidden>
-      <p class="most-read__label">🔥 Mais lidos</p>
+      <p class="most-read__label">Mais lidos</p>
       <div class="most-read__list" id="most-read-list"></div>
     </div>
     <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;" class="fade-in">
@@ -27,6 +27,8 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
       <a href="{{ '/blog/tags/' | relative_url }}">Ver por tag →</a>
       <a href="{{ '/blog/arquivo/' | relative_url }}">Arquivo completo →</a>
     </div>
+    <div id="study-guide-widget" class="study-guide" hidden></div>
+
     <div class="search-box fade-in">
       <input type="search" id="blog-search-input" placeholder="Buscar por palavra-chave..." aria-label="Buscar posts">
       <p class="search-box__empty" id="blog-search-empty" hidden>Nenhum post encontrado pra essa busca.</p>
@@ -38,7 +40,9 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
       <article class="blog-post-item fade-in" data-search="{{ search_blob | escape }}" data-slug="{{ post.slug }}">
         <span class="blog-post-item__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
         <div>
-          <p class="blog-post-item__cat">{{ post.categories | first | default: 'Blog' }}</p>
+          <p class="blog-post-item__cat">{{ post.categories | first | default: 'Blog' }}
+            <span class="blog-post-item__read-badge" hidden><svg width="11" height="11" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Lido</span>
+          </p>
           <h2 class="blog-post-item__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
           <p class="blog-post-item__excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</p>
           {% if post.tags %}
@@ -58,7 +62,7 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
     <div style="text-align:center;padding:5rem 2rem;border:1.5px dashed var(--border);border-radius:var(--radius-xl);" class="fade-in">
       <p style="font-family:var(--font-mono);color:var(--text-light);font-size:.8rem;margin-bottom:1rem;">// primeiros artigos chegando em breve</p>
       <h3 style="margin-bottom:.5rem;">Enquanto isso...</h3>
-      <p style="color:var(--text-muted);margin-bottom:2rem;max-width:44ch;margin:0 auto 2rem;">Estou documentando tudo no vault Obsidian. O blog começa quando o AuraPOS entrar em produção.</p>
+      <p style="color:var(--text-muted);margin-bottom:2rem;max-width:44ch;margin:0 auto 2rem;">Estou documentando tudo no vault Obsidian. O blog começa quando o Kaixara entrar em produção.</p>
       <a href="/sobre/" class="btn btn--brand">Conheça a trajetória</a>
     </div>
     {% endif %}
@@ -70,3 +74,9 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
     {% include newsletter.html %}
   </div>
 </section>
+
+{% include study-guide-data.html %}
+<script>
+  window.__studyGuide.marcarLidosNaListagem();
+  window.__studyGuide.renderizarContinuarWidget('study-guide-widget');
+</script>

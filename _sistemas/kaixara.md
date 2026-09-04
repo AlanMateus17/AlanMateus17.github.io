@@ -1,6 +1,6 @@
 ---
 layout: sistema
-name: "AuraPOS"
+name: "AM Kaixara"
 excerpt: "PDV multi-tenant com RLS. Vendas, estoque, fiscal."
 status: "dev"
 stack:
@@ -10,7 +10,7 @@ stack:
   - "Docker"
   - "Redis"
   - "SignalR"
-permalink: /portfolio/aurapos/
+permalink: /portfolio/kaixara/
 ---
 
 Esse projeto ainda não tem o estudo de caso detalhado escrito. Em breve: contexto, decisões técnicas e o que foi aprendido construindo.

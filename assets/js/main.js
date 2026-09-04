@@ -416,3 +416,30 @@ if ('serviceWorker' in navigator) {
 
   window.addEventListener('appinstalled', esconderPraSempre);
 })();
+
+// --- Modo claro/escuro ---
+(function () {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  var sunIcon = btn.querySelector('.theme-toggle__sun');
+  var moonIcon = btn.querySelector('.theme-toggle__moon');
+
+  function atualizarIcones() {
+    var escuro = document.documentElement.getAttribute('data-theme') === 'dark';
+    sunIcon.hidden = escuro;
+    moonIcon.hidden = !escuro;
+  }
+  atualizarIcones();
+
+  btn.addEventListener('click', function () {
+    var escuroAgora = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (escuroAgora) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+    atualizarIcones();
+  });
+})();

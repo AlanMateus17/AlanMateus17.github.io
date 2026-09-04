@@ -1,13 +1,13 @@
 ---
 layout: sistema
-name: "AuraEdu"
-excerpt: "Plataforma educacional — cursos, aulas, progresso e certificados."
+name: "AM Vendra"
+excerpt: "E-commerce completo com catálogo, carrinho e pagamento integrado."
 status: "plan"
 stack:
   - ".NET"
-  - "PostgreSQL"
   - "Next.js"
-permalink: /portfolio/auraedu/
+  - "Stripe"
+permalink: /portfolio/vendra/
 ---
 
 Esse projeto ainda não tem o estudo de caso detalhado escrito. Em breve: contexto, decisões técnicas e o que foi aprendido construindo.

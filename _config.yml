@@ -29,6 +29,13 @@ teaching_start_year: 2024
 # Formspree (comentários chegam por e-mail; você aprova e adiciona manualmente no repo)
 formspree_id: "xaeyqrzd"
 
+# Jekyll ignora pastas começando com "." por padrão — isso força incluir o security.txt
+include:
+  - .well-known
+
+# Analytics privado (GoatCounter) — cria conta grátis em goatcounter.com e troca abaixo
+goatcounter_username: "SEU_USUARIO_AQUI"
+
 # Formspree do formulário de orçamento (crie um formulário novo em formspree.io e cole o ID aqui)
 formspree_orcamento_id: "SEU_ID_AQUI"
 
@@ -41,6 +48,8 @@ collections:
     output: true
     permalink: /portfolio/:name/
   produtos:
+    output: false
+  depoimentos:
     output: false
 
 # Plugins suportados pelo GitHub Pages

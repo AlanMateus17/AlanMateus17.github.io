@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script>
+    (function () {
+      var tema = localStorage.getItem('theme');
+      if (tema === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0E3A45">
@@ -69,7 +75,7 @@
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer__bottom">
-        <p>© {{ 'now' | date: "%Y" }} <a href="/" style="color:var(--accent)">Alan Mateus | AMtech Digital</a>. Feito com Jekyll + GitHub Pages.</p>
+        <p>© {{ 'now' | date: "%Y" }} <a href="/" style="color:var(--accent-text)">Alan Mateus | AMtech Digital</a>. Feito com Jekyll + GitHub Pages.</p>
       </div>
     </div>
   </footer>

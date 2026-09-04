@@ -1,0 +1,95 @@
+---
+layout: default
+title: Minha Trilha de Estudos
+description: "Acompanhe seu progresso de leitura pelos artigos do blog, na mesma ordem do plano de estudos."
+permalink: /trilha/
+---
+<header class="page-hero">
+  <div class="container">
+    <p class="page-hero__eyebrow">Sua trilha</p>
+    <h1 class="page-hero__title">Minha trilha<br><em style="font-weight:300;color:var(--accent-text)">de estudos.</em></h1>
+    <p class="page-hero__desc">Os artigos seguem a mesma ordem do meu plano de estudos — aqui você acompanha até onde já leu.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container" style="max-width:760px;">
+    <div id="trilha-progresso" class="trilha-progresso">
+      <div class="trilha-progresso__bar">
+        <div class="trilha-progresso__fill" id="trilha-progresso-fill" style="width:0%;"></div>
+      </div>
+      <p id="trilha-progresso-texto">Carregando seu progresso...</p>
+    </div>
+
+    <div id="study-guide-widget" class="study-guide" hidden style="margin-top:1.5rem;"></div>
+
+    <div id="conquistas-secao" style="margin-top:2.5rem;" hidden>
+      <h2 style="margin-bottom:1rem;font-size:1.1rem;">Conquistas</h2>
+      <div id="conquistas-grid" class="conquistas-grid"></div>
+    </div>
+
+    <div id="trilha-lista" class="trilha-lista" style="margin-top:2.5rem;"></div>
+  </div>
+</section>
+
+{% include study-guide-data.html %}
+<script>
+(function () {
+  window.__studyGuide.renderizarContinuarWidget('study-guide-widget');
+
+  var posts = window.__studyGuide.posts;
+  var lidos = window.__studyGuide.lidos;
+
+  var lidosCount = 0;
+  var listaEl = document.getElementById('trilha-lista');
+  var html = '';
+  var checkSvg = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  posts.forEach(function (post, i) {
+    var foiLido = lidos.indexOf(post.slug) !== -1;
+    if (foiLido) lidosCount++;
+    html += '<a href="' + post.url + '" class="trilha-item ' + (foiLido ? 'trilha-item--lido' : '') + '">' +
+      '<span class="trilha-item__check">' + (foiLido ? checkSvg : (i + 1)) + '</span>' +
+      '<span class="trilha-item__titulo">' + post.title + '</span>' +
+      '</a>';
+  });
+  listaEl.innerHTML = html || '<p style="color:var(--text-muted);">Ainda não tem artigos publicados.</p>';
+
+  var total = posts.length;
+  var pct = total > 0 ? Math.round((lidosCount / total) * 100) : 0;
+  document.getElementById('trilha-progresso-fill').style.width = pct + '%';
+  document.getElementById('trilha-progresso-texto').textContent =
+    total > 0
+      ? 'Você leu ' + lidosCount + ' de ' + total + ' artigos publicados (' + pct + '%)'
+      : 'Ainda não tem artigos publicados pra acompanhar.';
+
+  // ===== Conquistas =====
+  var conquistas = [];
+  if (lidosCount >= 1) conquistas.push({ nome: 'Primeira leitura', desc: 'Leu o primeiro artigo' });
+  if (lidosCount >= 5) conquistas.push({ nome: '5 artigos', desc: 'Leu 5 artigos diferentes' });
+  if (lidosCount >= 10) conquistas.push({ nome: '10 artigos', desc: 'Leu 10 artigos diferentes' });
+  if (total > 0 && lidosCount === total) conquistas.push({ nome: 'Em dia', desc: 'Leu tudo que já foi publicado' });
+
+  var porTag = {};
+  posts.forEach(function (post) {
+    if (!post.tag) return;
+    if (!porTag[post.tag]) porTag[post.tag] = { total: 0, lidos: 0 };
+    porTag[post.tag].total++;
+    if (lidos.indexOf(post.slug) !== -1) porTag[post.tag].lidos++;
+  });
+  Object.keys(porTag).forEach(function (tag) {
+    if (porTag[tag].total > 1 && porTag[tag].lidos === porTag[tag].total) {
+      conquistas.push({ nome: 'Especialista: ' + tag, desc: 'Leu todos os artigos sobre ' + tag });
+    }
+  });
+
+  if (conquistas.length > 0) {
+    var grid = document.getElementById('conquistas-grid');
+    grid.innerHTML = conquistas.map(function (c) {
+      return '<div class="conquista-badge"><p class="conquista-badge__nome">' + c.nome + '</p>' +
+        '<p class="conquista-badge__desc">' + c.desc + '</p></div>';
+    }).join('');
+    document.getElementById('conquistas-secao').hidden = false;
+  }
+})();
+</script>

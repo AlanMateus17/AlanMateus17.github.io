@@ -1,0 +1,61 @@
+{% comment %}
+  Include compartilhado: dados de todos os posts em ordem cronológica (do mais antigo
+  pro mais novo — mesma ordem do plano de estudos, já que os posts seguem essa ordem),
+  usado pra guiar o leitor a partir do histórico de leitura dele (localStorage).
+{% endcomment %}
+<script id="study-guide-data" type="application/json">
+[
+  {% assign posts_em_ordem = site.posts | reverse %}
+  {% for post in posts_em_ordem %}
+  {
+    "slug": {{ post.slug | jsonify }},
+    "title": {{ post.title | jsonify }},
+    "url": {{ post.url | relative_url | jsonify }},
+    "tag": {{ post.tags | first | default: "" | jsonify }}
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
+</script>
+
+<script>
+window.__studyGuide = window.__studyGuide || {};
+(function () {
+  var dataEl = document.getElementById('study-guide-data');
+  if (!dataEl) return;
+  var posts = JSON.parse(dataEl.textContent);
+  var lidos = JSON.parse(localStorage.getItem('posts-lidos') || '[]');
+
+  window.__studyGuide.posts = posts;
+  window.__studyGuide.lidos = lidos;
+
+  window.__studyGuide.proximoNaoLido = function () {
+    for (var i = 0; i < posts.length; i++) {
+      if (lidos.indexOf(posts[i].slug) === -1) return posts[i];
+    }
+    return null;
+  };
+
+  window.__studyGuide.marcarLidosNaListagem = function () {
+    document.querySelectorAll('[data-slug]').forEach(function (card) {
+      var slug = card.getAttribute('data-slug');
+      if (lidos.indexOf(slug) !== -1) {
+        var badge = card.querySelector('.blog-post-item__read-badge');
+        if (badge) badge.hidden = false;
+      }
+    });
+  };
+
+  window.__studyGuide.renderizarContinuarWidget = function (containerId) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    var proximo = window.__studyGuide.proximoNaoLido();
+    if (!proximo) {
+      el.innerHTML = '<p class="study-guide__done">Você está em dia com todos os artigos publicados até agora!</p>';
+    } else {
+      el.innerHTML = '<p class="study-guide__label">Continue seus estudos</p>' +
+        '<a href="' + proximo.url + '" class="study-guide__link">' + proximo.title + ' →</a>';
+    }
+    el.hidden = false;
+  };
+})();
+</script>

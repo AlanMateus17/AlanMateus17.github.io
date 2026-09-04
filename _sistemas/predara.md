@@ -1,13 +1,13 @@
 ---
 layout: sistema
-name: "Loja Virtual"
-excerpt: "E-commerce completo com catálogo, carrinho e pagamento integrado."
+name: "AM Predara"
+excerpt: "Gestão de condomínios — taxas, manutenção, assembleias e comunicados."
 status: "plan"
 stack:
   - ".NET"
+  - "PostgreSQL"
   - "Next.js"
-  - "Stripe"
-permalink: /portfolio/loja-virtual/
+permalink: /portfolio/predara/
 ---
 
 Esse projeto ainda não tem o estudo de caso detalhado escrito. Em breve: contexto, decisões técnicas e o que foi aprendido construindo.

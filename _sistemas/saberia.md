@@ -1,14 +1,13 @@
 ---
 layout: sistema
-name: "Aura Delivery"
-excerpt: "Gestão de pedidos com geolocalização e rastreio em tempo real."
-status: "dev"
+name: "AM Saberia"
+excerpt: "Plataforma educacional — cursos, aulas, progresso e certificados."
+status: "plan"
 stack:
   - ".NET"
-  - "PostGIS"
-  - "SignalR"
+  - "PostgreSQL"
   - "Next.js"
-permalink: /portfolio/aura-delivery/
+permalink: /portfolio/saberia/
 ---
 
 Esse projeto ainda não tem o estudo de caso detalhado escrito. Em breve: contexto, decisões técnicas e o que foi aprendido construindo.
