@@ -19,6 +19,45 @@ layout: default
       {% for tag in page.tags %}<span>#{{ tag }}</span>{% endfor %}
       {% endif %}
     </div>
+    <div class="post-hero__reading-status" id="post-reading-status">
+      <span id="already-read-badge" class="reading-badge" hidden>✓ Você já leu este post</span>
+      <span id="already-liked-badge" class="reading-badge reading-badge--liked" hidden>♥ Você já curtiu este post</span>
+      <span id="reading-count-badge" class="reading-badge reading-badge--count" hidden></span>
+    </div>
+  </div>
+</header>
+
+<script>
+(function () {
+  var slug = {{ page.slug | jsonify }};
+  var chaveHistorico = 'posts-lidos';
+  var historico = JSON.parse(localStorage.getItem(chaveHistorico) || '[]');
+
+  var jaTinhaLido = historico.indexOf(slug) !== -1;
+  var jaCurtiu = !!localStorage.getItem('liked:' + slug);
+
+  if (jaTinhaLido) {
+    var badgeLido = document.getElementById('already-read-badge');
+    if (badgeLido) badgeLido.hidden = false;
+  }
+  if (jaCurtiu) {
+    var badgeCurtido = document.getElementById('already-liked-badge');
+    if (badgeCurtido) badgeCurtido.hidden = false;
+  }
+
+  if (!jaTinhaLido) {
+    historico.push(slug);
+    localStorage.setItem(chaveHistorico, JSON.stringify(historico));
+  }
+
+  var badgeContador = document.getElementById('reading-count-badge');
+  if (badgeContador && historico.length > 1) {
+    badgeContador.textContent = 'Você já leu ' + historico.length + ' artigos aqui 🔥';
+    badgeContador.hidden = false;
+  }
+})();
+</script>
+    </div>
   </div>
 </header>
 

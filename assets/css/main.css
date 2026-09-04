@@ -23,18 +23,21 @@
   --highlight:    #FFD166;
   --highlight-bg: rgba(255,209,102,0.15);
 
-  --bg:           #F7FAFA;
-  --bg-alt:       #EEF3F3;
+  --bg:           #F7F1E4;
+  --bg-alt:       #F0E9D8;
   --surface:      #FFFFFF;
-  --surface-raised: #FAFCFC;
+  --surface-raised: #FBF7EC;
+  --paper:        #F7F1E4;
+  --paper-text:   #262220;
+  --paper-link:   #B8532E;
 
-  --text:         #1C2B2A;
-  --text-muted:   #5C7266;
-  --text-light:   #94A89E;
+  --text:         #201F1B;
+  --text-muted:   #6B675E;
+  --text-light:   #9C978A;
   --text-inverse: #FFFFFF;
 
-  --border:       #DDE8E5;
-  --border-mid:   #C2D5D0;
+  --border:       #E7DEC8;
+  --border-mid:   #D6C9A8;
 
   --status-prod:  #1A9E6E;
   --status-dev:   #0E3A45;
@@ -980,8 +983,14 @@ section + section { padding-top: 0; }
 .post-body {
   max-width: var(--prose-max);
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 3rem 2.5rem;
+  background: var(--paper);
+  border-radius: var(--radius-xl);
+  color: var(--paper-text);
 }
+.post-body p { color: var(--paper-text); line-height: 1.85; font-size: 1.05rem; }
+.post-body a { color: var(--paper-link); text-decoration: underline; text-decoration-color: rgba(184,83,46,0.35); }
+.post-body a:hover { text-decoration-color: var(--paper-link); }
 .post-body h2 { margin: 2.5rem 0 0.75rem; }
 .post-body h3 { margin: 2rem 0 0.5rem; }
 .post-body p { margin-bottom: 1.25rem; }
@@ -1801,3 +1810,35 @@ pre { white-space: pre-wrap; word-break: break-all; }
 .status-panel__dot { width: 10px; height: 10px; border-radius: 50%; }
 .status-panel__dot--dev { background: var(--accent); }
 .status-panel__dot--plan { background: #C9A227; }
+
+/* === BADGES DE LEITURA (cabeçalho do post) === */
+.post-hero__reading-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+.reading-badge {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: rgba(0, 194, 168, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(0, 194, 168, 0.3);
+}
+.reading-badge--liked {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.25);
+}
+.reading-badge--count {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  border-color: rgba(255,255,255,0.2);
+}
+
+@media (max-width: 640px) {
+  .post-body { padding: 2rem 1.25rem; border-radius: var(--radius-lg); }
+}

@@ -371,11 +371,15 @@
   });
 
   certBtn.addEventListener('click', function () {
+    if (typeof QRCode === 'undefined') {
+      alert('Ainda carregando os recursos necessários — espera 2 segundos e tenta de novo.');
+      return;
+    }
     overlay.hidden = false;
     overlayText.textContent = 'Gerando seu certificado...';
     var getCopiado = S.copiarLinkAtual();
 
-    var W = 1080, H = 1350;
+    var W = 1080, H = 1600;
     var canvas = document.createElement('canvas');
     canvas.width = W; canvas.height = H;
     var ctx = canvas.getContext('2d');
@@ -413,15 +417,41 @@
       ty += 56;
     });
 
-    var hoje = new Date().toLocaleDateString('pt-BR');
-    ctx.fillStyle = '#5C7266';
-    ctx.font = '22px sans-serif';
-    ctx.fillText(hoje, W / 2, H - 160);
-    ctx.fillStyle = '#00C2A8';
-    ctx.font = 'bold 24px sans-serif';
-    ctx.fillText('alanmateus17.github.io', W / 2, H - 110);
+    var qrContainer = document.createElement('div');
+    qrContainer.style.position = 'absolute';
+    qrContainer.style.left = '-9999px';
+    document.body.appendChild(qrContainer);
+    new QRCode(qrContainer, { text: window.location.href, width: 260, height: 260, correctLevel: QRCode.CorrectLevel.H });
 
-    S.baixarOuCompartilhar(canvas, overlay, overlayText, getCopiado(), 'certificado-leitura.png');
+    setTimeout(function () {
+      var qrEl = qrContainer.querySelector('img') || qrContainer.querySelector('canvas');
+      var qrY = 800;
+
+      ctx.fillStyle = '#fff';
+      S.roundRect(ctx, W / 2 - 150, qrY, 300, 300, 16);
+      ctx.fill();
+      ctx.strokeStyle = '#DDE8E5';
+      ctx.lineWidth = 2;
+      S.roundRect(ctx, W / 2 - 150, qrY, 300, 300, 16);
+      ctx.stroke();
+      if (qrEl) ctx.drawImage(qrEl, W / 2 - 130, qrY + 20, 260, 260);
+
+      ctx.fillStyle = '#5C7266';
+      ctx.font = '24px sans-serif';
+      ctx.fillText('Aponte a câmera pra reler este post', W / 2, qrY + 350);
+
+      document.body.removeChild(qrContainer);
+
+      var hoje = new Date().toLocaleDateString('pt-BR');
+      ctx.fillStyle = '#5C7266';
+      ctx.font = '22px sans-serif';
+      ctx.fillText(hoje, W / 2, H - 160);
+      ctx.fillStyle = '#00C2A8';
+      ctx.font = 'bold 24px sans-serif';
+      ctx.fillText('alanmateus17.github.io', W / 2, H - 110);
+
+      S.baixarOuCompartilhar(canvas, overlay, overlayText, getCopiado(), 'certificado-leitura.png');
+    }, 400);
   });
 })();
 </script>
