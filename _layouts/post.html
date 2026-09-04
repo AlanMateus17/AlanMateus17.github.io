@@ -6,7 +6,13 @@ layout: default
 
 <header class="post-hero">
   <div class="container">
-    <p class="post-hero__cat">{{ page.categories | first | default: 'Blog' }}</p>
+    {% assign categoria = page.categories | first | default: 'Blog' %}
+    {% assign categoria_lower = categoria | downcase %}
+    {% if categoria_lower contains 'segur' %}
+    <p class="post-hero__cat" style="color:var(--accent-security);">{{ categoria }}</p>
+    {% else %}
+    <p class="post-hero__cat">{{ categoria }}</p>
+    {% endif %}
     <h1 class="post-hero__title">{{ page.title }}</h1>
     <div class="post-hero__meta">
       <span>{{ page.date | date: "%d/%m/%Y" }}</span>

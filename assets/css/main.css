@@ -20,6 +20,9 @@
 
   --accent:       #00C2A8;
   --accent-text:  #007464;
+  --accent-security:      #C98A26;
+  --accent-security-text: #8A5F14;
+  --accent-security-bg:   #1D1A16;
   --accent-glow:  rgba(0,194,168,0.25);
 
   --marker:       #EAAE3D;
@@ -95,6 +98,8 @@
   --paper-link:   #E08659;
 
   --accent-text:  #00C2A8;
+  --accent-security:      #E0A438;
+  --accent-security-text: #E0A438;
 
   --text:         #EDEAE2;
   --text-muted:   #A8A296;
@@ -887,7 +892,7 @@ section + section { padding-top: 0; }
   z-index: 2;
   transition: background var(--transition);
 }
-.trail-item--done .trail-dot { background: var(--accent); }
+.trail-item--done .trail-dot { background: var(--accent-security); }
 .trail-item--active .trail-dot { background: var(--brand); box-shadow: 0 0 0 3px var(--brand-dim); }
 .trail-body {
   padding: 0.5rem 0 1.75rem;
