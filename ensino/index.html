@@ -6,31 +6,31 @@ description: "Apostilas gratuitas das 9 matérias do EMTI — Lógica, Web, Hard
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Ensino</p>
-    <h1 class="page-hero__title">Materiais<br><em style="font-weight:300;color:var(--accent-text)">gratuitos.</em></h1>
+    <h1 class="page-hero__title">Materiais<br><em style="font-weight:300;color:var(--accent)">gratuitos.</em></h1>
     <p class="page-hero__desc">Apostilas, tutoriais e roteiros criados para os alunos do EMTI em Barbacena. Tudo livre para usar, adaptar e distribuir.</p>
   </div>
 </header>
 <section>
   <div class="container">
-    <div class="fade-in">
+    <div >
       <p class="section-eyebrow">EMTI — 9 matérias</p>
       <h2 class="section-title">Apostilas por matéria</h2>
       <p class="section-subtitle">20 aulas por matéria, organizadas por bimestre. Cada apostila cobre teoria, exercícios e atividade prática.</p>
     </div>
     <div class="ensino-grid">
-      {% assign materias = "💡|Lógica de Programação|Variáveis, condicionais, loops, funções e algoritmos do zero.|20 apostilas;🖥️|Arquitetura e Manutenção|Hardware de computadores — componentes, montagem e diagnóstico.|20 apostilas;🌐|HTML e CSS|Desenvolvimento web do zero — estrutura, estilo e responsividade.|20 apostilas;⚙️|Sistemas Operacionais|Windows e Linux — uso, configuração e linha de comando.|20 apostilas;☕|POO com Java|Orientação a objetos na prática com Java — classes, herança e polimorfismo.|20 apostilas;🔗|Programação Web|Backend com Java Servlets, banco de dados e APIs REST básicas.|20 apostilas;🤖|Noções de Robótica|Fundamentos de automação, Arduino e projetos práticos.|20 apostilas;🔧|Laboratório de Hardware|Bancada prática — montagem, troubleshooting e manutenção preventiva.|20 apostilas;💾|Laboratório de Software|Configuração de ambientes, virtualização e ferramentas profissionais.|20 apostilas" | split: ";" %}
+      {% assign materias = "logica|Lógica de Programação|Variáveis, condicionais, loops, funções e algoritmos do zero.|20 apostilas;hardware|Arquitetura e Manutenção|Hardware de computadores — componentes, montagem e diagnóstico.|20 apostilas;web|HTML e CSS|Desenvolvimento web do zero — estrutura, estilo e responsividade.|20 apostilas;so|Sistemas Operacionais|Windows e Linux — uso, configuração e linha de comando.|20 apostilas;poo|POO com Java|Orientação a objetos na prática com Java — classes, herança e polimorfismo.|20 apostilas;webprog|Programação Web|Backend com Java Servlets, banco de dados e APIs REST básicas.|20 apostilas;robotica|Noções de Robótica|Fundamentos de automação, Arduino e projetos práticos.|20 apostilas;labhard|Laboratório de Hardware|Bancada prática — montagem, troubleshooting e manutenção preventiva.|20 apostilas;labsoft|Laboratório de Software|Configuração de ambientes, virtualização e ferramentas profissionais.|20 apostilas" | split: ";" %}
       {% for materia in materias %}
         {% assign p = materia | split: "|" %}
-        <div class="materia-card fade-in">
-          <div class="materia-card__icon">{{ p[0] }}</div>
+        <div class="materia-card">
+          <div class="materia-card__icon">{% include icon-materia.html nome=p[0] %}</div>
           <h3 class="materia-card__name">{{ p[1] }}</h3>
           <p style="font-size:.85rem;color:var(--text-muted);line-height:1.55;">{{ p[2] }}</p>
           <p class="materia-card__count">{{ p[3] }}</p>
-          <a href="/contato/" class="materia-card__link">Solicitar material →</a>
+          <a href="/contato/" class="materia-card__link">Solicitar material</a>
         </div>
       {% endfor %}
     </div>
-    <div class="fade-in" style="margin-top:4rem;background:var(--brand);border-radius:var(--radius-xl);padding:2.5rem;color:#fff;text-align:center;">
+    <div  style="margin-top:4rem;background:var(--brand);border-radius:var(--radius-xl);padding:2.5rem;color:#fff;text-align:center;">
       <h3 style="color:#fff;margin-bottom:.75rem;">Você é professor?</h3>
       <p style="color:rgba(255,255,255,.65);margin:0 auto 1.5rem;max-width:48ch;">Todos os materiais são livres para adaptar e usar em suas aulas. Entre em contato se quiser o pacote completo ou colaborar.</p>
       <a href="/contato/" class="btn btn--primary">Entrar em contato</a>

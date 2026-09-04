@@ -6,30 +6,30 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Blog</p>
-    <h1 class="page-hero__title">Aprendendo<br><em style="font-weight:300;color:var(--accent-text)">em público.</em></h1>
+    <h1 class="page-hero__title">Aprendendo<br><em style="font-weight:300;color:var(--accent)">em público.</em></h1>
     <p class="page-hero__desc">Desenvolvimento, ensino, segurança e carreira. Cada post nasce de um problema real.</p>
   </div>
 </header>
 <section>
   <div class="container">
-    <div class="most-read fade-in" id="most-read" hidden>
+    <div class="most-read" id="most-read" hidden>
       <p class="most-read__label">Mais lidos</p>
       <div class="most-read__list" id="most-read-list"></div>
     </div>
-    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;" class="fade-in">
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;" >
       <button class="filter-btn active" data-filter="all">Todos</button>
       <button class="filter-btn" data-filter="desenvolvimento">Desenvolvimento</button>
       <button class="filter-btn" data-filter="ensino">Ensino</button>
       <button class="filter-btn" data-filter="seguranca">Segurança</button>
       <button class="filter-btn" data-filter="carreira">Carreira</button>
     </div>
-    <div class="blog-subnav fade-in">
-      <a href="{{ '/blog/tags/' | relative_url }}">Ver por tag →</a>
-      <a href="{{ '/blog/arquivo/' | relative_url }}">Arquivo completo →</a>
+    <div class="blog-subnav">
+      <a href="{{ '/blog/tags/' | relative_url }}">Ver por tag</a>
+      <a href="{{ '/blog/arquivo/' | relative_url }}">Arquivo completo</a>
     </div>
     <div id="study-guide-widget" class="study-guide" hidden></div>
 
-    <div class="search-box fade-in">
+    <div class="search-box">
       <input type="search" id="blog-search-input" placeholder="Buscar por palavra-chave..." aria-label="Buscar posts">
       <p class="search-box__empty" id="blog-search-empty" hidden>Nenhum post encontrado pra essa busca.</p>
     </div>
@@ -37,7 +37,7 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
     <div class="blog-list">
       {% for post in site.posts %}
       {% assign search_blob = post.title | append: ' ' | append: post.excerpt | strip_html | append: ' ' | append: post.tags | join: ' ' | downcase %}
-      <article class="blog-post-item fade-in" data-search="{{ search_blob | escape }}" data-slug="{{ post.slug }}">
+      <article class="blog-post-item" data-search="{{ search_blob | escape }}" data-slug="{{ post.slug }}">
         <span class="blog-post-item__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
         <div>
           <p class="blog-post-item__cat">{{ post.categories | first | default: 'Blog' }}
@@ -59,7 +59,7 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
       {% endfor %}
     </div>
     {% else %}
-    <div style="text-align:center;padding:5rem 2rem;border:1.5px dashed var(--border);border-radius:var(--radius-xl);" class="fade-in">
+    <div style="text-align:center;padding:5rem 2rem;border:1.5px dashed var(--border);border-radius:var(--radius-xl);" >
       <p style="font-family:var(--font-mono);color:var(--text-light);font-size:.8rem;margin-bottom:1rem;">// primeiros artigos chegando em breve</p>
       <h3 style="margin-bottom:.5rem;">Enquanto isso...</h3>
       <p style="color:var(--text-muted);margin-bottom:2rem;max-width:44ch;margin:0 auto 2rem;">Estou documentando tudo no vault Obsidian. O blog começa quando o Kaixara entrar em produção.</p>

@@ -1,12 +1,12 @@
 ---
 layout: default
 title: Portfólio
-description: "23 sistemas de gestão que venho construindo — PDV, delivery, saúde, finanças e mais. Todos construídos em Clean Architecture com .NET e Next.js."
+description: "13 sistemas de gestão que venho construindo — PDV, delivery, saúde, finanças e mais. Todos construídos em Clean Architecture com .NET e Next.js."
 ---
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Portfólio</p>
-    <h1 class="page-hero__title">23 sistemas.<br><em style="font-weight:300;color:var(--accent-text)">Uma arquitetura.</em></h1>
+    <h1 class="page-hero__title">13 sistemas.<br><em style="font-weight:300;color:var(--accent)">Uma arquitetura.</em></h1>
     <p class="page-hero__desc">Sistemas SaaS multi-tenant interconectados, construídos em Clean Architecture + .NET + Next.js.</p>
   </div>
 </header>
@@ -19,7 +19,7 @@ description: "23 sistemas de gestão que venho construindo — PDV, delivery, sa
       {% assign parts = sistema | split: "|" %}
       {% if parts[2] == "dev" %}{% assign total_dev = total_dev | plus: 1 %}{% else %}{% assign total_plan = total_plan | plus: 1 %}{% endif %}
     {% endfor %}
-    <div class="status-panel fade-in">
+    <div class="status-panel">
       <div class="status-panel__item">
         <span class="status-panel__dot status-panel__dot--dev"></span>
         <span><strong>{{ total_dev }}</strong> em desenvolvimento</span>
@@ -33,36 +33,40 @@ description: "23 sistemas de gestão que venho construindo — PDV, delivery, sa
       </div>
     </div>
 
-    <div class="portfolio-filters fade-in">
+    <div class="portfolio-filters">
       <button class="filter-btn active" data-filter="all">Todos ({{ sistemas.size }})</button>
       <button class="filter-btn" data-filter="dev">Em desenvolvimento</button>
       <button class="filter-btn" data-filter="plan">Planejados</button>
     </div>
-    <div class="portfolio-grid">
+    <div class="portfolio-log">
       {% assign sistemas = "AM Kaixara|PDV multi-tenant com RLS. Vendas, estoque, fiscal.|dev|.NET 10,PostgreSQL,Next.js,Docker,Redis,SignalR;AM Rotara|Gestão de pedidos com geolocalização e rastreio em tempo real.|dev|.NET,PostGIS,SignalR,Next.js;AM Rendara|Finanças pessoais e empresariais com rebalanceamento ARCA automático.|dev|.NET,PostgreSQL,Next.js;AM Petara|Clínicas veterinárias — prontuários, agenda, vacinas e lembretes.|plan|.NET,PostgreSQL,Next.js;AM Consertta|Assistência técnica — ordens de serviço, diagnóstico e histórico.|plan|.NET,PostgreSQL,Next.js;AM Vynla|Plataforma de relacionamentos com timeline, NFC e convites interativos.|plan|.NET,Next.js,NFC;AM Vendra|E-commerce completo com catálogo, carrinho e pagamento integrado.|plan|.NET,Next.js,Stripe;AM Predara|Gestão de condomínios — taxas, manutenção, assembleias e comunicados.|plan|.NET,PostgreSQL,Next.js;AM Canteira|Controle de obras e construção civil — cronograma, custos, equipes.|plan|.NET,PostgreSQL,Next.js;AM Saberia|Plataforma educacional — cursos, aulas, progresso e certificados.|plan|.NET,PostgreSQL,Next.js;AM Horaria|Agendamentos online para qualquer tipo de serviço com recorrência.|plan|.NET,PostgreSQL,Next.js;AM Taskoro|Gestão de projetos Kanban/Scrum/RAD — exceção de stack.|plan|React,Node.js,GraphQL;AM Projeta|Diagnóstico de sistemas por IA e geração de arquitetura.|plan|.NET,OpenAI,Next.js" | split: ";" %}
       {% for sistema in sistemas %}
         {% assign parts = sistema | split: "|" %}
-        <div class="sistema-card fade-in" data-status="{{ parts[2] }}">
-          <div class="sistema-card__header">
-            <h3 class="sistema-card__name">{{ parts[0] }}</h3>
+        {% assign project_slug = parts[0] | remove: "AM " | slugify %}
+        {% assign proj_like_key = 'portfolio--' | append: project_slug %}
+        <div class="log-entry" data-status="{{ parts[2] }}">
+          <div class="log-entry__marker">
             {% if parts[2] == "dev" %}
             <span class="sistema-card__status status--dev">Em dev</span>
             {% else %}
             <span class="sistema-card__status status--plan">Planejado</span>
             {% endif %}
           </div>
-          <p class="sistema-card__desc">{{ parts[1] }}</p>
-          <div class="sistema-card__stack">
-            {% assign tags = parts[3] | split: "," %}
-            {% for tag in tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+          <div class="log-entry__body">
+            <h3 class="log-entry__name">{{ parts[0] }}</h3>
+            <p class="log-entry__desc">{{ parts[1] }}</p>
+            <div class="log-entry__stack">
+              {% assign tags = parts[3] | split: "," %}
+              {% for tag in tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+            </div>
           </div>
-          {% assign project_slug = parts[0] | remove: "AM " | slugify %}
-          {% assign proj_like_key = 'portfolio--' | append: project_slug %}
-          <button type="button" class="project-like-btn" data-like-key="{{ proj_like_key }}" aria-pressed="false">
-            <span class="project-like-btn__icon" aria-hidden="true">♥</span>
-            <span class="project-like-btn__count">–</span>
-          </button>
-          <a href="/portfolio/{{ project_slug }}/" class="sistema-card__link">Ver detalhes →</a>
+          <div class="log-entry__actions">
+            <button type="button" class="project-like-btn" data-like-key="{{ proj_like_key }}" aria-pressed="false">
+              <span class="project-like-btn__icon" aria-hidden="true">♥</span>
+              <span class="project-like-btn__count">–</span>
+            </button>
+            <a href="/portfolio/{{ project_slug }}/" class="sistema-card__link">Ver detalhes</a>
+          </div>
         </div>
       {% endfor %}
     </div>

@@ -56,13 +56,12 @@
           {% else %}
             <span class="sistema-card__status status--plan">Planejado</span>
           {% endif %}
-          <span>·</span>
           {% for tech in page.stack %}<span>#{{ tech }}</span>{% endfor %}
         </div>
       </div>
     </header>
 
-    <article class="post-body">
+    <article class="post-body ruled-paper">
       <p style="font-size:1.1rem;color:var(--text-muted);">{{ page.excerpt }}</p>
       {{ content }}
     </article>
@@ -75,7 +74,7 @@
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer__bottom">
-        <p>© {{ 'now' | date: "%Y" }} <a href="/" style="color:var(--accent-text)">Alan Mateus | AMtech Digital</a>. Feito com Jekyll + GitHub Pages.</p>
+        <p>© {{ 'now' | date: "%Y" }} <a href="/" style="color:var(--accent)">Alan Mateus | AMtech Digital</a>. Feito com Jekyll + GitHub Pages.</p>
       </div>
     </div>
   </footer>

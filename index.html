@@ -22,7 +22,7 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 
         <p class="hero__desc">
           Professor de informática, desenvolvedor fullstack e estudante de segurança ofensiva.
-          Construindo 23 sistemas de gestão em público, documentando cada decisão, ensinando no caminho.
+          Construindo 13 sistemas de gestão em público, documentando cada decisão, ensinando no caminho.
         </p>
 
         <div class="hero__actions">
@@ -53,36 +53,24 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
   </div>
 </section>
 
-<!-- ===== NÚMEROS ===== -->
-<div class="stats">
+<!-- ===== LINHA DE STATUS (log corrido, não "big number" genérico) ===== -->
+<div class="status-line">
   <div class="container">
-    <div class="stats__grid">
-      <div class="stat fade-in">
-        {% assign current_year = site.time | date: '%Y' | plus: 0 %}
-        {% assign teaching_years = current_year | minus: site.teaching_start_year %}
-        <p class="stat__num" data-target="{{ teaching_years }}" data-suffix="+">{{ teaching_years }}+</p>
-        <p class="stat__label">anos ensinando</p>
-      </div>
-      <div class="stat fade-in">
-        <p class="stat__num" data-target="23" data-suffix="">23</p>
-        <p class="stat__label">sistemas planejados</p>
-      </div>
-      <div class="stat fade-in">
-        <p class="stat__num" data-target="9" data-suffix="">9</p>
-        <p class="stat__label">matérias no EMTI</p>
-      </div>
-      <div class="stat fade-in">
-        <p class="stat__num" data-target="65" data-suffix="+">65+</p>
-        <p class="stat__label">docs no vault Obsidian</p>
-      </div>
-    </div>
+    <p class="status-line__text">
+      {% assign current_year = site.time | date: '%Y' | plus: 0 %}
+      {% assign teaching_years = current_year | minus: site.teaching_start_year %}
+      <span>{{ teaching_years }}+ anos ensinando</span>
+      <span>13 sistemas planejados</span>
+      <span>9 matérias no EMTI</span>
+      <span>65+ docs no vault Obsidian</span>
+    </p>
   </div>
 </div>
 
 <!-- ===== TRÊS FRENTES ===== -->
 <section class="frentes">
   <div class="container">
-    <div class="fade-in">
+    <div >
       <p class="section-eyebrow">O que faço</p>
       <h2 class="section-title">Três frentes,<br>um portfólio coerente</h2>
       <p class="section-subtitle">Cada frente alimenta as outras. O que ensino informa como documento. O que codifico vira exemplo de aula. O que aprendo em segurança blinda o que construo.</p>
@@ -90,11 +78,11 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 
     <div class="frentes__grid">
 
-      <div class="frente fade-in" style="--frente-color:#00C2A8">
-        <div class="frente__icon">⚙️</div>
+      <div class="frente" style="--frente-color:#00C2A8">
+        <div class="frente__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.6"/><path d="M19.4 13a7.5 7.5 0 000-2l2-1.5-2-3.4-2.3.9a7.6 7.6 0 00-1.7-1L15 3.5h-4l-.4 2.5a7.6 7.6 0 00-1.7 1l-2.3-.9-2 3.4L6.6 11a7.5 7.5 0 000 2l-2 1.5 2 3.4 2.3-.9c.5.4 1.1.75 1.7 1l.4 2.5h4l.4-2.5a7.6 7.6 0 001.7-1l2.3.9 2-3.4-2-1.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
         <h3 class="frente__title">Desenvolvimento de Software</h3>
         <p class="frente__desc">
-          23 sistemas SaaS que venho construindo — PDV, delivery, veterinária, condôminos, finanças, segurança e mais.
+          13 sistemas SaaS que venho construindo — PDV, delivery, veterinária, condôminos, finanças, segurança e mais.
           Clean Architecture, .NET 10, PostgreSQL, Next.js.
         </p>
         <div class="frente__tags">
@@ -106,7 +94,7 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
         </div>
       </div>
 
-      <div class="frente fade-in" style="--frente-color:#FFD166">
+      <div class="frente" style="--frente-color:#FFD166">
         <div class="frente__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4.5C4 3.7 4.7 3 5.5 3H11v18H5.5c-.8 0-1.5-.7-1.5-1.5v-15z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 4.5c0-.8-.7-1.5-1.5-1.5H13v18h5.5c.8 0 1.5-.7 1.5-1.5v-15z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
         <h3 class="frente__title">Educação em TI</h3>
         <p class="frente__desc">
@@ -122,8 +110,8 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
         </div>
       </div>
 
-      <div class="frente fade-in" style="--frente-color:#0E3A45">
-        <div class="frente__icon">🔐</div>
+      <div class="frente" style="--frente-color:#0E2E38">
+        <div class="frente__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.6"/></svg></div>
         <h3 class="frente__title">Segurança Ofensiva</h3>
         <p class="frente__desc">
           Em formação — trilha eJPT → OSCP → CRTO. Estudo ativo de pentest web, Active Directory,
@@ -144,18 +132,18 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 <!-- ===== ÚLTIMOS POSTS ===== -->
 <section class="blog-section">
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;" class="fade-in">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;" >
       <div>
         <p class="section-eyebrow">Blog</p>
         <h2 class="section-title" style="margin-bottom:0">Últimas publicações</h2>
       </div>
-      <a href="/blog/" class="btn btn--ghost">Ver todos →</a>
+      <a href="/blog/" class="btn btn--ghost">Ver todos</a>
     </div>
 
     {% if site.posts.size > 0 %}
     <div class="posts-grid">
       {% for post in site.posts limit: 3 %}
-      <article class="post-card fade-in {% if forloop.first %}post-card--featured{% endif %}">
+      <article class="post-card {% if forloop.first %}post-card--featured{% endif %}">
         <p class="post-card__category">{{ post.categories | first | default: 'Blog' }}</p>
         <h3 class="post-card__title">
           <a href="{{ post.url | relative_url }}" style="display:block;">{{ post.title }}</a>
@@ -181,78 +169,43 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 <!-- ===== PORTFÓLIO PREVIEW ===== -->
 <section class="portfolio-section">
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;" class="fade-in">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;" >
       <div>
         <p class="section-eyebrow">Portfólio</p>
         <h2 class="section-title" style="margin-bottom:0">Sistemas em construção</h2>
       </div>
-      <a href="/portfolio/" class="btn btn--ghost">Ver todos →</a>
+      <a href="/portfolio/" class="btn btn--ghost">Ver todos</a>
     </div>
 
-    <div class="portfolio-grid">
-      <div class="sistema-card fade-in" data-status="dev">
-        <div class="sistema-card__header">
-          <h4 class="sistema-card__name">AM Kaixara</h4>
-          <span class="sistema-card__status status--dev">Em desenvolvimento</span>
-        </div>
-        <p class="sistema-card__desc">PDV multi-tenant com RLS no PostgreSQL. Vendas, estoque, relatórios e emissão fiscal. O primeiro desses sistemas.</p>
-        <div class="sistema-card__stack">
-          <span class="tag">.NET 10</span><span class="tag">PostgreSQL</span><span class="tag">Next.js</span><span class="tag">Docker</span>
-        </div>
-      </div>
-
-      <div class="sistema-card fade-in" data-status="dev">
-        <div class="sistema-card__header">
-          <h4 class="sistema-card__name">AM Rotara</h4>
-          <span class="sistema-card__status status--dev">Em desenvolvimento</span>
-        </div>
-        <p class="sistema-card__desc">Gestão de pedidos e entrega com geolocalização via PostGIS. Status em tempo real com SignalR.</p>
-        <div class="sistema-card__stack">
-          <span class="tag">.NET</span><span class="tag">PostGIS</span><span class="tag">SignalR</span>
+    <div class="portfolio-log">
+      <div class="log-entry">
+        <div class="log-entry__marker"><span class="sistema-card__status status--dev">Em dev</span></div>
+        <div class="log-entry__body">
+          <h3 class="log-entry__name">AM Kaixara</h3>
+          <p class="log-entry__desc">PDV multi-tenant com RLS no PostgreSQL. Vendas, estoque, relatórios e emissão fiscal. O primeiro desses sistemas.</p>
+          <div class="log-entry__stack">
+            <span class="tag">.NET 10</span><span class="tag">PostgreSQL</span><span class="tag">Next.js</span><span class="tag">Docker</span>
+          </div>
         </div>
       </div>
-
-      <div class="sistema-card fade-in" data-status="dev">
-        <div class="sistema-card__header">
-          <h4 class="sistema-card__name">AM Rendara</h4>
-          <span class="sistema-card__status status--dev">Em desenvolvimento</span>
-        </div>
-        <p class="sistema-card__desc">Gestão financeira pessoal e empresarial com a metodologia ARCA de rebalanceamento automático.</p>
-        <div class="sistema-card__stack">
-          <span class="tag">.NET</span><span class="tag">PostgreSQL</span><span class="tag">Next.js</span>
-        </div>
-      </div>
-
-      <div class="sistema-card fade-in" data-status="plan">
-        <div class="sistema-card__header">
-          <h4 class="sistema-card__name">AM Petara</h4>
-          <span class="sistema-card__status status--plan">Planejado</span>
-        </div>
-        <p class="sistema-card__desc">Sistema de gestão para clínicas veterinárias. Prontuários, agenda e lembretes automáticos.</p>
-        <div class="sistema-card__stack">
-          <span class="tag">.NET</span><span class="tag">PostgreSQL</span>
+      <div class="log-entry">
+        <div class="log-entry__marker"><span class="sistema-card__status status--dev">Em dev</span></div>
+        <div class="log-entry__body">
+          <h3 class="log-entry__name">AM Rotara</h3>
+          <p class="log-entry__desc">Gestão de pedidos e entrega com geolocalização via PostGIS. Status em tempo real com SignalR.</p>
+          <div class="log-entry__stack">
+            <span class="tag">.NET</span><span class="tag">PostGIS</span><span class="tag">SignalR</span>
+          </div>
         </div>
       </div>
-
-      <div class="sistema-card fade-in" data-status="plan">
-        <div class="sistema-card__header">
-          <h4 class="sistema-card__name">AM Vynla</h4>
-          <span class="sistema-card__status status--plan">Planejado</span>
-        </div>
-        <p class="sistema-card__desc">Plataforma de relacionamentos com linha do tempo de casal, convites interativos e NFC físico.</p>
-        <div class="sistema-card__stack">
-          <span class="tag">.NET</span><span class="tag">Next.js</span><span class="tag">NFC</span>
-        </div>
-      </div>
-
-      <div class="sistema-card fade-in" data-status="plan">
-        <div class="sistema-card__header">
-          <h4 class="sistema-card__name">AM Taskoro</h4>
-          <span class="sistema-card__status status--plan">Planejado</span>
-        </div>
-        <p class="sistema-card__desc">Plataforma de gestão de projetos com Kanban, Scrum e RAD. Stack: React + Node.js + GraphQL.</p>
-        <div class="sistema-card__stack">
-          <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">GraphQL</span>
+      <div class="log-entry">
+        <div class="log-entry__marker"><span class="sistema-card__status status--dev">Em dev</span></div>
+        <div class="log-entry__body">
+          <h3 class="log-entry__name">AM Rendara</h3>
+          <p class="log-entry__desc">Gestão financeira pessoal e empresarial com a metodologia ARCA de rebalanceamento automático.</p>
+          <div class="log-entry__stack">
+            <span class="tag">.NET</span><span class="tag">PostgreSQL</span><span class="tag">Next.js</span>
+          </div>
         </div>
       </div>
     </div>
@@ -268,8 +221,8 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 <!-- ===== CTA FINAL ===== -->
 <section style="background:var(--brand);padding:5rem 0;text-align:center;">
   <div class="container">
-    <div class="fade-in">
-      <h2 style="color:#fff;margin-bottom:1rem;">Construindo em público.<br><em style="font-weight:300;color:var(--accent-text)">Aprendendo em voz alta.</em></h2>
+    <div >
+      <h2 style="color:#fff;margin-bottom:1rem;">Construindo em público.<br><em style="font-weight:300;color:var(--accent)">Aprendendo em voz alta.</em></h2>
       <p style="color:rgba(255,255,255,0.65);margin:0 auto 2.5rem;max-width:50ch;font-size:1.05rem;">
         Cada decisão técnica, cada erro e cada avanço vai para o blog. Acompanhe a jornada ou entre em contato se quiser colaborar.
       </p>

@@ -112,7 +112,7 @@
 // --- Filtros do portfólio ---
 (function() {
   const btns  = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.sistema-card');
+  const cards = document.querySelectorAll('.log-entry');
   if (!btns.length) return;
 
   btns.forEach(btn => {

@@ -10,12 +10,9 @@ layout: default
     <h1 class="post-hero__title">{{ page.title }}</h1>
     <div class="post-hero__meta">
       <span>{{ page.date | date: "%d/%m/%Y" }}</span>
-      <span>·</span>
       <span>{{ page.content | number_of_words | divided_by: 200 | plus: 1 }} min de leitura</span>
-      <span>·</span>
       <span id="post-view-count" data-slug="{{ page.slug }}">– visualizações</span>
       {% if page.tags %}
-      <span>·</span>
       {% for tag in page.tags %}<span>#{{ tag }}</span>{% endfor %}
       {% endif %}
     </div>
@@ -66,7 +63,7 @@ layout: default
   <ol class="toc__list" id="post-toc-list"></ol>
 </nav>
 
-<article class="post-body">
+<article class="post-body ruled-paper">
   {{ content }}
 {% include share-buttons.html %}
 
