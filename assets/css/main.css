@@ -20,9 +20,10 @@
 
   --accent:       #00C2A8;
   --accent-text:  #007464;
-  --accent-security:      #C98A26;
-  --accent-security-text: #8A5F14;
-  --accent-security-bg:   #1D1A16;
+  --accent-security:      #DD7F35;
+  --accent-security-text: #8A431A;
+  --accent-teaching:      #EAAE3D;
+  --accent-teaching-text: #7A5D10;
   --accent-glow:  rgba(0,194,168,0.25);
 
   --marker:       #EAAE3D;
@@ -98,8 +99,10 @@
   --paper-link:   #E08659;
 
   --accent-text:  #00C2A8;
-  --accent-security:      #E0A438;
-  --accent-security-text: #E0A438;
+  --accent-security:      #E88A44;
+  --accent-security-text: #E88A44;
+  --accent-teaching:      #EAAE3D;
+  --accent-teaching-text: #EAAE3D;
 
   --text:         #EDEAE2;
   --text-muted:   #A8A296;
@@ -722,7 +725,7 @@ section + section { padding-top: 0; }
   transition: all var(--transition);
 }
 .materia-card:hover { border-color: var(--brand-mid); box-shadow: var(--shadow-sm); }
-.materia-card__icon { font-size: 1.75rem; }
+.materia-card__icon { font-size: 1.75rem; color: var(--accent-teaching-text); }
 .materia-card__name { font-size: 0.95rem; font-weight: 700; }
 .materia-card__count {
   font-size: 0.78rem;

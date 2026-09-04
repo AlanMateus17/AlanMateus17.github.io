@@ -42,7 +42,9 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
         <div>
           {% assign categoria_item = post.categories | first | default: 'Blog' %}
           {% assign categoria_item_lower = categoria_item | downcase %}
-          <p class="blog-post-item__cat"{% if categoria_item_lower contains 'segur' %} style="color:var(--accent-security-text);"{% endif %}>{{ categoria_item }}
+          {% assign cat_cor = "" %}
+          {% if categoria_item_lower contains 'segur' %}{% assign cat_cor = "var(--accent-security-text)" %}{% elsif categoria_item_lower contains 'educ' or categoria_item_lower contains 'ensino' %}{% assign cat_cor = "var(--accent-teaching-text)" %}{% endif %}
+          <p class="blog-post-item__cat"{% if cat_cor != "" %} style="color:{{ cat_cor }};"{% endif %}>{{ categoria_item }}
             <span class="blog-post-item__read-badge" hidden><svg width="11" height="11" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Lido</span>
           </p>
           <h2 class="blog-post-item__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>

@@ -10,6 +10,8 @@ layout: default
     {% assign categoria_lower = categoria | downcase %}
     {% if categoria_lower contains 'segur' %}
     <p class="post-hero__cat" style="color:var(--accent-security);">{{ categoria }}</p>
+    {% elsif categoria_lower contains 'educ' or categoria_lower contains 'ensino' %}
+    <p class="post-hero__cat" style="color:var(--accent-teaching);">{{ categoria }}</p>
     {% else %}
     <p class="post-hero__cat">{{ categoria }}</p>
     {% endif %}
