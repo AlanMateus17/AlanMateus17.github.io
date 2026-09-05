@@ -1928,3 +1928,53 @@ pre { white-space: pre-wrap; word-break: break-all; }
 }
 .conquista-badge__nome { font-weight: 700; font-size: 0.9rem; color: var(--accent-text); }
 .conquista-badge__desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+/* === CERTIFICAÇÕES (currículo) === */
+.cv__certs { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.cv__cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.cv__cert-badge em {
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+}
+.cv__cert-badge--obtida { border-color: var(--status-prod); }
+.cv__cert-badge--obtida em { background: rgba(26,158,110,0.12); color: var(--status-prod); }
+.cv__cert-badge--em-andamento { border-color: var(--marker); }
+.cv__cert-badge--em-andamento em { background: var(--marker-bg); color: var(--accent-teaching-text); }
+.cv__cert-badge--planejada { border-color: var(--border); opacity: 0.7; }
+.cv__cert-badge--planejada em { background: var(--bg-alt); color: var(--text-muted); }
+
+/* === BOTÃO FLUTUANTE GLOBAL: COMPARTILHAR PÁGINA COMO STORY === */
+.page-share-story-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 90;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: var(--brand);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition);
+}
+.page-share-story-btn:hover { transform: scale(1.08); }
+@media print {
+  .page-share-story-btn { display: none !important; }
+}

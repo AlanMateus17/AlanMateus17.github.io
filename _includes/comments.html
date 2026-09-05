@@ -13,8 +13,6 @@
         {% assign c = comment[1] %}
         {% unless c.parent %}
           {% assign top_id = comment[0] %}
-          <!-- DEBUG top_id=[{{ top_id }}] -->
-          {% for dbg in post_comments %}<!-- DEBUG item id=[{{ dbg[0] }}] parent=[{{ dbg[1].parent }}] -->{% endfor %}
 
           <div class="comment">
             <div class="comment__head">

@@ -2,139 +2,209 @@
 layout: default
 title: Currículo
 description: "Currículo de Alan Mateus — Professor de TI, Desenvolvedor .NET e Fundador do Grupo AMtech Digital."
+
+nome: "Alan Mateus"
+cargo: "Desenvolvedor .NET · Professor de TI · Fundador AMtech Digital"
+localizacao: "Barbacena, MG — Brasil — alandesouzasilva04@gmail.com"
+foto: ""
+github: "https://github.com/AlanMateus17"
+linkedin: "https://linkedin.com/in/alan-souza-dev"
+aberto_a_oportunidades: true
+
+resumo: "Desenvolvedor fullstack com foco em .NET/C# e Next.js, professor de informática no EMTI e fundador do Grupo AMtech Digital. Especializado em sistemas de gestão multi-tenant com Clean Architecture e segurança aplicada. Em formação em segurança ofensiva (trilha eJPT → OSCP)."
+
+experiencia:
+  - cargo: "Fundador & Desenvolvedor Principal"
+    periodo: "2024 — presente"
+    local: "Grupo AMtech Digital · Barbacena, MG"
+    descricao: "Construção de um conjunto de 13 sistemas SaaS. AM Kaixara (em desenvolvimento): PDV multi-tenant com Clean Architecture, RLS no PostgreSQL, API .NET 10 e frontend Next.js. Fundador nas frentes de desenvolvimento, assistência técnica e educação."
+  - cargo: "Professor de Informática — EMTI"
+    periodo: "2025 — presente"
+    local: "Escola Estadual · Barbacena, MG"
+    descricao: "Ensino de 9 matérias: Lógica de Programação, Arquitetura e Manutenção, HTML/CSS, Sistemas Operacionais, POO/Java, Programação Web, Robótica, Lab. Hardware e Lab. Software. Produção de 180 apostilas e material didático completo."
+  - cargo: "Técnico em Assistência Técnica"
+    periodo: "2021 — presente"
+    local: "Autônomo · Barbacena, MG"
+    descricao: "Reparo de dispositivos Apple e Xiaomi (tela, bateria, conector), notebooks e desktops. Formatação, diagnóstico e recuperação de dados."
+
+formacao_academica:
+  - curso: "Análise e Desenvolvimento de Sistemas (ADS)"
+    periodo: "Em andamento"
+    local: "Graduação tecnológica"
+  - curso: "Licenciatura em Matemática"
+    periodo: "Em andamento"
+    local: "Graduação — simultânea ao ADS"
+
+competencias:
+  - categoria: "Backend"
+    itens:
+      - "C# · .NET 10 · ASP.NET Core"
+      - "Entity Framework Core"
+      - "PostgreSQL · Redis"
+      - "Clean Architecture · DDD"
+  - categoria: "Frontend"
+    itens:
+      - "Next.js · TypeScript"
+      - "Tailwind CSS"
+      - "React Query · Zustand"
+      - "HTML5 · CSS3"
+  - categoria: "DevOps"
+    itens:
+      - "Docker · Docker Compose"
+      - "GitHub Actions (CI/CD)"
+      - "Linux (Ubuntu · Debian)"
+      - "Git · Conventional Commits"
+  - categoria: "Segurança & Outros"
+    itens:
+      - "OWASP Top 10 · JWT"
+      - "Burp Suite · Nmap"
+      - "Python (automação)"
+      - "Java · POO"
+
+certificacoes:
+  - nome: "CompTIA A+"
+    status: "planejada"
+  - nome: "CompTIA Network+"
+    status: "planejada"
+  - nome: "CompTIA Security+"
+    status: "planejada"
+  - nome: "CCNA (Cisco)"
+    status: "planejada"
+  - nome: "eJPT (INE)"
+    status: "planejada"
+  - nome: "OSCP (OffSec)"
+    status: "planejada"
+
+projetos_destaque:
+  - nome: "AM Kaixara — PDV Multi-tenant"
+    periodo: "2026 — presente"
+    descricao: "Sistema de ponto de venda construído em Clean Architecture com .NET 10, PostgreSQL + RLS para isolamento por tenant, API RESTful com JWT e frontend Next.js com design system próprio. Em desenvolvimento ativo."
+    repo_url: ""
+  - nome: "Material Didático EMTI"
+    periodo: "2025 — presente"
+    descricao: "180 apostilas em PDF cobrindo 9 matérias de informática para ensino médio técnico integrado. Conteúdo progressivo, com exercícios e avaliações."
+    repo_url: ""
+
+formacao_complementar:
+  - titulo: "Trilha de Segurança Ofensiva"
+    periodo: "2026 — presente"
+    onde: "eJPT (INE) → OSCP (OffSec)"
+    descricao: "Estudo de pentest, Active Directory attacks, web security (OWASP Top 10) e red team operations em laboratório próprio com Kali Linux e VMs."
 ---
 <section class="cv" style="padding-top:calc(var(--nav-height) + 2rem);">
   <div class="container" style="max-width:860px;">
 
-    <div style="display:flex;justify-content:flex-end;margin-bottom:1.5rem;gap:.75rem;" >
+    <div style="display:flex;justify-content:flex-end;margin-bottom:1.5rem;gap:.75rem;">
+      {% if page.aberto_a_oportunidades %}
       <span class="badge badge--open">Aberto a oportunidades</span>
+      {% endif %}
       <button onclick="window.print()" class="btn btn--ghost">Imprimir PDF</button>
     </div>
 
     <div class="cv__header">
       <div>
-        <h1 class="cv__name">Alan Mateus</h1>
-        <p class="cv__role">Desenvolvedor .NET · Professor de TI · Fundador AMtech Digital</p>
-        <p class="cv__location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:-1px;margin-right:2px;"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg> Barbacena, MG — Brasil — alandesouzasilva04@gmail.com</p>
+        {% if page.foto and page.foto != "" %}
+        <img src="{{ page.foto | relative_url }}" alt="Foto de {{ page.nome }}" style="width:88px;height:88px;border-radius:50%;object-fit:cover;margin-bottom:1rem;">
+        {% endif %}
+        <h1 class="cv__name">{{ page.nome }}</h1>
+        <p class="cv__role">{{ page.cargo }}</p>
+        <p class="cv__location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:-1px;margin-right:2px;"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg> {{ page.localizacao }}</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:.5rem;text-align:right;">
-        <a href="https://github.com/AlanMateus17" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">github.com/AlanMateus17</a>
-        <a href="https://linkedin.com/in/alan-souza-dev" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">linkedin.com/in/alan-souza-dev</a>
+        {% if page.github %}<a href="{{ page.github }}" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">{{ page.github | remove: "https://" }}</a>{% endif %}
+        {% if page.linkedin %}<a href="{{ page.linkedin }}" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">{{ page.linkedin | remove: "https://" }}</a>{% endif %}
       </div>
     </div>
 
     <div class="cv__section">
       <p class="cv__section-title">Resumo</p>
-      <p>Desenvolvedor fullstack com foco em .NET/C# e Next.js, professor de informática no EMTI e fundador do Grupo AMtech Digital. Especializado em sistemas de gestão multi-tenant com Clean Architecture e segurança aplicada. Em formação em segurança ofensiva (trilha eJPT → OSCP).</p>
+      <p>{{ page.resumo }}</p>
     </div>
 
     <div class="cv__section">
       <p class="cv__section-title">Experiência</p>
       <div class="cv__exp">
+        {% for item in page.experiencia %}
         <div class="cv__exp-item">
-          <p class="cv__exp-role">Fundador & Desenvolvedor Principal</p>
-          <p class="cv__exp-period">2024 — presente</p>
-          <p class="cv__exp-where">Grupo AMtech Digital · Barbacena, MG</p>
-          <p class="cv__exp-desc">Construção de um conjunto de 13 sistemas SaaS. AM Kaixara (em desenvolvimento): PDV multi-tenant com Clean Architecture, RLS no PostgreSQL, API .NET 10 e frontend Next.js. Fundador nas frentes de desenvolvimento, assistência técnica e educação.</p>
+          <p class="cv__exp-role">{{ item.cargo }}</p>
+          <p class="cv__exp-period">{{ item.periodo }}</p>
+          <p class="cv__exp-where">{{ item.local }}</p>
+          <p class="cv__exp-desc">{{ item.descricao }}</p>
         </div>
-        <div class="cv__exp-item">
-          <p class="cv__exp-role">Professor de Informática — EMTI</p>
-          <p class="cv__exp-period">2025 — presente</p>
-          <p class="cv__exp-where">Escola Estadual · Barbacena, MG</p>
-          <p class="cv__exp-desc">Ensino de 9 matérias: Lógica de Programação, Arquitetura e Manutenção, HTML/CSS, Sistemas Operacionais, POO/Java, Programação Web, Robótica, Lab. Hardware e Lab. Software. Produção de 180 apostilas e material didático completo.</p>
-        </div>
-        <div class="cv__exp-item">
-          <p class="cv__exp-role">Técnico em Assistência Técnica</p>
-          <p class="cv__exp-period">2021 — presente</p>
-          <p class="cv__exp-where">Autônomo · Barbacena, MG</p>
-          <p class="cv__exp-desc">Reparo de dispositivos Apple e Xiaomi (tela, bateria, conector), notebooks e desktops. Formatação, diagnóstico e recuperação de dados.</p>
-        </div>
+        {% endfor %}
       </div>
     </div>
 
     <div class="cv__section">
       <p class="cv__section-title">Formação Acadêmica</p>
       <div class="cv__exp">
+        {% for item in page.formacao_academica %}
         <div class="cv__exp-item">
-          <p class="cv__exp-role">Análise e Desenvolvimento de Sistemas (ADS)</p>
-          <p class="cv__exp-period">Em andamento</p>
-          <p class="cv__exp-where">Graduação tecnológica</p>
+          <p class="cv__exp-role">{{ item.curso }}</p>
+          <p class="cv__exp-period">{{ item.periodo }}</p>
+          <p class="cv__exp-where">{{ item.local }}</p>
         </div>
-        <div class="cv__exp-item">
-          <p class="cv__exp-role">Licenciatura em Matemática</p>
-          <p class="cv__exp-period">Em andamento</p>
-          <p class="cv__exp-where">Graduação — simultânea ao ADS</p>
-        </div>
+        {% endfor %}
       </div>
     </div>
 
     <div class="cv__section">
       <p class="cv__section-title">Competências Técnicas</p>
       <div class="skills-grid">
+        {% for grupo in page.competencias %}
         <div class="skill-group">
-          <p class="skill-group__title">Backend</p>
+          <p class="skill-group__title">{{ grupo.categoria }}</p>
           <ul class="skill-group__items">
-            <li class="skill-item">C# · .NET 10 · ASP.NET Core</li>
-            <li class="skill-item">Entity Framework Core</li>
-            <li class="skill-item">PostgreSQL · Redis</li>
-            <li class="skill-item">Clean Architecture · DDD</li>
+            {% for item in grupo.itens %}
+            <li class="skill-item">{{ item }}</li>
+            {% endfor %}
           </ul>
         </div>
-        <div class="skill-group">
-          <p class="skill-group__title">Frontend</p>
-          <ul class="skill-group__items">
-            <li class="skill-item">Next.js · TypeScript</li>
-            <li class="skill-item">Tailwind CSS</li>
-            <li class="skill-item">React Query · Zustand</li>
-            <li class="skill-item">HTML5 · CSS3</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <p class="skill-group__title">DevOps</p>
-          <ul class="skill-group__items">
-            <li class="skill-item">Docker · Docker Compose</li>
-            <li class="skill-item">GitHub Actions (CI/CD)</li>
-            <li class="skill-item">Linux (Ubuntu · Debian)</li>
-            <li class="skill-item">Git · Conventional Commits</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <p class="skill-group__title">Segurança & Outros</p>
-          <ul class="skill-group__items">
-            <li class="skill-item">OWASP Top 10 · JWT</li>
-            <li class="skill-item">Burp Suite · Nmap</li>
-            <li class="skill-item">Python (automação)</li>
-            <li class="skill-item">Java · POO</li>
-          </ul>
-        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="cv__section">
+      <p class="cv__section-title">Certificações</p>
+      <div class="cv__certs">
+        {% for cert in page.certificacoes %}
+        <span class="cv__cert-badge cv__cert-badge--{{ cert.status }}">
+          {{ cert.nome }}
+          <em>{% if cert.status == "obtida" %}obtida{% elsif cert.status == "em-andamento" %}em andamento{% else %}planejada{% endif %}</em>
+        </span>
+        {% endfor %}
       </div>
     </div>
 
     <div class="cv__section">
       <p class="cv__section-title">Projetos em Destaque</p>
       <div class="cv__exp">
+        {% for proj in page.projetos_destaque %}
         <div class="cv__exp-item">
-          <p class="cv__exp-role">AM Kaixara — PDV Multi-tenant</p>
-          <p class="cv__exp-period">2026 — presente</p>
-          <p class="cv__exp-desc">Sistema de ponto de venda construído em Clean Architecture com .NET 10, PostgreSQL + RLS para isolamento por tenant, API RESTful com JWT e frontend Next.js com design system próprio. Em desenvolvimento ativo.</p>
+          <p class="cv__exp-role">
+            {{ proj.nome }}
+            {% if proj.repo_url and proj.repo_url != "" %}
+            <a href="{{ proj.repo_url }}" target="_blank" rel="noopener" style="font-size:.8rem;font-weight:600;color:var(--accent-text);margin-left:.5rem;">Ver código →</a>
+            {% endif %}
+          </p>
+          <p class="cv__exp-period">{{ proj.periodo }}</p>
+          <p class="cv__exp-desc">{{ proj.descricao }}</p>
         </div>
-        <div class="cv__exp-item">
-          <p class="cv__exp-role">Material Didático EMTI</p>
-          <p class="cv__exp-period">2025 — presente</p>
-          <p class="cv__exp-desc">180 apostilas em PDF cobrindo 9 matérias de informática para ensino médio técnico integrado. Conteúdo progressivo, com exercícios e avaliações.</p>
-        </div>
+        {% endfor %}
       </div>
     </div>
 
     <div class="cv__section">
       <p class="cv__section-title">Formação Complementar</p>
       <div class="cv__exp">
+        {% for item in page.formacao_complementar %}
         <div class="cv__exp-item">
-          <p class="cv__exp-role">Trilha de Segurança Ofensiva</p>
-          <p class="cv__exp-period">2026 — presente</p>
-          <p class="cv__exp-where">eJPT (INE) → OSCP (OffSec)</p>
-          <p class="cv__exp-desc">Estudo de pentest, Active Directory attacks, web security (OWASP Top 10) e red team operations em laboratório próprio com Kali Linux e VMs.</p>
+          <p class="cv__exp-role">{{ item.titulo }}</p>
+          <p class="cv__exp-period">{{ item.periodo }}</p>
+          <p class="cv__exp-where">{{ item.onde }}</p>
+          <p class="cv__exp-desc">{{ item.descricao }}</p>
         </div>
+        {% endfor %}
       </div>
     </div>
 

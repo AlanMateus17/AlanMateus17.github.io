@@ -99,3 +99,62 @@ collections:
               - { label: "Construindo", name: "building", widget: "string" }
               - { label: "Estudando", name: "studying", widget: "string" }
               - { label: "Lendo", name: "reading", widget: "string" }
+
+      - label: "Currículo"
+        name: "curriculo"
+        file: "curriculo/index.html"
+        fields:
+          - { label: "Nome", name: "nome", widget: "string" }
+          - { label: "Cargo / título", name: "cargo", widget: "string" }
+          - { label: "Localização e e-mail", name: "localizacao", widget: "string" }
+          - { label: "Foto (opcional)", name: "foto", widget: "image", required: false }
+          - { label: "Link do GitHub", name: "github", widget: "string" }
+          - { label: "Link do LinkedIn", name: "linkedin", widget: "string" }
+          - { label: "Mostrar \"Aberto a oportunidades\"?", name: "aberto_a_oportunidades", widget: "boolean" }
+          - { label: "Resumo", name: "resumo", widget: "text" }
+          - label: "Experiência"
+            name: "experiencia"
+            widget: "list"
+            fields:
+              - { label: "Cargo", name: "cargo", widget: "string" }
+              - { label: "Período", name: "periodo", widget: "string" }
+              - { label: "Local", name: "local", widget: "string" }
+              - { label: "Descrição", name: "descricao", widget: "text" }
+          - label: "Formação Acadêmica"
+            name: "formacao_academica"
+            widget: "list"
+            fields:
+              - { label: "Curso", name: "curso", widget: "string" }
+              - { label: "Período", name: "periodo", widget: "string" }
+              - { label: "Local", name: "local", widget: "string" }
+          - label: "Competências Técnicas"
+            name: "competencias"
+            widget: "list"
+            fields:
+              - { label: "Categoria", name: "categoria", widget: "string" }
+              - { label: "Itens (um por linha)", name: "itens", widget: "list" }
+          - label: "Certificações"
+            name: "certificacoes"
+            widget: "list"
+            fields:
+              - { label: "Nome da certificação", name: "nome", widget: "string" }
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options: [{ label: "Obtida", value: "obtida" }, { label: "Em andamento", value: "em-andamento" }, { label: "Planejada", value: "planejada" }]
+          - label: "Projetos em Destaque"
+            name: "projetos_destaque"
+            widget: "list"
+            fields:
+              - { label: "Nome do projeto", name: "nome", widget: "string" }
+              - { label: "Período", name: "periodo", widget: "string" }
+              - { label: "Descrição", name: "descricao", widget: "text" }
+              - { label: "Link do repositório (deixe em branco até existir)", name: "repo_url", widget: "string", required: false }
+          - label: "Formação Complementar"
+            name: "formacao_complementar"
+            widget: "list"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Período", name: "periodo", widget: "string" }
+              - { label: "Onde", name: "onde", widget: "string" }
+              - { label: "Descrição", name: "descricao", widget: "text" }

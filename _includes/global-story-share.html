@@ -1,0 +1,130 @@
+{% comment %}
+  Botão flutuante global — permite compartilhar QUALQUER página do site como
+  Story (imagem vertical pra Instagram/WhatsApp), não só posts do blog.
+  Reaproveita html2canvas + qrcodejs, carregados aqui pra funcionar em toda página.
+{% endcomment %}
+<button type="button" id="page-share-story-btn" class="page-share-story-btn" aria-label="Compartilhar esta página como Story">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="18" r="1" fill="currentColor"/></svg>
+</button>
+
+<div id="page-share-overlay" class="story-overlay" hidden>
+  <div class="story-overlay__box">
+    <p id="page-share-overlay-text">Gerando sua imagem...</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+<script>
+(function () {
+  var btn = document.getElementById('page-share-story-btn');
+  if (!btn) return;
+  var overlay = document.getElementById('page-share-overlay');
+  var overlayText = document.getElementById('page-share-overlay-text');
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  btn.addEventListener('click', function () {
+    if (typeof html2canvas === 'undefined' || typeof QRCode === 'undefined') {
+      alert('Ainda carregando os recursos necessários — espera 2 segundos e tenta de novo.');
+      return;
+    }
+    overlay.hidden = false;
+    overlayText.textContent = 'Gerando sua imagem...';
+
+    var linkCopiado = false;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href).then(function () { linkCopiado = true; }).catch(function () {});
+    }
+
+    // Funciona em qualquer tipo de página: post, página interna (page-hero) ou a Home (hero)
+    var alvo = document.querySelector('.post-hero') ||
+               document.querySelector('.page-hero') ||
+               document.querySelector('.hero') ||
+               document.querySelector('main');
+
+    html2canvas(alvo, { backgroundColor: '#0E2E38', scale: 2, useCORS: true }).then(function (captura) {
+      var W = 1080, H = 1920;
+      var canvas = document.createElement('canvas');
+      canvas.width = W; canvas.height = H;
+      var ctx = canvas.getContext('2d');
+
+      var grad = ctx.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0, '#0E2E38');
+      grad.addColorStop(1, '#0A161C');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#00C2A8';
+      ctx.fillRect(0, 0, W, 14);
+      ctx.fillRect(0, H - 14, W, 14);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 34px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Alan Mateus | AMtech Digital', W / 2, 90);
+
+      var phoneW = 780, phoneX = (W - phoneW) / 2, phoneY = 180;
+      var escala = phoneW / captura.width;
+      var phoneH = Math.min(captura.height * escala, 1180);
+
+      ctx.fillStyle = '#050f14';
+      roundRect(ctx, phoneX - 14, phoneY - 14, phoneW + 28, phoneH + 28, 46);
+      ctx.fill();
+      ctx.save();
+      roundRect(ctx, phoneX, phoneY, phoneW, phoneH, 32);
+      ctx.clip();
+      ctx.drawImage(captura, phoneX, phoneY, phoneW, phoneH);
+      ctx.restore();
+
+      var qrContainer = document.createElement('div');
+      qrContainer.style.position = 'absolute';
+      qrContainer.style.left = '-9999px';
+      document.body.appendChild(qrContainer);
+      new QRCode(qrContainer, { text: window.location.href, width: 260, height: 260, correctLevel: QRCode.CorrectLevel.H });
+
+      setTimeout(function () {
+        var qrEl = qrContainer.querySelector('img') || qrContainer.querySelector('canvas');
+        var qrY = phoneY + phoneH + 60;
+        ctx.fillStyle = '#fff';
+        roundRect(ctx, W / 2 - 150, qrY, 300, 300, 16);
+        ctx.fill();
+        if (qrEl) ctx.drawImage(qrEl, W / 2 - 130, qrY + 20, 260, 260);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 30px sans-serif';
+        ctx.fillText('Aponte a câmera pra conhecer', W / 2, qrY + 350);
+        document.body.removeChild(qrContainer);
+
+        canvas.toBlob(function (blob) {
+          var arquivo = new File([blob], 'alanmateus-site.png', { type: 'image/png' });
+          overlayText.textContent = linkCopiado
+            ? 'Pronto! Link também copiado — cola no sticker de link do Instagram.'
+            : 'Pronto!';
+          setTimeout(function () {
+            overlay.hidden = true;
+            if (navigator.canShare && navigator.canShare({ files: [arquivo] })) {
+              navigator.share({ files: [arquivo], title: 'Compartilhar' }).catch(function () {});
+            } else {
+              var link = document.createElement('a');
+              link.download = 'alanmateus-site.png';
+              link.href = canvas.toDataURL('image/png');
+              link.click();
+            }
+          }, linkCopiado ? 1400 : 200);
+        }, 'image/png');
+      }, 400);
+    }).catch(function () {
+      overlay.hidden = true;
+      alert('Não deu pra gerar a imagem agora. Tenta de novo em instantes.');
+    });
+  });
+})();
+</script>
