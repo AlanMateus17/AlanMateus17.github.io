@@ -11,7 +11,16 @@ github: "https://github.com/AlanMateus17"
 linkedin: "https://linkedin.com/in/alan-souza-dev"
 aberto_a_oportunidades: true
 
+objetivo: "Oportunidade como Desenvolvedor .NET Júnior ou Estágio em Desenvolvimento — com abertura pra crescer também em segurança ofensiva."
+disponibilidade: "Meio período (concilia com aulas no EMTI e faculdade) — aberto a ajustar conforme a vaga."
+
 resumo: "Desenvolvedor fullstack com foco em .NET/C# e Next.js, professor de informática no EMTI e fundador do Grupo AMtech Digital. Especializado em sistemas de gestão multi-tenant com Clean Architecture e segurança aplicada. Em formação em segurança ofensiva (trilha eJPT → OSCP)."
+
+idiomas:
+  - idioma: "Português"
+    nivel: "Nativo"
+  - idioma: "Inglês"
+    nivel: "Fase A — em estudo (leitura técnica já fluente)"
 
 experiencia:
   - cargo: "Fundador & Desenvolvedor Principal"
@@ -61,6 +70,8 @@ competencias:
       - "Python (automação)"
       - "Java · POO"
 
+nivel_seguranca: 1
+
 certificacoes:
   - nome: "CompTIA A+"
     status: "planejada"
@@ -94,11 +105,13 @@ formacao_complementar:
 <section class="cv" style="padding-top:calc(var(--nav-height) + 2rem);">
   <div class="container" style="max-width:860px;">
 
-    <div style="display:flex;justify-content:flex-end;margin-bottom:1.5rem;gap:.75rem;">
+    <div class="cv__botoes-topo">
       {% if page.aberto_a_oportunidades %}
       <span class="badge badge--open">Aberto a oportunidades</span>
       {% endif %}
-      <button onclick="window.print()" class="btn btn--ghost">Imprimir PDF</button>
+      <a href="{{ '/roteiro/' | relative_url }}" class="btn btn--ghost">Ver roteiro público</a>
+      <button onclick="window.print()" class="btn btn--ghost">Imprimir</button>
+      <button id="cv-baixar-pdf" class="btn btn--primary">Baixar PDF</button>
     </div>
 
     <div class="cv__header">
@@ -110,10 +123,17 @@ formacao_complementar:
         <p class="cv__role">{{ page.cargo }}</p>
         <p class="cv__location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="vertical-align:-1px;margin-right:2px;"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg> {{ page.localizacao }}</p>
       </div>
-      <div style="display:flex;flex-direction:column;gap:.5rem;text-align:right;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;text-align:right;">
         {% if page.github %}<a href="{{ page.github }}" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">{{ page.github | remove: "https://" }}</a>{% endif %}
         {% if page.linkedin %}<a href="{{ page.linkedin }}" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">{{ page.linkedin | remove: "https://" }}</a>{% endif %}
+        <div id="cv-qrcode" class="cv__qrcode" title="Escaneie para abrir meu cartão de contato"></div>
       </div>
+    </div>
+
+    <div class="cv__section">
+      <p class="cv__section-title">Objetivo</p>
+      <p>{{ page.objetivo }}</p>
+      <p class="cv__disponibilidade">Disponibilidade: {{ page.disponibilidade }}</p>
     </div>
 
     <div class="cv__section">
@@ -149,6 +169,18 @@ formacao_complementar:
     </div>
 
     <div class="cv__section">
+      <p class="cv__section-title">Idiomas</p>
+      <div class="cv__idiomas">
+        {% for idioma in page.idiomas %}
+        <div class="cv__idioma-item">
+          <span class="cv__idioma-nome">{{ idioma.idioma }}</span>
+          <span class="cv__idioma-nivel">{{ idioma.nivel }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="cv__section">
       <p class="cv__section-title">Competências Técnicas</p>
       <div class="skills-grid">
         {% for grupo in page.competencias %}
@@ -161,6 +193,46 @@ formacao_complementar:
           </ul>
         </div>
         {% endfor %}
+      </div>
+
+      <div class="radar-chart-wrap">
+        <p class="radar-chart__legenda" id="radar-chart-legenda">Calculando as etapas com base nos repositórios reais do GitHub...</p>
+
+        <svg viewBox="0 0 400 400" width="360" height="360" class="radar-chart">
+          <polygon points="200,40 360,200 200,360 40,200" fill="none" stroke="var(--border)" stroke-width="1"/>
+          <polygon points="200,80 320,200 200,320 80,200" fill="none" stroke="var(--border)" stroke-width="1"/>
+          <polygon points="200,120 280,200 200,280 120,200" fill="none" stroke="var(--border)" stroke-width="1"/>
+          <polygon points="200,160 240,200 200,240 160,200" fill="none" stroke="var(--border)" stroke-width="1"/>
+          <line x1="200" y1="40" x2="200" y2="360" stroke="var(--border)" stroke-width="1"/>
+          <line x1="40" y1="200" x2="360" y2="200" stroke="var(--border)" stroke-width="1"/>
+
+          <text x="204" y="122" class="radar-chart__anel">4</text>
+          <text x="204" y="162" class="radar-chart__anel">3</text>
+          <text x="204" y="202" class="radar-chart__anel">2</text>
+          <text x="204" y="242" class="radar-chart__anel">1</text>
+
+          <polygon id="radar-poligono" points="200,200 200,200 200,200 200,200"
+                   fill="var(--accent-glow)" stroke="var(--accent)" stroke-width="3"
+                   style="transition: points 0.4s ease;"/>
+          <circle id="radar-ponto-backend" cx="200" cy="200" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
+          <circle id="radar-ponto-frontend" cx="200" cy="200" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
+          <circle id="radar-ponto-devops" cx="200" cy="200" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
+          <circle id="radar-ponto-seguranca" cx="200" cy="200" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
+
+          <text x="200" y="24" text-anchor="middle" class="radar-chart__label">Backend</text>
+          <text x="380" y="204" text-anchor="start" class="radar-chart__label">Frontend</text>
+          <text x="200" y="388" text-anchor="middle" class="radar-chart__label">DevOps</text>
+          <text x="20" y="204" text-anchor="end" class="radar-chart__label">Segurança</text>
+        </svg>
+
+        <div class="radar-chart__resumo" id="radar-chart-resumo">
+          <div class="radar-chart__resumo-item"><span class="radar-chart__resumo-dot"></span><span>Backend: <strong id="radar-texto-backend">calculando...</strong></span></div>
+          <div class="radar-chart__resumo-item"><span class="radar-chart__resumo-dot"></span><span>Frontend: <strong id="radar-texto-frontend">calculando...</strong></span></div>
+          <div class="radar-chart__resumo-item"><span class="radar-chart__resumo-dot"></span><span>DevOps: <strong id="radar-texto-devops">calculando...</strong></span></div>
+          <div class="radar-chart__resumo-item"><span class="radar-chart__resumo-dot"></span><span>Segurança: <strong id="radar-texto-seguranca">–</strong></span></div>
+        </div>
+
+        <p class="radar-chart__etapas">1 Fundamentos · 2 Praticando · 3 Aplicado · 4 Avançado</p>
       </div>
     </div>
 
@@ -175,6 +247,22 @@ formacao_complementar:
         {% endfor %}
       </div>
     </div>
+
+    {% assign depoimentos_destaque = site.depoimentos | limit: 2 %}
+    {% if depoimentos_destaque.size > 0 %}
+    <div class="cv__section">
+      <p class="cv__section-title">O que dizem</p>
+      <div class="cv__depoimentos">
+        {% for dep in depoimentos_destaque %}
+        <blockquote class="cv__depoimento">
+          <p>"{{ dep.texto }}"</p>
+          <cite>{{ dep.nome }} — {{ dep.papel }}</cite>
+        </blockquote>
+        {% endfor %}
+      </div>
+      <p class="cv__depoimentos-link"><a href="{{ '/depoimentos/' | relative_url }}">Ver todos os depoimentos →</a></p>
+    </div>
+    {% endif %}
 
     <div class="cv__section">
       <p class="cv__section-title">Projetos em Destaque</p>
@@ -210,3 +298,133 @@ formacao_complementar:
 
   </div>
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+
+<script>
+window.addEventListener('load', function () {
+  if (typeof QRCode !== 'undefined') {
+    new QRCode(document.getElementById("cv-qrcode"), {
+      text: window.location.origin + "{{ '/contato/cartao/' | relative_url }}",
+      width: 72,
+      height: 72,
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+
+  var btnPdf = document.getElementById('cv-baixar-pdf');
+  if (btnPdf) {
+    btnPdf.addEventListener('click', function () {
+      if (typeof html2pdf === 'undefined') {
+        alert('Ainda carregando o gerador de PDF — espera 2 segundos e tenta de novo.');
+        return;
+      }
+      var elemento = document.querySelector('.cv');
+      var opcoes = {
+        margin: 0.4,
+        filename: 'curriculo-alan-mateus.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opcoes).from(elemento).save();
+    });
+  }
+});
+</script>
+
+<script>
+(function () {
+  var USUARIO_GITHUB = "AlanMateus17";
+  var nivelSeguranca = {{ page.nivel_seguranca | default: 1 }};
+  var CENTRO = 200, RAIO_MAX = 160;
+
+  var NOMES_ETAPA = { 1: "Etapa 1 — Fundamentos", 2: "Etapa 2 — Praticando", 3: "Etapa 3 — Aplicado", 4: "Etapa 4 — Avançado" };
+
+  var MAPA = {
+    backend: ["C#", "Java", "Python", "PHP", "Ruby", "Go", "TSQL", "PLpgSQL"],
+    frontend: ["JavaScript", "TypeScript", "HTML", "CSS", "Vue", "SCSS"],
+    devops: ["Dockerfile", "Shell", "PowerShell", "YAML", "Makefile"]
+  };
+
+  function bytesParaEtapa(bytes) {
+    if (bytes <= 0) return 1;
+    if (bytes < 10000) return 2;
+    if (bytes < 80000) return 3;
+    return 4;
+  }
+
+  function raioDaEtapa(etapa) { return (etapa / 4) * RAIO_MAX; }
+
+  function desenharPonto(idCirculo, etapa, eixo) {
+    var r = raioDaEtapa(etapa);
+    var circulo = document.getElementById(idCirculo);
+    var x = CENTRO, y = CENTRO;
+    if (eixo === 'top') y = CENTRO - r;
+    if (eixo === 'right') x = CENTRO + r;
+    if (eixo === 'bottom') y = CENTRO + r;
+    if (eixo === 'left') x = CENTRO - r;
+    circulo.setAttribute('cx', x);
+    circulo.setAttribute('cy', y);
+    return { x: x, y: y };
+  }
+
+  function atualizarPoligono(pTop, pRight, pBottom, pLeft) {
+    var pontos = pTop.x + ',' + pTop.y + ' ' + pRight.x + ',' + pRight.y + ' ' + pBottom.x + ',' + pBottom.y + ' ' + pLeft.x + ',' + pLeft.y;
+    document.getElementById('radar-poligono').setAttribute('points', pontos);
+  }
+
+  var pSeg = desenharPonto('radar-ponto-seguranca', nivelSeguranca, 'left');
+  document.getElementById('radar-texto-seguranca').textContent = NOMES_ETAPA[nivelSeguranca];
+
+  var pTop0 = desenharPonto('radar-ponto-backend', 1, 'top');
+  var pRight0 = desenharPonto('radar-ponto-frontend', 1, 'right');
+  var pBottom0 = desenharPonto('radar-ponto-devops', 1, 'bottom');
+  atualizarPoligono(pTop0, pRight0, pBottom0, pSeg);
+
+  fetch('https://api.github.com/users/' + USUARIO_GITHUB + '/repos?per_page=100')
+    .then(function (r) { if (!r.ok) throw new Error('falhou'); return r.json(); })
+    .then(function (repos) {
+      var repositorios = repos.filter(function (r) { return !r.fork; });
+      var promessas = repositorios.map(function (repo) {
+        return fetch(repo.languages_url).then(function (r) { return r.json(); }).catch(function () { return {}; });
+      });
+      return Promise.all(promessas);
+    })
+    .then(function (todasLinguagens) {
+      var totais = { backend: 0, frontend: 0, devops: 0 };
+      todasLinguagens.forEach(function (linguagens) {
+        Object.keys(linguagens).forEach(function (nomeLinguagem) {
+          var bytes = linguagens[nomeLinguagem];
+          Object.keys(MAPA).forEach(function (categoria) {
+            if (MAPA[categoria].indexOf(nomeLinguagem) !== -1) totais[categoria] += bytes;
+          });
+        });
+      });
+
+      var etapaBackend = bytesParaEtapa(totais.backend);
+      var etapaFrontend = bytesParaEtapa(totais.frontend);
+      var etapaDevops = bytesParaEtapa(totais.devops);
+
+      var pTop = desenharPonto('radar-ponto-backend', etapaBackend, 'top');
+      var pRight = desenharPonto('radar-ponto-frontend', etapaFrontend, 'right');
+      var pBottom = desenharPonto('radar-ponto-devops', etapaDevops, 'bottom');
+      atualizarPoligono(pTop, pRight, pBottom, pSeg);
+
+      document.getElementById('radar-texto-backend').textContent = NOMES_ETAPA[etapaBackend];
+      document.getElementById('radar-texto-frontend').textContent = NOMES_ETAPA[etapaFrontend];
+      document.getElementById('radar-texto-devops').textContent = NOMES_ETAPA[etapaDevops];
+
+      document.getElementById('radar-chart-legenda').textContent =
+        'Backend, Frontend e DevOps calculados ao vivo pelo código real nos repositórios públicos do GitHub. Segurança é autoavaliação, atualizada manualmente por marco.';
+    })
+    .catch(function () {
+      document.getElementById('radar-chart-legenda').textContent =
+        'Não foi possível carregar os dados do GitHub agora (recarregue a página). Segurança já é exibida normalmente.';
+      ['backend', 'frontend', 'devops'].forEach(function (c) {
+        document.getElementById('radar-texto-' + c).textContent = 'indisponível agora';
+      });
+    });
+})();
+</script>

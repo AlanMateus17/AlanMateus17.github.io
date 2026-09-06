@@ -1978,3 +1978,63 @@ pre { white-space: pre-wrap; word-break: break-all; }
 @media print {
   .page-share-story-btn { display: none !important; }
 }
+
+/* === CURRÍCULO — novos elementos === */
+.cv__botoes-topo {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.cv__qrcode { margin-top: 0.5rem; }
+.cv__qrcode img { display: block; border-radius: 4px; }
+.cv__disponibilidade { margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+
+.cv__idiomas { display: flex; flex-direction: column; gap: 0.6rem; }
+.cv__idioma-item { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.cv__idioma-nome { font-weight: 700; }
+.cv__idioma-nivel { font-size: 0.88rem; color: var(--text-muted); }
+
+.cv__depoimentos { display: flex; flex-direction: column; gap: 1.25rem; }
+.cv__depoimento {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.1rem;
+  margin: 0;
+  font-style: italic;
+  color: var(--text-muted);
+}
+.cv__depoimento cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+.cv__depoimentos-link { margin-top: 1rem; font-size: 0.88rem; }
+.cv__depoimentos-link a { color: var(--accent-text); font-weight: 600; }
+
+@media print {
+  .cv__botoes-topo { display: none !important; }
+}
+
+/* === GRÁFICO RADAR DA STACK (Currículo) === */
+.radar-chart-wrap { margin-top: 2rem; display: flex; flex-direction: column; align-items: center; }
+.radar-chart__legenda { font-size: 0.85rem; color: var(--text-muted); text-align: center; max-width: 420px; margin-bottom: 1.25rem; min-height: 2.5em; }
+.radar-chart__label { font-size: 15px; font-weight: 700; font-family: var(--font-body); fill: var(--text); }
+.radar-chart__anel { font-size: 11px; font-family: var(--font-mono); fill: var(--text-light); }
+.radar-chart__etapas { font-size: 0.78rem; color: var(--text-light); margin-top: 1.25rem; text-align: center; }
+.radar-chart__resumo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 1.5rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+.radar-chart__resumo-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; }
+.radar-chart__resumo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+@media (max-width: 480px) {
+  .radar-chart__resumo { grid-template-columns: 1fr; }
+}
