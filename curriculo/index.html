@@ -127,8 +127,10 @@ formacao_complementar:
         {% if page.github %}<a href="{{ page.github }}" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">{{ page.github | remove: "https://" }}</a>{% endif %}
         {% if page.linkedin %}<a href="{{ page.linkedin }}" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">{{ page.linkedin | remove: "https://" }}</a>{% endif %}
         <div class="cv__qrcode-box">
-          <div id="cv-qrcode" class="cv__qrcode" title="Escaneie para abrir meu cartão de contato"></div>
-          <p class="cv__qrcode-legenda">Escaneie o cartão</p>
+          <a href="{{ '/contato/cartao/' | relative_url }}" id="cv-qrcode-link" aria-label="Abrir cartão de contato digital" style="display:inline-block;text-decoration:none;">
+            <div id="cv-qrcode" class="cv__qrcode" title="Escaneie ou toque para abrir meu cartão de contato"></div>
+          </a>
+          <p class="cv__qrcode-legenda" id="cv-qrcode-legenda">Escaneie o cartão</p>
         </div>
       </div>
     </div>
@@ -302,7 +304,7 @@ formacao_complementar:
   </div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<script src="/assets/js/gerador-visual.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 
 <script>
@@ -316,6 +318,12 @@ window.addEventListener('load', function () {
       colorLight: "#ffffff",
       correctLevel: QRCode.CorrectLevel.M
     });
+  }
+
+  // Em telas de toque o QR não serve pra escanear a própria tela — deixa claro que é um link.
+  if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) {
+    var legendaQr = document.getElementById('cv-qrcode-legenda');
+    if (legendaQr) legendaQr.textContent = 'Toque para abrir o cartão';
   }
 
   var btnPdf = document.getElementById('cv-baixar-pdf');
