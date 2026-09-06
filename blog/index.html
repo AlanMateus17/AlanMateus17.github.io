@@ -32,12 +32,14 @@ description: "Artigos sobre desenvolvimento .NET, ensino de TI e segurança ofen
     <div class="search-box">
       <input type="search" id="blog-search-input" placeholder="Buscar por palavra-chave..." aria-label="Buscar posts">
       <p class="search-box__empty" id="blog-search-empty" hidden>Nenhum post encontrado pra essa busca.</p>
+      <p class="search-box__empty" id="blog-filter-empty" hidden>Ainda não tenho nenhum post publicado nesse tema — mas está no roteiro. <a href="{{ '/roteiro/' | relative_url }}">Confere o que vem por aí →</a></p>
     </div>
     {% if site.posts.size > 0 %}
     <div class="blog-list">
       {% for post in site.posts %}
       {% assign search_blob = post.title | append: ' ' | append: post.excerpt | strip_html | append: ' ' | append: post.tags | join: ' ' | downcase %}
-      <article class="blog-post-item" data-search="{{ search_blob | escape }}" data-slug="{{ post.slug }}">
+      {% assign categoria_filtro = post.categories | first | default: '' | downcase %}
+      <article class="blog-post-item" data-search="{{ search_blob | escape }}" data-slug="{{ post.slug }}" data-categoria="{{ categoria_filtro }}">
         <span class="blog-post-item__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
         <div>
           {% assign categoria_item = post.categories | first | default: 'Blog' %}

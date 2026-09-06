@@ -126,7 +126,10 @@ formacao_complementar:
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;text-align:right;">
         {% if page.github %}<a href="{{ page.github }}" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">{{ page.github | remove: "https://" }}</a>{% endif %}
         {% if page.linkedin %}<a href="{{ page.linkedin }}" style="color:var(--accent-text);font-size:.875rem;" target="_blank" rel="noopener noreferrer">{{ page.linkedin | remove: "https://" }}</a>{% endif %}
-        <div id="cv-qrcode" class="cv__qrcode" title="Escaneie para abrir meu cartão de contato"></div>
+        <div class="cv__qrcode-box">
+          <div id="cv-qrcode" class="cv__qrcode" title="Escaneie para abrir meu cartão de contato"></div>
+          <p class="cv__qrcode-legenda">Escaneie o cartão</p>
+        </div>
       </div>
     </div>
 
@@ -198,7 +201,7 @@ formacao_complementar:
       <div class="radar-chart-wrap">
         <p class="radar-chart__legenda" id="radar-chart-legenda">Calculando as etapas com base nos repositórios reais do GitHub...</p>
 
-        <svg viewBox="0 0 400 400" width="360" height="360" class="radar-chart">
+        <svg viewBox="-70 -40 540 480" width="400" height="356" class="radar-chart">
           <polygon points="200,40 360,200 200,360 40,200" fill="none" stroke="var(--border)" stroke-width="1"/>
           <polygon points="200,80 320,200 200,320 80,200" fill="none" stroke="var(--border)" stroke-width="1"/>
           <polygon points="200,120 280,200 200,280 120,200" fill="none" stroke="var(--border)" stroke-width="1"/>
@@ -307,8 +310,10 @@ window.addEventListener('load', function () {
   if (typeof QRCode !== 'undefined') {
     new QRCode(document.getElementById("cv-qrcode"), {
       text: window.location.origin + "{{ '/contato/cartao/' | relative_url }}",
-      width: 72,
-      height: 72,
+      width: 88,
+      height: 88,
+      colorDark: "#0E2E38",
+      colorLight: "#ffffff",
       correctLevel: QRCode.CorrectLevel.M
     });
   }

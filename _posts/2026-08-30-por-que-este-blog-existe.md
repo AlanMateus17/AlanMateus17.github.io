@@ -2,7 +2,7 @@
 layout: post
 title: "Por que este blog existe — e por que o ensino de TI nas escolas está falhando"
 date: 2026-08-30
-categories: [educação]
+categories: [ensino]
 tags: [ensino, ti, escola-publica, emti, tecnologia]
 excerpt: "Um manifesto de abertura e a primeira crítica: currículo, infraestrutura, base fundamental que falta, desinteresse dos alunos e o que realmente sustenta uma escola boa."
 quiz:

@@ -109,22 +109,36 @@
   update();
 })();
 
-// --- Filtros do portfólio ---
+// --- Filtros do portfólio e do blog (mesmo botão, alvo diferente por página) ---
 (function() {
-  const btns  = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.log-entry');
+  const btns = document.querySelectorAll('.filter-btn');
   if (!btns.length) return;
+
+  const logEntries = document.querySelectorAll('.log-entry');
+  const blogPosts = document.querySelectorAll('.blog-post-item');
+  const vazioFiltro = document.getElementById('blog-filter-empty');
 
   btns.forEach(btn => {
     btn.addEventListener('click', () => {
       btns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const filter = btn.dataset.filter;
+      let visiveis = 0;
 
-      cards.forEach(card => {
+      logEntries.forEach(card => {
         const match = filter === 'all' || card.dataset.status === filter;
         card.style.display = match ? '' : 'none';
       });
+
+      blogPosts.forEach(card => {
+        const match = filter === 'all' || card.dataset.categoria === filter;
+        card.style.display = match ? '' : 'none';
+        if (match) visiveis++;
+      });
+
+      if (blogPosts.length && vazioFiltro) {
+        vazioFiltro.hidden = visiveis > 0;
+      }
     });
   });
 })();

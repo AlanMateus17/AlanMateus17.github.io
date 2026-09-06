@@ -1987,8 +1987,22 @@ pre { white-space: pre-wrap; word-break: break-all; }
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
-.cv__qrcode { margin-top: 0.5rem; }
-.cv__qrcode img { display: block; border-radius: 4px; }
+.cv__qrcode-box {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.cv__qrcode {
+  padding: 0.6rem;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.cv__qrcode img { display: block; border-radius: 2px; }
+.cv__qrcode-legenda { font-size: 0.72rem; color: var(--text-light); font-family: var(--font-mono); }
 .cv__disponibilidade { margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
 
 .cv__idiomas { display: flex; flex-direction: column; gap: 0.6rem; }
