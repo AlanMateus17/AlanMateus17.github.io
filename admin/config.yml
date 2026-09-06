@@ -43,6 +43,15 @@ collections:
         multiple: true
       - { label: "Tags", name: "tags", widget: "list" }
       - { label: "Resumo", name: "excerpt", widget: "text" }
+      - label: "Quiz de fixação (opcional, mas recomendado)"
+        name: "quiz"
+        widget: "list"
+        required: false
+        summary: "{{fields.pergunta}}"
+        fields:
+          - { label: "Pergunta", name: "pergunta", widget: "string" }
+          - { label: "Opções (uma por linha)", name: "opcoes", widget: "list" }
+          - { label: "Posição da opção certa (0 = primeira, 1 = segunda...)", name: "correta", widget: "number", min: 0 }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
 
   - name: "sistemas"

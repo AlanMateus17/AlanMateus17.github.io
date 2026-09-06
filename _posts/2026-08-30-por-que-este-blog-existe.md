@@ -5,6 +5,19 @@ date: 2026-08-30
 categories: [educação]
 tags: [ensino, ti, escola-publica, emti, tecnologia]
 excerpt: "Um manifesto de abertura e a primeira crítica: currículo, infraestrutura, base fundamental que falta, desinteresse dos alunos e o que realmente sustenta uma escola boa."
+quiz:
+  - pergunta: "Segundo o post, até que idade o autor conta que não estudou como deveria?"
+    opcoes:
+      - "Até os 15 anos"
+      - "Até os 18 anos"
+      - "Até os 21 anos"
+    correta: 1
+  - pergunta: "Qual é a ordem dos três primeiros sistemas que o post cita, e por que essa ordem específica?"
+    opcoes:
+      - "AM Kaixara, AM Rotara, AM Rendara — porque cada um reaproveita o que o anterior constrói"
+      - "Ordem alfabética, sem motivo técnico"
+      - "O sistema mais fácil primeiro, o mais difícil por último"
+    correta: 0
 ---
 
 Aos 9 anos de idade eu decidi que um dia mudaria a realidade da minha família. Sonhava em trocar uma infância marcada por dificuldade financeira por uma viagem em família para alguma ilha, para alguma praia, nas férias ou num final de semana prolongado. Era uma criança com uma visão clara do que queria — só que, mesmo sabendo que precisava estudar pra chegar lá, não estudei como deveria. Não até os 18 anos.

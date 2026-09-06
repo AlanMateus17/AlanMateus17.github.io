@@ -2038,3 +2038,48 @@ pre { white-space: pre-wrap; word-break: break-all; }
 @media (max-width: 480px) {
   .radar-chart__resumo { grid-template-columns: 1fr; }
 }
+
+/* === ROTEIRO PÚBLICO === */
+.roteiro-lista { display: flex; flex-direction: column; gap: 1.1rem; }
+.roteiro-item { display: flex; align-items: flex-start; gap: 0.9rem; }
+.roteiro-item__marcador {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+}
+.roteiro-item__marcador--pendente { background: transparent; border: 1.5px solid var(--border-mid); }
+.roteiro-item__titulo { font-weight: 600; }
+.roteiro-item__desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
+.roteiro-item--agora .roteiro-item__titulo { color: var(--accent-text); }
+
+/* === ATIVIDADE RECENTE DO GITHUB (Home) === */
+.github-atividade { display: flex; flex-direction: column; }
+.github-atividade__carregando,
+.github-atividade__vazio { color: var(--text-muted); font-size: 0.9rem; padding: 1rem 0; }
+.github-atividade__item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--text);
+}
+.github-atividade__item:hover .github-atividade__msg { color: var(--accent-text); }
+.github-atividade__repo {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-text);
+  background: rgba(0,194,168,0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.github-atividade__msg { flex: 1; font-size: 0.88rem; }
+.github-atividade__tempo { font-size: 0.78rem; color: var(--text-light); white-space: nowrap; flex-shrink: 0; }
+@media (max-width: 640px) {
+  .github-atividade__item { flex-wrap: wrap; }
+  .github-atividade__msg { width: 100%; order: 3; }
+}

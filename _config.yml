@@ -39,6 +39,9 @@ goatcounter_username: "SEU_USUARIO_AQUI"
 # Formspree do formulário de orçamento (crie um formulário novo em formspree.io e cole o ID aqui)
 formspree_orcamento_id: "SEU_ID_AQUI"
 
+# Formspree do quiz dos posts (crie um formulário novo em formspree.io e cole o ID aqui)
+formspree_quiz_id: "SEU_ID_AQUI"
+
 # Coleções
 collections:
   sistemas:

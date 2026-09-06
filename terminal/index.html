@@ -1,0 +1,86 @@
+---
+layout: default
+title: "~"
+description: "Você achou."
+sitemap: false
+noindex: true
+permalink: /terminal/
+---
+<section style="min-height:100vh;background:#0A0F0D;padding:2rem 1rem;display:flex;align-items:center;justify-content:center;">
+  <div style="width:100%;max-width:700px;background:#0F1613;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.5);overflow:hidden;font-family:var(--font-mono);">
+    <div style="background:#1A211E;padding:0.6rem 1rem;display:flex;gap:0.4rem;align-items:center;">
+      <span style="width:11px;height:11px;border-radius:50%;background:#FF5F56;display:inline-block;"></span>
+      <span style="width:11px;height:11px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
+      <span style="width:11px;height:11px;border-radius:50%;background:#27C93F;display:inline-block;"></span>
+      <span style="color:#6B7A72;font-size:0.75rem;margin-left:1rem;">alan@amtech: ~</span>
+    </div>
+    <div id="terminal-saida" style="padding:1.25rem;color:#7FE6C4;font-size:0.85rem;line-height:1.7;height:400px;overflow-y:auto;white-space:pre-wrap;"></div>
+    <div style="display:flex;align-items:center;padding:0 1.25rem 1.25rem;color:#7FE6C4;font-size:0.85rem;">
+      <span style="color:#00C2A8;margin-right:0.5rem;">$</span>
+      <input id="terminal-input" type="text" autocomplete="off" spellcheck="false"
+        style="flex:1;background:transparent;border:none;outline:none;color:#7FE6C4;font-family:inherit;font-size:inherit;">
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var saida = document.getElementById('terminal-saida');
+  var input = document.getElementById('terminal-input');
+  var historico = [];
+  var indiceHistorico = -1;
+
+  var comandos = {
+    help: "Comandos disponíveis:\n  whoami       — quem sou eu\n  stack        — tecnologias que uso\n  sudo hire-me — bom, tenta\n  ls           — lista o que tem por aqui\n  cat plano.txt — meu plano de estudos\n  clear        — limpa a tela\n  exit         — sai (mentira, não sai de verdade)",
+    whoami: "Alan Mateus — professor de TI, desenvolvedor .NET/Next.js, e um dia vou ser pentester também.\nSe você achou essa página, provavelmente é do tipo que aperta F12 antes de perguntar. Respeito.",
+    stack: ".NET 10 · C# · PostgreSQL · Next.js · TypeScript · Docker · Clean Architecture\nAinda estudando: eJPT → OSCP (segurança ofensiva)",
+    ls: "sobre/  portfolio/  blog/  ensino/  seguranca/  curriculo/  contato/\n(e você achou a pasta que não estava na lista)",
+    "cat plano.txt": "Passo 1: Lógica de Programação + Matemática Cap 1-2\nCritério de pronto: 3 exercícios sem travar\nDepois disso: AM Kaixara, o primeiro dos 13 sistemas",
+    "sudo hire-me": "[sudo] password for recrutador: \n\nAcesso negado. Mas o link do currículo funciona sem senha: /curriculo/",
+    clear: null,
+    exit: "Você não sai de um terminal só fechando ele. Aperta Ctrl+W ou vive aqui pra sempre."
+  };
+
+  function escrever(texto) {
+    saida.textContent += texto + "\n\n";
+    saida.scrollTop = saida.scrollHeight;
+  }
+
+  escrever("Bem-vindo(a) ao terminal secreto.\nDigite 'help' pra ver o que dá pra fazer aqui.");
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (historico.length && indiceHistorico > 0) {
+        indiceHistorico--;
+        input.value = historico[indiceHistorico];
+      }
+      return;
+    }
+    if (e.key !== 'Enter') return;
+
+    var comando = input.value.trim();
+    if (!comando) return;
+
+    historico.push(comando);
+    indiceHistorico = historico.length;
+
+    escrever("$ " + comando);
+    input.value = '';
+
+    var chave = comando.toLowerCase();
+    if (chave === 'clear') {
+      saida.textContent = '';
+      return;
+    }
+    if (comandos.hasOwnProperty(chave)) {
+      escrever(comandos[chave]);
+    } else {
+      escrever("comando não encontrado: " + comando + "\ndigite 'help' pra ver o que existe.");
+    }
+  });
+
+  document.addEventListener('click', function () { input.focus(); });
+  input.focus();
+})();
+</script>

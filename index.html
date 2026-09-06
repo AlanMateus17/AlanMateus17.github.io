@@ -213,6 +213,16 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 </section>
 
 <section>
+  <div class="container" style="max-width:760px;">
+    <p class="section-eyebrow">Prova ao vivo</p>
+    <h2 class="section-title">Atividade recente no GitHub</h2>
+    <div id="github-atividade" class="github-atividade">
+      <p class="github-atividade__carregando">Buscando os commits mais recentes...</p>
+    </div>
+  </div>
+</section>
+
+<section>
   <div class="container" style="max-width:640px;">
     {% include newsletter.html %}
   </div>
@@ -233,3 +243,59 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var container = document.getElementById('github-atividade');
+  if (!container) return;
+  var USUARIO_GITHUB = "AlanMateus17";
+
+  function tempoRelativo(dataISO) {
+    var diffMs = Date.now() - new Date(dataISO).getTime();
+    var minutos = Math.floor(diffMs / 60000);
+    if (minutos < 60) return 'há ' + Math.max(minutos, 1) + ' min';
+    var horas = Math.floor(minutos / 60);
+    if (horas < 24) return 'há ' + horas + 'h';
+    var dias = Math.floor(horas / 24);
+    if (dias < 30) return 'há ' + dias + ' dia' + (dias > 1 ? 's' : '');
+    var meses = Math.floor(dias / 30);
+    return 'há ' + meses + ' mês' + (meses > 1 ? 'es' : '');
+  }
+
+  fetch('https://api.github.com/users/' + USUARIO_GITHUB + '/events/public?per_page=30')
+    .then(function (r) { if (!r.ok) throw new Error('falhou'); return r.json(); })
+    .then(function (eventos) {
+      var commits = [];
+      eventos.forEach(function (evento) {
+        if (evento.type !== 'PushEvent') return;
+        var repoNome = evento.repo.name.split('/')[1];
+        evento.payload.commits.forEach(function (c) {
+          commits.push({
+            repo: repoNome,
+            mensagem: c.message.split('\n')[0],
+            data: evento.created_at,
+            url: 'https://github.com/' + evento.repo.name + '/commit/' + c.sha
+          });
+        });
+      });
+
+      if (commits.length === 0) {
+        container.innerHTML = '<p class="github-atividade__vazio">Nenhuma atividade pública recente — a construção continua, só não apareceu no GitHub esta semana.</p>';
+        return;
+      }
+
+      var html = commits.slice(0, 6).map(function (c) {
+        return '<a href="' + c.url + '" target="_blank" rel="noopener" class="github-atividade__item">' +
+          '<span class="github-atividade__repo">' + c.repo + '</span>' +
+          '<span class="github-atividade__msg">' + c.mensagem + '</span>' +
+          '<span class="github-atividade__tempo">' + tempoRelativo(c.data) + '</span>' +
+          '</a>';
+      }).join('');
+      container.innerHTML = html;
+    })
+    .catch(function () {
+      container.innerHTML = '<p class="github-atividade__vazio">Não foi possível carregar a atividade do GitHub agora.</p>';
+    });
+})();
+</script>
+
