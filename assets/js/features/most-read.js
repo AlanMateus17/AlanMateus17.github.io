@@ -1,38 +1,40 @@
-/**
- * === features/most-read.js ===
- * Monta a lista "Mais lidos" (`#most-read`) na página do blog, consultando
- * a contagem de visualizações de cada post no CounterAPI e ordenando pelas
- * 3 maiores. Só aparece se pelo menos um post tiver mais de 1 visualização
- * (evita mostrar "mais lidos" quando ninguém leu nada ainda).
+/*
+ * features/most-read.js — widget "Mais lidos" na listagem do blog.
+ * Busca a contagem de visualizações (via core/counter-widget.js) de
+ * cada post listado, ordena e mostra os 3 mais vistos — só se algum
+ * post já tiver mais de 1 visualização (senão não faz sentido destacar).
  */
 (function () {
-  var itens = document.querySelectorAll('.blog-post-item[data-slug]');
+  var items = document.querySelectorAll('.blog-post-item[data-slug]');
   var container = document.getElementById('most-read');
-  var lista = document.getElementById('most-read-list');
-  if (!itens.length || !container || !lista) return;
+  var list = document.getElementById('most-read-list');
+  if (!items.length || !container || !list) return;
 
   var leituras = [];
 
-  Promise.all(Array.from(itens).map(function (item) {
+  var promessas = Array.from(items).map(function (item) {
     var slug = item.getAttribute('data-slug');
-    return AMSite.counter.lerContador('view', slug)
-      .then(function (data) {
+    return window.AMCounter.fetchViewCount(slug)
+      .then(function (views) {
         var titulo = item.querySelector('.blog-post-item__title a');
-        if (titulo && data.value) {
-          leituras.push({ titulo: titulo.textContent, url: titulo.getAttribute('href'), views: data.value });
+        if (titulo && views) {
+          leituras.push({ titulo: titulo.textContent, url: titulo.getAttribute('href'), views: views });
         }
       })
       .catch(function () {});
-  })).then(function () {
+  });
+
+  Promise.all(promessas).then(function () {
     leituras.sort(function (a, b) { return b.views - a.views; });
     var top = leituras.slice(0, 3).filter(function (p) { return p.views > 1; });
     if (!top.length) return;
+
     top.forEach(function (p) {
       var a = document.createElement('a');
       a.href = p.url;
       a.className = 'most-read__item';
       a.textContent = p.titulo;
-      lista.appendChild(a);
+      list.appendChild(a);
     });
     container.hidden = false;
   });

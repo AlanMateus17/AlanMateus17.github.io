@@ -78,7 +78,7 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 
     <div class="frentes__grid">
 
-      <div class="frente" style="--frente-color:#00C2A8">
+      <div class="frente frente--dev">
         <div class="frente__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.6"/><path d="M19.4 13a7.5 7.5 0 000-2l2-1.5-2-3.4-2.3.9a7.6 7.6 0 00-1.7-1L15 3.5h-4l-.4 2.5a7.6 7.6 0 00-1.7 1l-2.3-.9-2 3.4L6.6 11a7.5 7.5 0 000 2l-2 1.5 2 3.4 2.3-.9c.5.4 1.1.75 1.7 1l.4 2.5h4l.4-2.5a7.6 7.6 0 001.7-1l2.3.9 2-3.4-2-1.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
         <h3 class="frente__title">Desenvolvimento de Software</h3>
         <p class="frente__desc">
@@ -94,7 +94,7 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
         </div>
       </div>
 
-      <div class="frente" style="--frente-color:#FFD166">
+      <div class="frente frente--ensino">
         <div class="frente__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4.5C4 3.7 4.7 3 5.5 3H11v18H5.5c-.8 0-1.5-.7-1.5-1.5v-15z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 4.5c0-.8-.7-1.5-1.5-1.5H13v18h5.5c.8 0 1.5-.7 1.5-1.5v-15z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
         <h3 class="frente__title">Educação em TI</h3>
         <p class="frente__desc">
@@ -110,7 +110,7 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
         </div>
       </div>
 
-      <div class="frente" style="--frente-color:#0E2E38">
+      <div class="frente frente--seguranca">
         <div class="frente__icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.6"/></svg></div>
         <h3 class="frente__title">Segurança Ofensiva</h3>
         <p class="frente__desc">
@@ -132,10 +132,10 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 <!-- ===== ÚLTIMOS POSTS ===== -->
 <section class="blog-section">
   <div class="container">
-    <div class="flex-between-end mb-2" >
+    <div class="section-header">
       <div>
         <p class="section-eyebrow">Blog</p>
-        <h2 class="section-title mb-0" >Últimas publicações</h2>
+        <h2 class="section-title section-title--sem-margem">Últimas publicações</h2>
       </div>
       <a href="{{ '/blog/' | relative_url }}" class="btn btn--ghost">Ver todos</a>
     </div>
@@ -146,7 +146,7 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
       <article class="post-card {% if forloop.first %}post-card--featured{% endif %}">
         <p class="post-card__category">{{ post.categories | first | default: 'Blog' }}</p>
         <h3 class="post-card__title">
-          <a href="{{ post.url | relative_url }}" class="display-block">{{ post.title }}</a>
+          <a href="{{ post.url | relative_url }}" class="post-card__title-link">{{ post.title }}</a>
         </h3>
         {% if post.excerpt %}
         <p class="post-card__excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
@@ -159,8 +159,8 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
       {% endfor %}
     </div>
     {% else %}
-    <div class="empty-state">
-      <p class="placeholder-note text-sm">// primeiros posts chegando em breve</p>
+    <div class="posts-vazio">
+      <p class="posts-vazio__tag">// primeiros posts chegando em breve</p>
     </div>
     {% endif %}
   </div>
@@ -169,15 +169,15 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 <!-- ===== PORTFÓLIO PREVIEW ===== -->
 <section class="portfolio-section">
   <div class="container">
-    <div class="flex-between-end mb-2" >
+    <div class="section-header">
       <div>
         <p class="section-eyebrow">Portfólio</p>
-        <h2 class="section-title mb-0" >Sistemas em construção</h2>
+        <h2 class="section-title section-title--sem-margem">Sistemas em construção</h2>
       </div>
       <a href="{{ '/portfolio/' | relative_url }}" class="btn btn--ghost">Ver todos</a>
     </div>
 
-    <div class="entry-list">
+    <div class="portfolio-log">
       <div class="log-entry">
         <div class="log-entry__marker"><span class="sistema-card__status status--dev">Em dev</span></div>
         <div class="log-entry__body">
@@ -213,30 +213,30 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 </section>
 
 <section>
-  <div class="container max-w-xl" >
+  <div class="container container--narrow-md">
     <p class="section-eyebrow">Prova ao vivo</p>
     <h2 class="section-title">Atividade recente no GitHub</h2>
-    <div id="github-atividade" class="github-atividade">
+    <div id="github-atividade" class="github-atividade" data-github-user="{{ site.author.github }}">
       <p class="github-atividade__carregando">Buscando os commits mais recentes...</p>
     </div>
   </div>
 </section>
 
 <section>
-  <div class="container max-w-lg" >
+  <div class="container container--narrow-sm">
     {% include newsletter.html %}
   </div>
 </section>
 
 <!-- ===== CTA FINAL ===== -->
-<section class="cta-band">
+<section class="cta-final">
   <div class="container">
     <div>
-      <h2 class="text-white mb-1">Construindo em público.<br><em class="text-accent-label">Aprendendo em voz alta.</em></h2>
-      <p class="cta-band__lead">
+      <h2 class="cta-final__titulo">Construindo em público.<br><em class="page-hero__title-accent">Aprendendo em voz alta.</em></h2>
+      <p class="cta-final__desc">
         Cada decisão técnica, cada erro e cada avanço vai para o blog. Acompanhe a jornada ou entre em contato se quiser colaborar.
       </p>
-      <div class="flex-gap-sm flex-center">
+      <div class="cta-final__botoes">
         <a href="{{ '/blog/' | relative_url }}" class="btn btn--primary">Acompanhar o blog</a>
         <a href="{{ '/contato/' | relative_url }}" class="btn btn--outline">Entrar em contato</a>
       </div>
@@ -244,58 +244,4 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
   </div>
 </section>
 
-<script>
-(function () {
-  var container = document.getElementById('github-atividade');
-  if (!container) return;
-  var USUARIO_GITHUB = "AlanMateus17";
-
-  function tempoRelativo(dataISO) {
-    var diffMs = Date.now() - new Date(dataISO).getTime();
-    var minutos = Math.floor(diffMs / 60000);
-    if (minutos < 60) return 'há ' + Math.max(minutos, 1) + ' min';
-    var horas = Math.floor(minutos / 60);
-    if (horas < 24) return 'há ' + horas + 'h';
-    var dias = Math.floor(horas / 24);
-    if (dias < 30) return 'há ' + dias + ' dia' + (dias > 1 ? 's' : '');
-    var meses = Math.floor(dias / 30);
-    return 'há ' + meses + ' mês' + (meses > 1 ? 'es' : '');
-  }
-
-  fetch('https://api.github.com/users/' + USUARIO_GITHUB + '/events/public?per_page=30')
-    .then(function (r) { if (!r.ok) throw new Error('falhou'); return r.json(); })
-    .then(function (eventos) {
-      var commits = [];
-      eventos.forEach(function (evento) {
-        if (evento.type !== 'PushEvent') return;
-        var repoNome = evento.repo.name.split('/')[1];
-        evento.payload.commits.forEach(function (c) {
-          commits.push({
-            repo: repoNome,
-            mensagem: c.message.split('\n')[0],
-            data: evento.created_at,
-            url: 'https://github.com/' + evento.repo.name + '/commit/' + c.sha
-          });
-        });
-      });
-
-      if (commits.length === 0) {
-        container.innerHTML = '<p class="github-atividade__vazio">Nenhuma atividade pública recente — a construção continua, só não apareceu no GitHub esta semana.</p>';
-        return;
-      }
-
-      var html = commits.slice(0, 6).map(function (c) {
-        return '<a href="' + c.url + '" target="_blank" rel="noopener" class="github-atividade__item">' +
-          '<span class="github-atividade__repo">' + c.repo + '</span>' +
-          '<span class="github-atividade__msg">' + c.mensagem + '</span>' +
-          '<span class="github-atividade__tempo">' + tempoRelativo(c.data) + '</span>' +
-          '</a>';
-      }).join('');
-      container.innerHTML = html;
-    })
-    .catch(function () {
-      container.innerHTML = '<p class="github-atividade__vazio">Não foi possível carregar a atividade do GitHub agora.</p>';
-    });
-})();
-</script>
-
+<script src="{{ '/assets/js/pages/home.js' | relative_url }}" defer></script>

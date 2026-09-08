@@ -1,10 +1,14 @@
-/**
- * === core/pwa.js ===
- * Tudo relacionado a "instalar o site como app" (Progressive Web App):
- *  1) registra o Service Worker (`sw.js`), que permite funcionar parcialmente offline;
- *  2) controla o botão "Instalar app" — o fluxo é diferente em Android/Chrome
- *     (o navegador avisa quando pode instalar) e em iOS/Safari (não avisa,
- *     então mostramos instruções manuais).
+/*
+ * core/pwa.js — transforma o site num "app instalável" (PWA).
+ *
+ * Duas responsabilidades bem diferentes neste arquivo:
+ *
+ * 1) Registrar o Service Worker (sw.js na raiz do site), que é o que
+ *    permite o site funcionar parcialmente offline e ser instalado.
+ *
+ * 2) Controlar o botão "Instalar app" que aparece no rodapé de toda
+ *    página — incluindo o caminho especial pro iOS, que não tem o
+ *    aviso automático "beforeinstallprompt" que Chrome/Edge/Android têm.
  */
 
 // --- Registra o Service Worker ---
@@ -23,7 +27,7 @@ if ('serviceWorker' in navigator) {
   var iosModal = document.getElementById('ios-install-modal');
   var iosClose = document.getElementById('ios-install-close');
   var iosDone = document.getElementById('ios-install-done');
-  var deferredPrompt = null;
+  var deferredPrompt = null; // guarda o evento do navegador pra disparar depois
 
   function isIOS() {
     return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;

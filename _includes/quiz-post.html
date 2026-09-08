@@ -1,11 +1,13 @@
 {% comment %}
-  Quiz educacional — só aparece se o post tiver "quiz:" no front matter.
-  Ao acertar, pede o nome e manda um e-mail (Formspree) avisando que a pessoa concluiu.
+  quiz-post.html — quiz de fixação, só aparece se o post tiver "quiz:"
+  no front matter. Toda a lógica está em assets/js/features/quiz.js;
+  aqui só ficam os dados (slug, título, id do Formspree e as respostas
+  certas de cada pergunta), passados via atributos data-*.
 {% endcomment %}
 {% if page.quiz %}
 <div class="quiz-post" id="quiz-post"
-     data-post-slug="{{ page.slug }}"
-     data-post-title="{{ page.title }}"
+     data-slug="{{ page.slug }}"
+     data-titulo="{{ page.title }}"
      data-formspree-id="{{ site.formspree_quiz_id }}">
   <p class="quiz-post__eyebrow">Teste o que você aprendeu</p>
   <h3 class="quiz-post__titulo">Quiz rápido</h3>
@@ -34,7 +36,7 @@
   </div>
 
   <div id="quiz-post-concluido" hidden>
-    <p class="quiz-post__concluido-msg"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="icon-inline--tight"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Quiz concluído!</p>
+    <p class="quiz-post__concluido-msg"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="icon-inline"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Quiz concluído!</p>
   </div>
 </div>
 {% endif %}

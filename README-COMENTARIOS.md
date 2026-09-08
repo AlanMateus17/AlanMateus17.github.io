@@ -18,34 +18,29 @@ message: "O texto do comentário aqui."
 
 Pra rejeitar um comentário: simplesmente não faz nada, o e-mail fica só na sua caixa de entrada.
 
-## Resposta em thread (comentário respondendo outro)
+## Resposta em thread (opcional)
 
-Quando alguém usa o botão "Responder" no site, o e-mail que você recebe do
-Formspree já vem com o campo `parent` preenchido (o id do comentário-pai).
-Copie esse id pro campo `parent` do `.yml` da resposta:
+Se quiser que o comentário apareça como uma RESPOSTA a outro comentário já
+publicado (em vez de um comentário novo, solto), adicione o campo `parent`
+com o nome do arquivo do comentário respondido (sem a extensão `.yml`):
 
 ```yaml
-name: "Nome de quem respondeu"
-date: "2026-09-02"
+name: "Nome da pessoa"
+date: "2026-08-31"
 message: "O texto da resposta aqui."
 parent: "001"
 ```
 
-O valor de `parent` é o **nome do arquivo** (sem `.yml`) do comentário original
-que está sendo respondido — não o nome da pessoa.
+## Marcar um comentário como seu (opcional)
 
-## Selo de "Autor" (quando você mesmo comenta)
-
-Pra marcar um comentário seu com o selo "Autor" ao lado do nome, adicione
-`author: true`:
+Se você mesmo estiver respondendo (não um visitante), adicione `author: true`
+pra aparecer o selo "Autor" ao lado do seu nome:
 
 ```yaml
 name: "Alan Mateus"
-date: "2026-09-02"
-message: "Resposta minha aqui."
-author: true
+date: "2026-08-31"
+message: "Sua resposta aqui."
 parent: "001"
+author: true
 ```
 
-`author` e `parent` são independentes — um comentário pode ter só um dos
-dois, os dois juntos, ou nenhum.

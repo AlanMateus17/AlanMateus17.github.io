@@ -7,7 +7,7 @@ permalink: /loja/
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Loja</p>
-    <h1 class="page-hero__title">Material extra,<br><em class="text-accent-label">além do gratuito.</em></h1>
+    <h1 class="page-hero__title">Material extra,<br><em class="page-hero__title-accent">além do gratuito.</em></h1>
     <p class="page-hero__desc">Tudo que já é gratuito no site continua gratuito. Aqui ficam pacotes extras, mentorias e produtos que exigem mais tempo meu pra preparar.</p>
   </div>
 </header>
@@ -36,9 +36,9 @@ permalink: /loja/
       <p class="text-muted">Nenhum produto disponível no momento.</p>
     {% endif %}
 
-    <p class="mt-4 text-xs text-center">
-      Prefere conversar antes? <a href="{{ '/servicos/#orcamento' | relative_url }}" class="text-accent-text">Pede um orçamento</a> ou chama no
-      <a href="https://wa.me/{{ site.author.whatsapp }}" target="_blank" rel="noopener" class="text-accent-text">WhatsApp</a>.
+    <p class="loja-rodape-nota">
+      Prefere conversar antes? <a href="{{ '/servicos/' | relative_url }}#orcamento" class="link-accent">Pede um orçamento</a> ou chama no
+      <a href="https://wa.me/{{ site.author.whatsapp }}" target="_blank" rel="noopener" class="link-accent">WhatsApp</a>.
     </p>
   </div>
 </section>

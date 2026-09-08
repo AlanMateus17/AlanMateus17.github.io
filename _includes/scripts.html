@@ -1,48 +1,48 @@
 {% comment %}
-  === scripts.html ===
-  Ponto único de carregamento do JS do site inteiro (incluído por
-  `_layouts/default.html`, então roda em toda página).
+  scripts.html — carrega, em ORDEM, todo o JavaScript usado em mais de
+  uma página do site. Incluído uma única vez, no fim do <body> de
+  _layouts/default.html (e, por consequência, em toda página que usa
+  esse layout — inclusive as páginas de portfólio, que agora estendem
+  o default em vez de duplicar tudo).
 
-  ORDEM IMPORTA: cada arquivo abaixo pode depender do que veio antes dele
-  (ex.: `core/counter-api.js` usa `AMSite.config`, definido em
-  `site-config.js`). Todos usam `defer`, então:
-    - baixam em paralelo, sem travar a renderização da página;
-    - executam só depois que o HTML inteiro terminou de carregar;
-    - executam NESTA ORDEM (a ordem do documento), nunca fora de ordem.
+  A ordem importa: cada arquivo pode depender do que veio antes dele.
+  Todos usam "defer", que significa "baixa em paralelo com a página,
+  mas só executa depois que o HTML inteiro terminou de ser lido" — por
+  isso é seguro carregar tudo aqui em cima do rodapé, mesmo que o
+  elemento que um script procura só apareça mais abaixo no HTML.
 
-  Cada arquivo de `features/` se auto-verifica ("o elemento que eu preciso
-  existe nesta página?") antes de fazer qualquer coisa — por isso é seguro
-  carregar todos eles em toda página, mesmo que a feature só apareça em
-  algumas: nas páginas onde não se aplica, o arquivo simplesmente não faz nada.
-
-  Os scripts de UMA página só (`pages/curriculo.js`, `pages/citacao.js`,
-  `pages/trilha.js`) NÃO estão aqui — são carregados individualmente só na
-  própria página, pra não pesar o carregamento das demais.
+  Scripts de UMA página só (ex: pages/curriculo.js) NÃO ficam aqui —
+  eles são carregados só na própria página, no fim do arquivo dela.
 {% endcomment %}
 
-<!-- Fundação: config do site + módulos compartilhados entre várias features -->
+{% comment %} 1) Ponte com o _config.yml — precisa vir primeiro {% endcomment %}
 <script src="{{ '/assets/js/site-config.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/core/canvas-utils.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/core/counter-api.js' | relative_url }}" defer></script>
 
-<!-- Núcleo: presente e funcional em toda página do site -->
+{% comment %} 2) Módulos "core": infraestrutura reaproveitada por várias features {% endcomment %}
+<script src="{{ '/assets/js/core/counter-widget.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/core/canvas-share.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/core/theme.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/core/navigation.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/core/animations.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/core/pwa.js' | relative_url }}" defer></script>
 
-<!-- Features: cada uma só age se o elemento dela existir na página atual -->
-<script src="{{ '/assets/js/features/reading-progress.js' | relative_url }}" defer></script>
+{% comment %} 3) Features: cada uma só age se encontrar seu elemento na página atual {% endcomment %}
 <script src="{{ '/assets/js/features/filters.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/features/copy-code.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/features/likes-widget.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/features/toc.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/features/view-counter.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/features/copy-code.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/features/blog-search.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/features/most-read.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/features/post-status.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/features/study-guide.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/features/likes-widget.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/features/comments.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/features/quiz.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/features/study-guide.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/features/post-status.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/features/share-post.js' | relative_url }}" defer></script>
+
+{% comment %}
+  4) Compartilhar página como Story: depende de bibliotecas externas
+  (html2canvas) e da biblioteca local de QR code — por isso vêm antes.
+{% endcomment %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="{{ '/assets/js/vendor/qrcode.min.js' | relative_url }}" defer></script>
 <script src="{{ '/assets/js/features/share-global.js' | relative_url }}" defer></script>

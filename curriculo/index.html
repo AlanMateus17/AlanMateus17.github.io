@@ -102,11 +102,8 @@ formacao_complementar:
     onde: "eJPT (INE) → OSCP (OffSec)"
     descricao: "Estudo de pentest, Active Directory attacks, web security (OWASP Top 10) e red team operations em laboratório próprio com Kali Linux e VMs."
 ---
-<section class="cv header-offset-pad"
-         data-cartao-url="{{ '/contato/cartao/' | relative_url }}"
-         data-github-user="AlanMateus17"
-         data-nivel-seguranca="{{ page.nivel_seguranca | default: 1 }}">
-  <div class="container max-w-2xl" >
+<section class="cv cv--com-topo">
+  <div class="container container--cv">
 
     <div class="cv__botoes-topo">
       {% if page.aberto_a_oportunidades %}
@@ -120,18 +117,18 @@ formacao_complementar:
     <div class="cv__header">
       <div>
         {% if page.foto and page.foto != "" %}
-        <img src="{{ page.foto | relative_url }}" alt="Foto de {{ page.nome }}" class="avatar-round mb-1">
+        <img src="{{ page.foto | relative_url }}" alt="Foto de {{ page.nome }}" class="cv__foto">
         {% endif %}
         <h1 class="cv__name">{{ page.nome }}</h1>
         <p class="cv__role">{{ page.cargo }}</p>
-        <p class="cv__location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="icon-inline"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg> {{ page.localizacao }}</p>
+        <p class="cv__location"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="cv__location-icon"><path d="M12 21s7-6.5 7-12a7 7 0 10-14 0c0 5.5 7 12 7 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg> {{ page.localizacao }}</p>
       </div>
-      <div class="flex-col-end">
-        {% if page.github %}<a href="{{ page.github }}" class="text-accent-text text-sm" target="_blank" rel="noopener noreferrer">{{ page.github | remove: "https://" }}</a>{% endif %}
-        {% if page.linkedin %}<a href="{{ page.linkedin }}" class="text-accent-text text-sm" target="_blank" rel="noopener noreferrer">{{ page.linkedin | remove: "https://" }}</a>{% endif %}
+      <div class="cv__header-right">
+        {% if page.github %}<a href="{{ page.github }}" class="cv__social-link" target="_blank" rel="noopener noreferrer">{{ page.github | remove: "https://" }}</a>{% endif %}
+        {% if page.linkedin %}<a href="{{ page.linkedin }}" class="cv__social-link" target="_blank" rel="noopener noreferrer">{{ page.linkedin | remove: "https://" }}</a>{% endif %}
         <div class="cv__qrcode-box">
-          <a href="{{ '/contato/cartao/' | relative_url }}" id="cv-qrcode-link" aria-label="Abrir cartão de contato digital" class="link-plain">
-            <div id="cv-qrcode" class="cv__qrcode" title="Escaneie ou toque para abrir meu cartão de contato"></div>
+          <a href="{{ '/contato/cartao/' | relative_url }}" id="cv-qrcode-link" aria-label="Abrir cartão de contato digital" class="cv__qrcode-link">
+            <div id="cv-qrcode" class="cv__qrcode" title="Escaneie ou toque para abrir meu cartão de contato" data-cartao-url="{{ '/contato/cartao/' | relative_url }}"></div>
           </a>
           <p class="cv__qrcode-legenda" id="cv-qrcode-legenda">Escaneie o cartão</p>
         </div>
@@ -203,7 +200,7 @@ formacao_complementar:
         {% endfor %}
       </div>
 
-      <div class="radar-chart-wrap">
+      <div class="radar-chart-wrap" data-github-user="{{ site.author.github }}" data-nivel-seguranca="{{ page.nivel_seguranca | default: 1 }}">
         <p class="radar-chart__legenda" id="radar-chart-legenda">Calculando as etapas com base nos repositórios reais do GitHub...</p>
 
         <svg viewBox="-70 -40 540 480" width="400" height="356" class="radar-chart">
@@ -221,7 +218,7 @@ formacao_complementar:
 
           <polygon id="radar-poligono" points="200,200 200,200 200,200 200,200"
                    fill="var(--accent-glow)" stroke="var(--accent)" stroke-width="3"
-                   class="radar-chart-line"/>
+                   class="radar-chart__poligono"/>
           <circle id="radar-ponto-backend" cx="200" cy="200" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
           <circle id="radar-ponto-frontend" cx="200" cy="200" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
           <circle id="radar-ponto-devops" cx="200" cy="200" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
@@ -280,7 +277,7 @@ formacao_complementar:
           <p class="cv__exp-role">
             {{ proj.nome }}
             {% if proj.repo_url and proj.repo_url != "" %}
-            <a href="{{ proj.repo_url }}" target="_blank" rel="noopener" class="text-xs font-weight-600 text-accent-text ml-1">Ver código →</a>
+            <a href="{{ proj.repo_url }}" target="_blank" rel="noopener" class="cv__proj-repo-link">Ver código →</a>
             {% endif %}
           </p>
           <p class="cv__exp-period">{{ proj.periodo }}</p>
@@ -307,5 +304,10 @@ formacao_complementar:
   </div>
 </section>
 
+{% comment %}
+  A biblioteca de QR code (vendor/qrcode.min.js) já é carregada globalmente
+  em _includes/scripts.html — não precisa carregar de novo aqui.
+  Só a de gerar PDF (html2pdf) é específica desta página.
+{% endcomment %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.14.0/html2pdf.bundle.min.js" defer></script>
 <script src="{{ '/assets/js/pages/curriculo.js' | relative_url }}" defer></script>

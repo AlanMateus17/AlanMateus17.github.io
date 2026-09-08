@@ -1,7 +1,6 @@
 ---
 layout: sistema
 name: "AM Rotara"
-order: 2
 excerpt: "Gestão de pedidos com geolocalização e rastreio em tempo real."
 status: "dev"
 repo_url: ""

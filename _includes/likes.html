@@ -1,13 +1,13 @@
+{% comment %}
+  likes.html — botão de curtir de UM post (usado só em _layouts/post.html).
+  A lógica de curtir de verdade fica em assets/js/features/likes-widget.js,
+  que por sua vez usa assets/js/core/counter-widget.js (compartilhado com
+  as curtidas dos comentários e dos projetos do portfólio).
+{% endcomment %}
 <div class="likes">
-  <!--
-    data-post-slug carrega o slug do post (só existe em tempo de build, no
-    Jekyll) até o JS. A lógica de curtir de verdade mora em
-    assets/js/features/likes-widget.js — aqui só passamos o dado adiante.
-  -->
-  <button type="button" class="likes__btn" id="like-btn" data-post-slug="{{ page.slug }}" aria-pressed="false" disabled>
+  <button type="button" class="likes__btn" id="like-btn" aria-pressed="false" disabled data-slug="{{ page.slug }}">
     <span class="likes__icon" aria-hidden="true">♥</span>
     <span class="likes__count" id="like-count">–</span>
   </button>
   <span class="likes__label">curtidas</span>
 </div>
-

@@ -1,3 +1,15 @@
+{% comment %}
+  comments.html — lista de comentários de um post + formulário pra
+  enviar um novo. A publicação NÃO é automática: o formulário manda um
+  e-mail via Formspree, e você aprova e publica manualmente criando um
+  arquivo .yml em _data/comments/ — o passo a passo está em
+  README-COMENTARIOS.md (inclusive como responder em thread e marcar um
+  comentário como seu, com o selo "Autor").
+
+  Toda a interatividade (contador de caracteres, botão responder,
+  curtidas de cada comentário, envio do formulário) está em
+  assets/js/features/comments.js.
+{% endcomment %}
 <section class="comments" id="comentarios">
   <h3 class="comments__title">
     Comentários
@@ -103,7 +115,7 @@
     <input type="hidden" name="post_url" value="{{ page.url | absolute_url }}">
     <input type="hidden" name="parent" id="comment-form-parent" value="">
     <!-- honeypot simples anti-spam -->
-    <p class="visually-hidden">
+    <p class="comment-form__honeypot">
       <label>Não preencha este campo<input type="text" name="_gotcha"></label>
     </p>
 
@@ -115,7 +127,7 @@
     <label class="comment-form__label" for="cf-name">Nome</label>
     <input class="comment-form__input" id="cf-name" name="name" type="text" required maxlength="80">
 
-    <label class="comment-form__label" for="cf-email">E-mail <span class="opacity-muted">(não é publicado, só de contato)</span></label>
+    <label class="comment-form__label" for="cf-email">E-mail <span class="comment-form__hint">(não é publicado, só de contato)</span></label>
     <input class="comment-form__input" id="cf-email" name="email" type="email" maxlength="120">
 
     <label class="comment-form__label" for="cf-message">Comentário</label>
@@ -128,4 +140,3 @@
     <p class="comment-form__status" id="comment-form-status" hidden></p>
   </form>
 </section>
-

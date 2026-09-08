@@ -8,11 +8,12 @@ backend:
 media_folder: "assets/img/posts"
 public_folder: "/assets/img/posts"
 
-# Os componentes de editor customizados (vídeo do YouTube, caixa de destaque)
-# são registrados de verdade em admin/index.html via CMS.registerEditorComponent().
-# YAML não pode conter funções JavaScript (fromBlock/toBlock), então um bloco
-# "editor_components:" aqui nunca funcionou — foi removido para não confundir
-# quem for editar este arquivo no futuro.
+# Os componentes customizados do editor (vídeo do YouTube, caixa de destaque)
+# NÃO podem ser registrados aqui em YAML — o Decap CMS exige que sejam
+# registrados via JavaScript, com CMS.registerEditorComponent().
+# O registro real e funcional está em admin/index.html.
+# (Havia uma cópia divergente desse bloco aqui antes; foi removida porque
+# nunca funcionou e gerava um HTML de saída diferente do que o index.html gera.)
 
 collections:
   - name: "posts"

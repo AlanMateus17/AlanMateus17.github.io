@@ -1,16 +1,14 @@
-/**
- * === features/copy-code.js ===
- * Adiciona um botão "Copiar" no canto de cada bloco de código (<pre>) dos
- * posts do blog. O botão é criado por JS (não existe no HTML do post)
- * porque o Markdown do Jekyll gera o <pre><code> sozinho, sem como incluir
- * um botão dentro dele na hora de escrever o post.
+/*
+ * features/copy-code.js — adiciona um botão "Copiar" em todo bloco de
+ * código (<pre>) do conteúdo dos posts, pra quem estiver lendo poder
+ * copiar o código sem precisar selecionar o texto manualmente.
  */
 (function () {
   document.querySelectorAll('pre').forEach(function (pre) {
     var btn = document.createElement('button');
     btn.textContent = 'Copiar';
     btn.className = 'copy-code-btn';
-    pre.classList.add('pre-with-copy');
+    pre.style.position = 'relative';
     pre.appendChild(btn);
 
     btn.addEventListener('click', function () {

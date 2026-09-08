@@ -1,8 +1,16 @@
 {% comment %}
-  Dados de todos os posts em ordem cronológica (do mais antigo pro mais
-  novo — mesma ordem do plano de estudos), pra guiar o leitor a partir do
-  histórico de leitura dele. Este arquivo tem SÓ os dados (JSON); toda a
-  lógica que lê e usa esses dados mora em assets/js/features/study-guide.js.
+  study-guide-data.html — só DADOS, não lógica.
+
+  Gera um JSON com todos os posts do blog em ordem cronológica (do mais
+  antigo pro mais novo, que é a mesma ordem do plano de estudos), pra
+  quem estiver lendo saber qual é o "próximo post não lido" com base no
+  próprio histórico de leitura (guardado no localStorage do navegador).
+
+  Isso precisa continuar em Liquid/HTML (não dá pra virar um .js comum)
+  porque só o Jekyll, no momento do build, sabe quais posts existem.
+  Quem lê esse JSON e decide o que fazer com ele é
+  assets/js/features/study-guide.js — script comum, sem Liquid, que
+  também já cuida de desenhar o widget "Continue seus estudos".
 {% endcomment %}
 <script id="study-guide-data" type="application/json">
 [

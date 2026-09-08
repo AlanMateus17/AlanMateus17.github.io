@@ -2,13 +2,14 @@
 layout: default
 ---
 {% comment %}
-  Layout "sistema": usado pelas páginas de detalhe de cada projeto do
-  portfólio (collection `_sistemas`). Antes duplicava inteiro o
-  <head>/nav/footer/PWA de `default.html` — agora só define o conteúdo
-  específico (hero + artigo) e herda tudo o resto de `default.html`,
-  então qualquer mudança de navegação/rodapé/PWA feita lá passa a valer
-  aqui também (era esse o bug que fazia o botão de dark mode sumir
-  nas páginas de portfólio).
+  _layouts/sistema.html — layout de cada página de detalhe do portfólio
+  (_sistemas/*.md usa este layout, configurado em _config.yml).
+
+  Antes este arquivo duplicava o _layouts/default.html inteiro (head,
+  navegação, rodapé, PWA...) copiado à mão — e por causa disso tinha até
+  ficado sem o botão de tema, porque ninguém lembrou de copiar a
+  atualização pra cá também. Agora ele estende o default normalmente,
+  igual _layouts/post.html, e só define o conteúdo específico da página.
 {% endcomment %}
 
 <header class="post-hero">
@@ -27,7 +28,7 @@ layout: default
 </header>
 
 <article class="post-body ruled-paper">
-  <p class="text-muted text-lg">{{ page.excerpt }}</p>
+  <p class="sistema-excerpt">{{ page.excerpt }}</p>
   {% if page.repo_url and page.repo_url != "" %}
   <p>
     <a href="{{ page.repo_url }}" target="_blank" rel="noopener" class="btn btn--brand">
@@ -50,6 +51,6 @@ layout: default
   {% endif %}
 </article>
 
-<div class="container container--prose mt-2 mb-4">
+<div class="container--prose-tight">
   <a href="{{ '/portfolio/' | relative_url }}" class="btn btn--ghost">← Voltar pro Portfólio</a>
 </div>

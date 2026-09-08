@@ -25,9 +25,12 @@ paginate_path: "/blog/page:num/"
 # Ano em que começou a lecionar — usado pra calcular "X anos ensinando" sozinho, sem editar todo ano
 teaching_start_year: 2025
 
-# Staticman (comentários e curtidas com aprovação via PR no GitHub)
 # Formspree (comentários chegam por e-mail; você aprova e adiciona manualmente no repo)
 formspree_id: "xaeyqrzd"
+
+# Namespace do CounterAPI (curtidas e visualizações). Usado em vários lugares do JS
+# (likes-widget.js, comments.js, portfolio) — troque só aqui se um dia mudar.
+counterapi_namespace: "alanmateus17-github-io"
 
 # Jekyll ignora pastas começando com "." por padrão — isso força incluir o security.txt
 include:
@@ -41,12 +44,6 @@ formspree_orcamento_id: "SEU_ID_AQUI"
 
 # Formspree do quiz dos posts (crie um formulário novo em formspree.io e cole o ID aqui)
 formspree_quiz_id: "SEU_ID_AQUI"
-
-# Namespace da conta no CounterAPI (contador de visualizações/curtidas).
-# Antes estava copiado à mão em 5 lugares (main.js, likes.html, comments.html);
-# agora é lido daqui e injetado no <body> por _layouts/default.html, então só
-# precisa mudar em UM lugar se a conta do CounterAPI mudar um dia.
-counterapi_namespace: "alanmateus17-github-io"
 
 # Coleções
 collections:

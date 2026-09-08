@@ -1,53 +1,39 @@
-/**
- * === features/filters.js ===
- * Botões de filtro (`.filter-btn`) usados em três páginas diferentes:
- *  - Portfólio (`#portfolio-lista`): filtra `.log-entry` por `data-status`
- *    (em desenvolvimento / planejado)
- *  - Ensino (`#materias-lista`): filtra `.log-entry` por `data-curso`
- *    (qual curso técnico aquela matéria pertence)
- *  - Blog: filtra `.blog-post-item` por `data-categoria`, e mostra um aviso
- *    de "nenhum resultado" (`#blog-filter-empty`) quando o filtro zera a lista
- *
- * Portfólio e Ensino reaproveitam a mesma classe visual `.log-entry` (é o
- * mesmo componente de "linha de log"), então cada busca é escopada pelo
- * container da própria página (`#portfolio-lista`, `#materias-lista`) —
- * sem isso, filtrar o portfólio também esconderia as matérias do ensino
- * (e vice-versa), já que os elementos têm a mesma classe.
+/*
+ * features/filters.js — os botões de filtro (".filter-btn") aparecem em
+ * duas páginas diferentes: o Portfólio (filtra por "Em desenvolvimento"
+ * / "Planejado") e o Blog (filtra por categoria). É o MESMO botão e a
+ * mesma classe CSS nas duas páginas — só o alvo filtrado muda, e o
+ * código abaixo já verifica quais elementos existem na página atual
+ * antes de tentar filtrar.
  */
 (function () {
-  var botoes = document.querySelectorAll('.filter-btn');
-  if (!botoes.length) return;
+  var btns = document.querySelectorAll('.filter-btn');
+  if (!btns.length) return;
 
-  var itensPortfolio = document.querySelectorAll('#portfolio-lista .log-entry');
-  var itensEnsino = document.querySelectorAll('#materias-lista .log-entry');
-  var itensBlog = document.querySelectorAll('.blog-post-item');
-  var avisoVazioBlog = document.getElementById('blog-filter-empty');
+  var logEntries = document.querySelectorAll('.log-entry');       // cards do Portfólio
+  var blogPosts = document.querySelectorAll('.blog-post-item');   // cards do Blog
+  var vazioFiltro = document.getElementById('blog-filter-empty'); // aviso de "nenhum resultado" no Blog
 
-  botoes.forEach(function (btn) {
+  btns.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      botoes.forEach(function (b) { b.classList.remove('active'); });
+      btns.forEach(function (b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      var filtro = btn.dataset.filter;
+      var filter = btn.dataset.filter;
       var visiveis = 0;
 
-      itensPortfolio.forEach(function (card) {
-        var bate = filtro === 'all' || card.dataset.status === filtro;
-        card.style.display = bate ? '' : 'none';
+      logEntries.forEach(function (card) {
+        var match = filter === 'all' || card.dataset.status === filter;
+        card.style.display = match ? '' : 'none';
       });
 
-      itensEnsino.forEach(function (card) {
-        var bate = filtro === 'all' || card.dataset.curso === filtro;
-        card.style.display = bate ? '' : 'none';
+      blogPosts.forEach(function (card) {
+        var match = filter === 'all' || card.dataset.categoria === filter;
+        card.style.display = match ? '' : 'none';
+        if (match) visiveis++;
       });
 
-      itensBlog.forEach(function (card) {
-        var bate = filtro === 'all' || card.dataset.categoria === filtro;
-        card.style.display = bate ? '' : 'none';
-        if (bate) visiveis++;
-      });
-
-      if (itensBlog.length && avisoVazioBlog) {
-        avisoVazioBlog.hidden = visiveis > 0;
+      if (blogPosts.length && vazioFiltro) {
+        vazioFiltro.hidden = visiveis > 0;
       }
     });
   });

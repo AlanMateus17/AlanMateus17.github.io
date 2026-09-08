@@ -1,17 +1,23 @@
 ---
 layout: default
 ---
+{% comment %}
+  _layouts/post.html — layout de cada artigo do blog (_posts/*.md usa
+  este layout automaticamente, por causa da configuração de collections
+  padrão do Jekyll). Estende _layouts/default.html: só o conteúdo entre
+  a barra de progresso e os comentários é definido aqui.
+{% endcomment %}
 
 <div class="reading-progress" aria-hidden="true"></div>
 
-<header class="post-hero">
+<header class="post-hero" data-slug="{{ page.slug }}">
   <div class="container">
     {% assign categoria = page.categories | first | default: 'Blog' %}
     {% assign categoria_lower = categoria | downcase %}
     {% if categoria_lower contains 'segur' %}
-    <p class="post-hero__cat text-security">{{ categoria }}</p>
+    <p class="post-hero__cat post-hero__cat--seguranca">{{ categoria }}</p>
     {% elsif categoria_lower contains 'educ' or categoria_lower contains 'ensino' %}
-    <p class="post-hero__cat text-teaching">{{ categoria }}</p>
+    <p class="post-hero__cat post-hero__cat--ensino">{{ categoria }}</p>
     {% else %}
     <p class="post-hero__cat">{{ categoria }}</p>
     {% endif %}
@@ -19,13 +25,12 @@ layout: default
     <div class="post-hero__meta">
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d/%m/%Y" }}</time>
       <span>{{ page.content | number_of_words | divided_by: 200 | plus: 1 }} min de leitura</span>
-      <span id="post-view-count" data-slug="{{ page.slug }}">– visualizações</span>
+      <span id="post-view-count">– visualizações</span>
       {% if page.tags %}
       {% for tag in page.tags %}<span>#{{ tag }}</span>{% endfor %}
       {% endif %}
     </div>
-    <!-- data-post-slug: ponte com o Jekyll pro features/post-status.js (ver arquivo) -->
-    <div class="post-hero__reading-status" id="post-reading-status" data-post-slug="{{ page.slug }}">
+    <div class="post-hero__reading-status" id="post-reading-status">
       <span id="already-read-badge" class="reading-badge" hidden><svg width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Você já leu este post</span>
       <span id="already-liked-badge" class="reading-badge reading-badge--liked" hidden><svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 17.5s-6.5-4.2-8.5-8.2C-0.2 5.8 1.5 3 4.5 3c1.8 0 3 .9 3.7 1.9.2.3.6.3.8 0C9.7 3.9 10.9 3 12.7 3c3 0 4.7 2.8 3 6.3-2 4-8.5 8.2-8.5 8.2z"/></svg> Você já curtiu este post</span>
     </div>
@@ -39,20 +44,20 @@ layout: default
 
 <article class="post-body ruled-paper">
   {{ content }}
-{% include share-buttons.html %}
-{% include quiz-post.html %}
+  {% include share-buttons.html %}
+  {% include quiz-post.html %}
 
-<div id="study-guide-widget" class="study-guide" hidden></div>
-{% include study-guide-data.html %}
+  <div id="study-guide-widget" class="study-guide" hidden></div>
+  {% include study-guide-data.html %}
 
-{% include related-posts.html %}
-{% include post-nav.html %}
+  {% include related-posts.html %}
+  {% include post-nav.html %}
 </article>
 
-<div class="container container--prose mb-4">
-  <div class="divider-top flex-between">
+<div class="post-footer-nav container--prose">
+  <div class="post-footer-nav__row">
     <a href="{{ '/blog/' | relative_url }}" class="btn btn--ghost">← Todos os posts</a>
-    <div class="flex-gap-sm">
+    <div class="post-footer-nav__tags">
       {% for tag in page.tags %}
       <span class="tag">{{ tag }}</span>
       {% endfor %}

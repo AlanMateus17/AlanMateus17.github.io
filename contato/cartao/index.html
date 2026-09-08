@@ -4,39 +4,50 @@ title: Cartão de Visita Digital
 description: "Escaneie e salve meu contato direto na sua agenda."
 permalink: /contato/cartao/
 ---
+{% comment %}
+  Cartão de contato digital: gera um QR code que, ao ser escaneiado,
+  salva o contato direto na agenda de quem escaneou (formato vCard).
+  Os dados do vCard vêm de _config.yml (site.author.*) — assim não há
+  telefone/nome duplicado entre este arquivo e o resto do site.
+  A lógica de exibição (QR code + adaptação pra quem já está no celular)
+  está em assets/js/pages/cartao-contato.js.
+{% endcomment %}
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Contato</p>
-    <h1 class="page-hero__title">Cartão de<br><em class="text-accent-label">visita digital.</em></h1>
+    <h1 class="page-hero__title">Cartão de<br><em class="page-hero__title-accent">visita digital.</em></h1>
     <p class="page-hero__desc" id="cartao-instrucao">Aponte a câmera do celular pro QR code, ou baixe o contato direto.</p>
   </div>
 </header>
 
 <section>
-  <div class="container max-w-sm text-center" >
+  <div class="container container--cartao">
 
-    <p id="cartao-dica-mobile" class="highlight-box mb-2">
+    <p id="cartao-dica-mobile" class="cartao-dica-mobile" hidden>
       Você já está no seu celular — não precisa escanear nada. É só tocar no botão abaixo.
     </p>
 
-    <a id="cartao-qr-link" href="{{ '/assets/alan-mateus.vcf' | relative_url }}" download="alan-mateus.vcf" aria-label="Tocar no QR code também baixa o contato diretamente" class="link-plain">
-      <div id="vcard-qr" class="card-on-color"></div>
+    <a id="cartao-qr-link" href="{{ '/assets/alan-mateus.vcf' | relative_url }}" download="alan-mateus.vcf" aria-label="Tocar no QR code também baixa o contato diretamente" class="cartao-qr-link">
+      <div id="vcard-qr"
+           class="cartao-qr-box"
+           data-vcard-nome="{{ site.author.name }}"
+           data-vcard-org="Grupo AMtech Digital"
+           data-vcard-cargo="Professor de Informática &amp; Desenvolvedor"
+           data-vcard-tel="{{ site.author.whatsapp }}"
+           data-vcard-url="{{ site.url }}"
+           data-vcard-cidade="Barbacena"
+           data-vcard-estado="MG"
+           data-vcard-pais="Brasil"></div>
     </a>
 
-    <p id="cartao-legenda-qr" class="text-muted text-sm mt-2">
+    <p id="cartao-legenda-qr" class="cartao-legenda-qr">
       Escaneando, o contato já é salvo direto na agenda — sem precisar digitar nada.
     </p>
 
-    <a href="{{ '/assets/alan-mateus.vcf' | relative_url }}" download="alan-mateus.vcf" id="cartao-btn-principal" class="btn btn--primary mt-1" >
+    <a href="{{ '/assets/alan-mateus.vcf' | relative_url }}" download="alan-mateus.vcf" id="cartao-btn-principal" class="btn btn--primary cartao-btn-principal">
       Baixar contato (.vcf)
     </a>
   </div>
 </section>
 
-<!--
-  Carrega gerador-visual.js de novo aqui (fora do defer global) porque esta
-  página precisa do QR code imediatamente — ver o comentário no topo de
-  assets/js/pages/cartao.js pra entender por quê.
--->
-<script src="{{ '/assets/js/vendor/gerador-visual.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/pages/cartao.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/pages/cartao-contato.js' | relative_url }}" defer></script>

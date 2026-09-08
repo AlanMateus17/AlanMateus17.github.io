@@ -1,7 +1,6 @@
 ---
 layout: sistema
 name: "AM Petara"
-order: 4
 excerpt: "Clínicas veterinárias — prontuários, agenda, vacinas e lembretes."
 status: "plan"
 stack:

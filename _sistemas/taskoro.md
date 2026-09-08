@@ -1,7 +1,6 @@
 ---
 layout: sistema
 name: "AM Taskoro"
-order: 12
 excerpt: "Gestão de projetos Kanban/Scrum/RAD — exceção de stack."
 status: "plan"
 stack:

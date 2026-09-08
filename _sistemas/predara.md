@@ -1,7 +1,6 @@
 ---
 layout: sistema
 name: "AM Predara"
-order: 8
 excerpt: "Gestão de condomínios — taxas, manutenção, assembleias e comunicados."
 status: "plan"
 stack:

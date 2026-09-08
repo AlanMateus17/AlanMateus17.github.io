@@ -5,16 +5,16 @@ description: "Trilha de estudos em segurança ofensiva — eJPT, OSCP e além. W
 ---
 <header class="page-hero">
   <div class="container">
-    <p class="page-hero__eyebrow text-security" >Segurança Ofensiva</p>
-    <h1 class="page-hero__title">Red Team<br><em class="text-accent-label text-security">em formação.</em></h1>
+    <p class="page-hero__eyebrow page-hero__eyebrow--seguranca">Segurança Ofensiva</p>
+    <h1 class="page-hero__title">Red Team<br><em class="page-hero__title-accent page-hero__title-accent--seguranca">em formação.</em></h1>
     <p class="page-hero__desc">Trilha eJPT → OSCP → CRTO → além. Cada sistema que construo passa por threat modeling. Aqui ficam os writeups e notas de estudo.</p>
   </div>
 </header>
 <section>
-  <div class="container max-w-2xl" >
-    <div class="seguranca-grid mb-4" >
-      <div class="surface-card">
-        <p class="surface-card--quote text-security-text mb-1">Trilha de certificações</p>
+  <div class="container container--cv">
+    <div class="seguranca-grid seguranca-grid--espacado">
+      <div class="seguranca-painel">
+        <p class="seguranca-painel__titulo">Trilha de certificações</p>
         <div class="trail">
           {% assign certs = "eJPT|INE — pentest básico e metodologia|active;OSCP|OffSec PEN-200 — metodologia completa e AD|plan;CRTO|Zero-Point Security — C2 e red team|plan;CRTP|Altered Security — AD kill chain|plan;OSEP|OffSec PEN-300 — evasion avançada|plan" | split: ";" %}
           {% for cert in certs %}
@@ -31,15 +31,15 @@ description: "Trilha de estudos em segurança ofensiva — eJPT, OSCP e além. W
         </div>
       </div>
       <div>
-        <p class="section-eyebrow text-security-text" >Laboratório</p>
-        <h3 class="mb-1">Setup de estudos</h3>
-        <div class="flex-col-sm-tight">
+        <p class="section-eyebrow section-eyebrow--seguranca">Laboratório</p>
+        <h3 class="titulo-com-margem">Setup de estudos</h3>
+        <div class="lab-lista">
           {% assign lab = "Kali Linux|VM no Acer Nitro AN515-45;BloodHound CE|via Docker no WSL2;TryHackMe|trilha Jr Pentester;PortSwigger Web Academy|labs de web security;HackTheBox|máquinas ativas" | split: ";" %}
           {% for item in lab %}
             {% assign i = item | split: "|" %}
-            <div class="flex-row-between-sm">
-              <span class="font-weight-500">{{ i[0] }}</span>
-              <span class="text-muted placeholder-note">{{ i[1] }}</span>
+            <div class="lab-item">
+              <span class="lab-item__nome">{{ i[0] }}</span>
+              <span class="lab-item__detalhe">{{ i[1] }}</span>
             </div>
           {% endfor %}
         </div>
@@ -47,11 +47,11 @@ description: "Trilha de estudos em segurança ofensiva — eJPT, OSCP e além. W
     </div>
 
     <div>
-      <p class="section-eyebrow text-security-text" >Writeups</p>
-      <h3 class="mb-2">Notas de laboratório</h3>
-      <div class="empty-state empty-state--lg">
-        <p class="placeholder-note">// writeups chegando à medida que avanço na trilha</p>
-        <p class="text-muted mt-1 max-w-sm mx-auto">Cada máquina resolvida ou técnica documentada vai aparecer aqui. Comece acompanhando o blog.</p>
+      <p class="section-eyebrow section-eyebrow--seguranca">Writeups</p>
+      <h3 class="titulo-com-margem-lg">Notas de laboratório</h3>
+      <div class="secao-vazia">
+        <p class="secao-vazia__tag">// writeups chegando à medida que avanço na trilha</p>
+        <p class="secao-vazia__desc">Cada máquina resolvida ou técnica documentada vai aparecer aqui. Comece acompanhando o blog.</p>
       </div>
     </div>
   </div>

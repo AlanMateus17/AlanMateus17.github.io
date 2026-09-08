@@ -1,7 +1,6 @@
 ---
 layout: sistema
 name: "AM Projeta"
-order: 13
 excerpt: "Diagnóstico de sistemas por IA e geração de arquitetura."
 status: "plan"
 stack:

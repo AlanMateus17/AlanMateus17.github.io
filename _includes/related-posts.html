@@ -1,20 +1,10 @@
-{% comment %}
-  Posts relacionados = compartilham QUALQUER categoria com o post atual, não
-  só a primeira. Um post pode ter várias categorias (front matter aceita
-  lista), então olhar só a primeira deixava de fora relações válidas.
-{% endcomment %}
-{% assign related = "" | split: "" %}
-{% for categoria in page.categories %}
-  {% assign encontrados = site.posts | where_exp: "post", "post.categories contains categoria" %}
-  {% assign related = related | concat: encontrados %}
-{% endfor %}
-{% assign related = related | uniq | where_exp: "post", "post.url != page.url" | limit: 3 %}
+{% assign related = site.posts | where_exp: "post", "post.categories contains page.categories[0]" | where_exp: "post", "post.url != page.url" | limit: 3 %}
 {% if related.size > 0 %}
 <div class="related-posts">
   <h3>Também no blog</h3>
   <ul>
     {% for post in related %}
-      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
     {% endfor %}
   </ul>
 </div>

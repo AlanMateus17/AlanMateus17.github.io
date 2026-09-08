@@ -3,26 +3,24 @@ layout: default
 title: Portfólio
 description: "13 sistemas de gestão que venho construindo — PDV, delivery, saúde, finanças e mais. Todos construídos em Clean Architecture com .NET e Next.js."
 ---
+{% comment %}
+  Esta página lê os sistemas direto da collection `sistemas` (arquivos
+  em _sistemas/*.md, configurados em _config.yml). Antes havia uma lista
+  gigante com os mesmos dados COLADA DUAS VEZES neste arquivo — se você
+  atualizasse o status de um sistema só nos arquivos .md, o portfólio
+  continuaria mostrando o valor antigo. Agora só existe UM lugar pra
+  editar cada sistema: o arquivo dele em _sistemas/.
+{% endcomment %}
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Portfólio</p>
-    <h1 class="page-hero__title">13 sistemas.<br><em class="text-accent-label">Uma arquitetura.</em></h1>
+    <h1 class="page-hero__title">13 sistemas.<br><em class="page-hero__title-accent">Uma arquitetura.</em></h1>
     <p class="page-hero__desc">Sistemas SaaS multi-tenant interconectados, construídos em Clean Architecture + .NET + Next.js.</p>
   </div>
 </header>
 <section>
   <div class="container">
-    {% comment %}
-      Antes, os 13 sistemas estavam colados como uma string gigante, DUAS
-      VEZES, neste mesmo arquivo — duplicando dados que já existem,
-      sincronizados, na collection `_sistemas` (configurada em
-      `_config.yml`). Agora a lista vem de `site.sistemas` uma única vez;
-      qualquer edição de nome, status ou stack acontece só no arquivo
-      `_sistemas/<slug>.md` correspondente, nunca aqui.
-      `order` (front matter de cada arquivo) preserva a ordem curada
-      original da lista, que não é alfabética.
-    {% endcomment %}
-    {% assign sistemas = site.sistemas | sort: "order" %}
+    {% assign sistemas = site.sistemas %}
     {% assign total_dev = 0 %}
     {% assign total_plan = 0 %}
     {% for sistema in sistemas %}
@@ -47,10 +45,10 @@ description: "13 sistemas de gestão que venho construindo — PDV, delivery, sa
       <button class="filter-btn" data-filter="dev">Em desenvolvimento</button>
       <button class="filter-btn" data-filter="plan">Planejados</button>
     </div>
-    <div class="entry-list" id="portfolio-lista">
+    <div class="portfolio-log">
       {% for sistema in sistemas %}
-        {% assign project_slug = sistema.name | remove: "AM " | slugify %}
-        {% assign proj_like_key = 'portfolio--' | append: project_slug %}
+        {% assign sistema_slug = sistema.name | remove: "AM " | slugify %}
+        {% assign proj_like_key = 'portfolio--' | append: sistema_slug %}
         <div class="log-entry" data-status="{{ sistema.status }}">
           <div class="log-entry__marker">
             {% if sistema.status == "dev" %}
@@ -63,7 +61,7 @@ description: "13 sistemas de gestão que venho construindo — PDV, delivery, sa
             <h3 class="log-entry__name">{{ sistema.name }}</h3>
             <p class="log-entry__desc">{{ sistema.excerpt }}</p>
             <div class="log-entry__stack">
-              {% for tech in sistema.stack %}<span class="tag">{{ tech }}</span>{% endfor %}
+              {% for tag in sistema.stack %}<span class="tag">{{ tag }}</span>{% endfor %}
             </div>
           </div>
           <div class="log-entry__actions">

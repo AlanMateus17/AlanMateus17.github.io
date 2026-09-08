@@ -1,4 +1,10 @@
-{% comment %}Usado dentro de _layouts/post.html — usa page.title e a URL absoluta do post{% endcomment %}
+{% comment %}
+  share-buttons.html — botões de compartilhar UM post. WhatsApp e X já
+  são links simples (não precisam de JavaScript, só a URL montada aqui
+  com Liquid). Os outros quatro (copiar link, LinkedIn, citação, PDF)
+  dependem de JavaScript — a lógica deles está em
+  assets/js/features/share-post.js.
+{% endcomment %}
 {% assign post_url = page.url | absolute_url %}
 {% assign post_title = page.title | url_encode %}
 <div class="share-buttons">
@@ -21,7 +27,6 @@
 </div>
 
 <div id="quote-share-btn" class="quote-share-btn" hidden>❝ Compartilhar citação</div>
-
 
 <div id="story-generating-overlay" class="story-overlay" hidden>
   <div class="story-overlay__box">

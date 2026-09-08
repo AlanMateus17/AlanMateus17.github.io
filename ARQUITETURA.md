@@ -1,199 +1,206 @@
-# Arquitetura do site — alanmateus17.github.io
+# Arquitetura do site — guia de manutenção
 
-Este documento explica **como o projeto está organizado agora**, depois da
-reestruturação: por que cada pasta existe, como CSS/JS/HTML se relacionam,
-e o raciocínio por trás das decisões — pra você conseguir dar manutenção
-sozinho sem precisar decorar tudo de novo daqui a 3 meses.
+Este documento existe pra você conseguir dar manutenção no site sozinho.
+Ele explica **onde fica cada coisa** e **por quê** está organizado assim.
+Para o que cada bloco de código faz especificamente, os comentários estão
+dentro dos próprios arquivos (em CSS, JS e HTML) — este arquivo é o mapa
+geral, não o detalhe.
 
-Todo arquivo `.css` e `.js` também tem comentários explicando o que cada
-bloco faz — este documento é o "mapa geral"; os comentários dentro de cada
-arquivo são o "zoom" em cada parte.
+## Visão geral
 
----
-
-## 1. Visão geral: Jekyll, e o que isso significa na prática
-
-O site é gerado pelo **Jekyll** (rodando automaticamente no GitHub Pages a
-cada `git push`). Isso significa que existem dois "mundos" de código aqui,
-que não devem ser confundidos:
-
-- **Liquid** (`{% ... %}` e `{{ ... }}`) — roda uma vez, **no momento do
-  build**, no servidor do GitHub. Gera o HTML final. Não existe mais depois
-  que a página chega no navegador de quem visita o site.
-- **JavaScript** (`assets/js/*.js`) — roda **no navegador de cada
-  visitante**, depois que a página já chegou pronta. É o que faz botões
-  responderem a clique, contadores atualizarem, etc.
-
-Isso importa porque **arquivos `.js` não são processados pelo Jekyll** —
-eles são servidos exatamente como estão escritos. Então, sempre que um
-script precisa de um dado que só existe em tempo de build (o slug de um
-post, um ID de formulário, uma config do `_config.yml`), esse dado precisa
-"atravessar a ponte" de Liquid pra JS através de **atributos `data-*` no
-HTML** — nunca dentro do próprio arquivo `.js`. Você vai ver esse padrão
-se repetir várias vezes abaixo.
-
-## 2. Estrutura de pastas
+O site é gerado pelo Jekyll: você escreve Markdown/HTML com um pouco de
+Liquid (`{{ }}` e `{% %}`), e o Jekyll transforma isso num site estático
+(puro HTML/CSS/JS) toda vez que você publica. Não existe backend, nem
+banco de dados — os "dados" do site são os próprios arquivos do repositório.
 
 ```
-_config.yml          → configuração central do Jekyll (títulos, IDs de API, etc.)
-_layouts/             → "moldes" de página (default, post, sistema)
-_includes/            → pedaços de HTML reutilizados entre páginas (nav, comentários, etc.)
-_posts/                → os artigos do blog
-_sistemas/             → um arquivo por projeto do portfólio (collection do Jekyll)
-_data/comments/        → comentários aprovados manualmente (ver README-COMENTARIOS.md)
-admin/                 → editor visual (Decap CMS)
-assets/
-  css/main.css          → TODO o CSS do site, num arquivo só (ver seção 3)
-  js/                    → TODO o JS do site, organizado em pastas (ver seção 4)
-<pasta-de-cada-página>/index.html → uma pasta por URL (ex.: /sobre/, /blog/)
+site/
+├── _config.yml          → configurações gerais (nome, links, IDs de formulário...)
+├── _layouts/             → moldes de página (cabeçalho + rodapé + onde o conteúdo entra)
+├── _includes/            → pedaços de HTML reaproveitados dentro dos layouts
+├── _posts/               → os artigos do blog (um arquivo .md por post)
+├── _sistemas/             → os projetos do portfólio (um .md por sistema)
+├── _produtos/, _depoimentos/ → outras collections, mesma ideia
+├── _data/comments/        → comentários aprovados manualmente (ver README-COMENTARIOS.md)
+├── assets/
+│   ├── css/main.css      → TODO o CSS do site, num arquivo só
+│   └── js/                → TODO o JavaScript do site, organizado (ver abaixo)
+└── <pasta>/index.html    → cada pasta na raiz é uma página (ex: /sobre/, /contato/)
 ```
 
-## 3. CSS — `assets/css/main.css`
+## Como o CSS está organizado
 
-Fica num arquivo único de propósito (facilita o navegador cachear uma vez
-só), mas é organizado em seções bem marcadas com comentários
-`/* === NOME DA SEÇÃO === */`. As principais, na ordem em que aparecem:
+Tudo em **`assets/css/main.css`**, um arquivo só, dividido em seções com
+comentários `/* === NOME DA SEÇÃO === */`. No topo do arquivo fica o
+**sistema de tokens** (`:root { --brand: ...; --accent: ...; }`) — cores,
+espaçamentos, fontes, sombras, tudo como variável.
 
-1. **TOKENS** (`:root { --brand: ...; }`) — todas as cores, espaçamentos e
-   fontes do site são variáveis CSS aqui. Trocar uma cor do site inteiro é
-   mudar uma linha aqui, nunca procurar por um valor de cor espalhado pelo
-   HTML.
-2. **MODO ESCURO** — os mesmos tokens, com valores diferentes, ativados
-   quando `<html data-theme="dark">`.
-3. **LAYOUT** e **UTILITÁRIOS** — classes pequenas e genéricas
-   (`.text-muted`, `.mb-2`, `.flex-center`, etc.) que substituem o que
-   antes eram estilos `style="..."` escritos direto no HTML. Regra: se um
-   valor se repete em mais de um lugar e não é exclusivo de um componente
-   específico, vira uma classe aqui.
-4. **Seções por componente/página** (`NAVEGAÇÃO`, `HERO`, `PORTFOLIO`,
-   `CURRÍCULO`, `TERMINAL`, etc.) — cada uma cobre um pedaço visual
-   específico do site.
-5. **RESPONSIVO** — media queries, por último, sempre sobrescrevendo o que
-   vem antes.
+**Regra de ouro: nunca escrever `style="cor:vermelho"` direto no HTML.**
+Se precisar de um estilo novo, ele vira uma classe no `main.css` (mesmo
+que seja usada só numa página) — assim, se um dia você quiser mudar uma
+cor ou espaçamento, muda num lugar só, em vez de caçar em 20 arquivos
+HTML diferentes. A seção **"CLASSES EXTRAÍDAS DE style="" INLINE"**, no
+fim do arquivo, tem várias classes assim, cada uma comentada com o nome
+da página de onde veio.
 
-**Por que quase não sobrou `style="..."` no HTML:** antes havia 201
-ocorrências espalhadas por ~20 arquivos. Isso significava que ajustar uma
-cor ou espaçamento repetido virava uma caça ao tesouro pelo HTML inteiro.
-Agora restam só 3, e são um caso legítimo: `style="--frente-color:#00C2A8"`
-define uma *variável CSS por instância* (um jeito padrão e correto de
-parametrizar um componente reaproveitável) — não é a mesma coisa que
-"esquecer" o estilo dentro do HTML.
+**Exceção intencional:** as cores dos "swatches" no gerador de citação
+(`ferramentas/gerador-de-citacao/index.html`) continuam com
+`style="background:#0E2E38"` — ali a cor é um DADO (uma opção que a
+pessoa escolhe), não uma decisão de estilo, então não faz sentido virar
+classe fixa.
 
-## 4. JavaScript — `assets/js/`
+## Como o JavaScript está organizado
+
+Tudo dentro de **`assets/js/`**, dividido em quatro pastas:
 
 ```
-site-config.js     → lê configuração do _config.yml (via data-* no <body>)
-core/                → roda em TODA página, é a base do site
-  canvas-utils.js       funções de desenho compartilhadas (geração de imagens)
-  counter-api.js        comunicação com o CounterAPI (views/curtidas)
-  theme.js              botão de claro/escuro
-  navigation.js         menu, scroll da nav, voltar ao topo
-  animations.js         efeito de digitação, fade-in ao rolar
-  pwa.js                instalar como app + service worker
-features/            → uma funcionalidade por arquivo; cada um SÓ FAZ ALGO
-                        se o elemento HTML dele existir na página atual
-                        (por isso é seguro carregar todos em toda página)
-  reading-progress.js, filters.js, copy-code.js, toc.js, view-counter.js,
-  blog-search.js, most-read.js, likes-widget.js, post-status.js,
-  study-guide.js, comments.js, quiz.js, share-post.js, share-global.js
-pages/                → lógica exclusiva de UMA página específica —
-                        só é carregado nela, não no site inteiro
-  curriculo.js, citacao.js, trilha.js, cartao.js
-vendor/               → bibliotecas de terceiros (não escritas por nós)
-  gerador-visual.js (QRCode.js), mailerlite.js
+assets/js/
+├── site-config.js        → ponte entre _config.yml e o JS (veja abaixo)
+├── core/                  → infraestrutura usada por várias features
+├── features/               → um arquivo por funcionalidade reaproveitável
+├── pages/                 → scripts específicos de UMA página só
+└── vendor/                 → bibliotecas de terceiros (não editar por dentro)
 ```
 
-### Como tudo é carregado: `_includes/scripts.html`
+### `core/` — a base que várias features usam
 
-Esse arquivo é o **único lugar** que decide a ordem de carregamento do JS
-global — está incluído em `_layouts/default.html`, então roda em toda
-página. Ele carrega, nesta ordem: `site-config.js` → `core/*` → `features/*`.
-A ordem importa porque um arquivo pode depender do anterior (ex.:
-`core/counter-api.js` usa `AMSite.config`, que só existe depois de
-`site-config.js` rodar).
+| Arquivo | O que faz |
+|---|---|
+| `theme.js` | Botão de modo claro/escuro |
+| `navigation.js` | Menu, rolagem da navbar, botão "voltar ao topo" |
+| `animations.js` | Efeito typewriter, fade-in ao rolar, barra de progresso de leitura |
+| `pwa.js` | Instalar o site como app + Service Worker |
+| `counter-widget.js` | Fala com o CounterAPI (curtidas e visualizações) — usado por posts, comentários e portfólio |
+| `canvas-share.js` | Funções de desenho compartilhadas pelos 3 geradores de imagem do site |
 
-Os scripts de `pages/` **não** estão em `scripts.html` — cada página os
-carrega individualmente (ex.: só `/curriculo/` carrega `pages/curriculo.js`),
-pra não pesar o carregamento das páginas que não precisam deles.
+### `features/` — uma funcionalidade por arquivo
 
-### O padrão `AMSite` e por que os módulos existem
+Cada arquivo começa com `if (!elemento) return;` — ou seja, ele só age se
+a página atual tiver o elemento que ele procura. Por isso TODOS os
+arquivos de `features/` são carregados em TODA página (via
+`_includes/scripts.html`), sem problema de desempenho perceptível: os que
+não se aplicam simplesmente não fazem nada.
 
-Todo arquivo de `core/` e `features/` guarda suas funções dentro de um
-objeto global único, `window.AMSite` (ex.: `AMSite.counter.ligarBotaoCurtir`,
-`AMSite.canvas.wrapText`). Isso substitui o que antes eram 3 cópias
-levemente diferentes da mesma lógica (curtir um post, curtir um comentário,
-curtir um card do portfólio todas reimplementavam a mesma chamada ao
-CounterAPI; `roundRect`/`wrapText` existiam coladas em 3 arquivos de
-geração de imagem diferentes). Agora existe **uma versão de cada função**,
-e um bug corrigido nela é corrigido em todo lugar que a usa.
+`filters.js`, `toc.js`, `copy-code.js`, `blog-search.js`, `most-read.js`,
+`likes-widget.js`, `comments.js`, `quiz.js`, `study-guide.js`,
+`share-post.js`, `share-global.js`, `post-status.js`.
 
-### A "ponte" entre Jekyll e JS: `data-*`, não `<script>` inline
+### `pages/` — o oposto: código de UMA página só
 
-Sempre que uma feature precisa de um dado que só existe em tempo de build
-(slug de um post, ID de formulário, nível de segurança do currículo), esse
-dado é escrito como atributo `data-*` num elemento HTML já existente, e o
-arquivo `.js` correspondente lê esse atributo quando roda. Exemplos:
+Diferente de `features/`, estes só são carregados na própria página deles
+(um `<script src="...">` no fim do arquivo HTML da página), porque não
+fazem sentido em nenhum outro lugar do site: `curriculo.js`,
+`cartao-contato.js`, `citation-generator.js`, `trilha.js`, `home.js`,
+`servicos.js`, `terminal.js`.
+
+**Regra pra decidir onde um script novo vai:** se ele pode, no futuro,
+ser útil em mais de uma página → `features/`. Se é específico de uma
+página só → `pages/`.
+
+### `vendor/` — bibliotecas de terceiros
+
+`qrcode.min.js` (gera QR codes) e `mailerlite.js`/`cms-editor-components.js`
+(snippets oficiais de serviços externos). **Não edite o conteúdo desses
+arquivos** — se precisar trocar de versão, baixe o arquivo novo e
+substitua o antigo inteiro.
+
+### `site-config.js` — a ponte com `_config.yml`
+
+Alguns valores (o namespace do CounterAPI, os IDs do Formspree) ficam
+configurados no `_config.yml`, não escritos direto no JavaScript — assim
+você só precisa trocar num lugar se um dia mudar de serviço. Só que o
+navegador não lê `_config.yml` (só o Jekyll lê, no momento do build). O
+`site-config.js` resolve isso: é um arquivo `.js` com front matter
+Liquid (as três linhas `---` no topo), que o Jekyll processa e "imprime"
+esses valores num objeto `window.AM_CONFIG` de JavaScript comum.
+
+### Como uma página passa dado pro JavaScript
+
+Como o JavaScript não entende Liquid, todo dado que varia por página
+(o slug de um post, o nome de usuário do GitHub, etc.) é passado através
+de **atributos `data-*`** no próprio HTML:
 
 ```html
-<!-- likes.html escreve o dado: -->
-<button id="like-btn" data-post-slug="{{ page.slug }}">
-
-<!-- features/likes-widget.js lê o dado: -->
-var slug = likeBtnPost.getAttribute('data-post-slug');
+<!-- no HTML (processado pelo Jekyll): -->
+<div id="vcard-qr" data-vcard-tel="{{ site.author.whatsapp }}"></div>
+```
+```js
+// no JavaScript (arquivo comum, sem Liquid):
+var telefone = document.getElementById('vcard-qr').dataset.vcardTel;
 ```
 
-**Por que não simplesmente chamar uma função com o dado, tipo
-`AMSite.likes.iniciar({{ page.slug | jsonify }})`?** Porque todo script
-externo carrega com `defer` — ele só *executa* depois que a página inteira
-terminou de carregar, mesmo que aaparência dele no HTML seja mais acima.
-Um `<script>` **inline** (sem `src`), por outro lado, roda **na hora**, no
-exato ponto em que o navegador o encontra — o que seria *antes* do arquivo
-`defer` correspondente sequer ter rodado. Ler os dados do próprio DOM (via
-`data-*`) em vez de receber por chamada de função elimina esse problema de
-ordem por completo.
+Isso mantém os arquivos `.js` 100% reaproveitáveis e sem depender do
+Jekyll pra funcionar — são só JavaScript puro.
 
-A única exceção de verdade a "todo JS mora em `assets/js/`" é o
-script de tema no `<head>` de `_layouts/default.html`: ele decide se a
-página nasce clara ou escura, e precisa rodar **antes** do CSS pintar a
-tela — um arquivo com `defer` chegaria tarde demais e a página piscaria
-branca por um instante. Está comentado no próprio arquivo.
+### Ordem de carregamento (`_includes/scripts.html`)
 
-### Duplicação de carregamento proposital (só uma, e documentada)
+Um único include, incluído uma vez em `_layouts/default.html`, carrega
+TODO o JavaScript do site (menos os scripts de `pages/`, que cada página
+carrega por conta própria, no fim do próprio arquivo). A ordem dentro
+dele importa — está comentada linha a linha lá dentro.
 
-`/contato/cartao/` carrega `vendor/gerador-visual.js` (a lib do QR code)
-uma segunda vez, sem `defer`, além da cópia global (com `defer`) que já
-roda em toda página. É proposital: essa página *é* o QR code, então ele
-precisa aparecer imediatamente, sem esperar o carregamento adiado. Está
-comentado em `assets/js/pages/cartao.js`.
+## Como os layouts se encaixam
 
-## 5. Onde cada tipo de mudança deve ser feita
+```
+_layouts/default.html   ← base de tudo: <head>, navegação, rodapé, scripts
+        ↑ estendido por
+_layouts/post.html       ← usado pelos posts do blog (_posts/*.md)
+_layouts/sistema.html    ← usado pelas páginas do portfólio (_sistemas/*.md)
+```
 
-| Eu quero... | Eu mexo em... |
+`post.html` e `sistema.html` têm `layout: default` no próprio front
+matter — isso significa "pegue o `default.html` e coloque o MEU conteúdo
+onde está `{{ content }}`". **Nunca copie o `<head>`/navegação/rodapé de
+`default.html` pra outro layout** — foi exatamente esse erro que existia
+antes (em `sistema.html`) e fez o botão de tema desaparecer nas páginas
+do portfólio, porque ninguém lembrou de atualizar a cópia também.
+
+## Portfólio: uma fonte de verdade só
+
+Os 13 sistemas do portfólio (`portfolio/index.html`) são lidos direto da
+collection `_sistemas/` — cada sistema é um arquivo `_sistemas/nome.md`
+com `name`, `excerpt`, `status`, `stack`, etc. **Pra atualizar um
+sistema, edite só o arquivo dele em `_sistemas/`** — a página do
+portfólio e a página de detalhe dele (`/portfolio/nome-do-sistema/`) se
+atualizam sozinhas, porque as duas leem do mesmo lugar.
+
+## Comentários: fluxo manual
+
+Não existe backend recebendo e publicando comentários automaticamente.
+O fluxo é: alguém comenta → você recebe um e-mail (Formspree) → você
+aprova criando um arquivo `.yml` em `_data/comments/<slug-do-post>/` →
+faz commit e push → o comentário aparece no próximo build. O passo a
+passo completo (incluindo como fazer respostas em thread) está em
+`README-COMENTARIOS.md`.
+
+## Onde configurar o quê
+
+| Quero mudar... | Onde |
 |---|---|
-| Mudar uma cor/espaçamento do site inteiro | `assets/css/main.css`, seção `TOKENS` |
-| Mudar o estilo de UM componente específico | `main.css`, seção daquele componente |
-| Adicionar um sistema novo no portfólio | criar `_sistemas/novo-slug.md` (nunca em `portfolio/index.html`) |
-| Mudar o namespace do CounterAPI | `_config.yml` → `counterapi_namespace` |
-| Mudar o comportamento de "curtir" (post, comentário ou portfólio) | `assets/js/core/counter-api.js` |
-| Mudar como as citações/cards de LinkedIn são desenhados | `assets/js/core/canvas-utils.js` |
-| Adicionar uma feature nova que aparece em várias páginas | novo arquivo em `assets/js/features/`, incluído em `_includes/scripts.html` |
-| Adicionar lógica só de uma página nova | novo arquivo em `assets/js/pages/`, `<script src="...">` só naquela página |
-| Aprovar um comentário | `README-COMENTARIOS.md` |
+| Nome, WhatsApp, GitHub, LinkedIn, localização | `_config.yml` → `author:` |
+| Status "construindo agora" do hero | `_config.yml` → `status_now:` |
+| Analytics (GoatCounter) | `_config.yml` → `goatcounter_username` |
+| Formulário de comentários / orçamento / quiz | `_config.yml` → `formspree_*` |
+| Um sistema do portfólio | `_sistemas/<nome>.md` |
+| Um post do blog | `_posts/AAAA-MM-DD-titulo.md` |
+| Uma cor ou espaçamento do site inteiro | `assets/css/main.css` → seção `:root` (tokens) |
+| O comportamento de um botão/widget | o arquivo certo em `assets/js/` (veja a tabela acima) |
 
-## 6. O que a auditoria técnica pediu e o que foi feito
+## Coisas que foram corrigidas nesta reorganização
 
-Todos os itens da auditoria (`auditoria-site-alanmateus.md`) foram
-aplicados: BOM removido, `staticman.yml` removido, bug de tags órfãs em
-`post.html` corrigido, `<time>` semântico na data do post,
-`related-posts.html` considerando todas as categorias (não só a primeira),
-duplicação de dados do portfólio eliminada (agora vem de `site.sistemas`),
-`sistema.html` estendendo `default.html` (corrigindo o dark mode ausente),
-namespace do CounterAPI centralizado, `roundRect`/`wrapText` unificados,
-script duplicado do currículo removido, `editor_components` morto removido
-do `admin/config.yml`, `onclick` trocado por `addEventListener`, todos os
-links internos padronizados pra `relative_url`, e o README de comentários
-documentando `parent` e `author`. O único item deixado como está (por
-decisão de arquitetura, documentada) é o radar de skills do currículo
-continuar consultando a API do GitHub ao vivo em vez de dados pré-gerados
-em build time — mover isso exigiria uma GitHub Action nova, o que é uma
-mudança de infraestrutura maior e fica de fora do escopo desta limpeza.
+Pra referência — o que mudou em relação à versão anterior do projeto:
+
+- HTML mal-formado em `_layouts/post.html` (tags fechando sem abrir)
+- `_layouts/sistema.html` duplicava o `default.html` inteiro → agora estende
+- `portfolio/index.html` tinha a mesma lista de sistemas colada duas vezes,
+  e ainda duplicava os dados de `_sistemas/*.md` → agora lê só de lá
+- Todo JavaScript que estava espalhado em `<script>` dentro do HTML foi
+  extraído pra `assets/js/`, organizado e comentado
+- Funções repetidas (`wrapText`, `roundRect`, lógica de curtidas/CounterAPI)
+  foram unificadas em `core/canvas-share.js` e `core/counter-widget.js`
+- O namespace do CounterAPI, que estava escrito em 5 lugares diferentes,
+  agora existe só em `_config.yml`
+- `staticman.yml` (configuração não usada) e o bloco `editor_components`
+  inválido de `admin/config.yml` foram removidos
+- BOM (caractere invisível) removido de 4 arquivos
+- ~200 atributos `style=""` inline viraram classes no `main.css`

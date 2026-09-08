@@ -1,27 +1,25 @@
-/**
- * === pages/trilha.js ===
- * Lógica exclusiva da página /trilha/. Usa os dados já carregados por
- * `features/study-guide.js` (que também é quem desenha o widget "continue
- * seus estudos" no topo desta mesma página, automaticamente).
+/*
+ * pages/trilha.js — lógica específica da página /trilha/ (barra de
+ * progresso de leitura, lista de todos os posts marcando os já lidos,
+ * e "conquistas" desbloqueadas conforme o histórico de leitura).
  *
- * Por que dentro de `DOMContentLoaded`: este arquivo é carregado no MEIO
- * do conteúdo da página, então aparece no documento ANTES do
- * `_includes/scripts.html` (que fica perto do fim do `<body>` e é onde
- * `study-guide.js` mora). Mesmo os dois usando `defer`, scripts com defer
- * executam na ordem em que aparecem no documento — então, sem esperar o
- * `DOMContentLoaded`, este arquivo rodaria ANTES de `study-guide.js` e
- * `AMSite.studyGuide` ainda não existiria. `DOMContentLoaded` só dispara
- * depois que TODOS os scripts com defer da página já terminaram de rodar,
- * garantindo a ordem certa sem depender de onde cada tag <script> está.
+ * Depende de window.__studyGuide (definido em features/study-guide.js),
+ * que já leu o histórico de leitura do localStorage e a lista de posts
+ * vinda de _includes/study-guide-data.html.
+ *
+ * Observação sobre segurança: os títulos e tags inseridos via innerHTML
+ * abaixo vêm sempre do próprio conteúdo do blog (você mesmo escreve os
+ * posts) — nunca de um formulário público — por isso não há risco de
+ * outra pessoa injetar HTML malicioso aqui.
  */
-document.addEventListener('DOMContentLoaded', function () {
-  if (!AMSite.studyGuide) return; // página sem os dados do guia de estudos carregados
+(function () {
+  var listaEl = document.getElementById('trilha-lista');
+  if (!listaEl) return;
 
-  var posts = AMSite.studyGuide.posts;
-  var lidos = AMSite.studyGuide.lidos;
+  var posts = window.__studyGuide.posts;
+  var lidos = window.__studyGuide.lidos;
 
   var lidosCount = 0;
-  var listaEl = document.getElementById('trilha-lista');
   var html = '';
   var checkSvg = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
@@ -33,8 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
       '<span class="trilha-item__titulo">' + post.title + '</span>' +
       '</a>';
   });
-  listaEl.innerHTML = html || '<p class="text-muted">Ainda não tem artigos publicados.</p>';
+  listaEl.innerHTML = html || '<p class="trilha-vazio">Ainda não tem artigos publicados.</p>';
 
+  // --- Barra de progresso ---
   var total = posts.length;
   var pct = total > 0 ? Math.round((lidosCount / total) * 100) : 0;
   document.getElementById('trilha-progresso-fill').style.width = pct + '%';
@@ -43,13 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
       ? 'Você leu ' + lidosCount + ' de ' + total + ' artigos publicados (' + pct + '%)'
       : 'Ainda não tem artigos publicados pra acompanhar.';
 
-  // --- Conquistas ---
+  // --- Conquistas desbloqueadas conforme o progresso ---
   var conquistas = [];
   if (lidosCount >= 1) conquistas.push({ nome: 'Primeira leitura', desc: 'Leu o primeiro artigo' });
   if (lidosCount >= 5) conquistas.push({ nome: '5 artigos', desc: 'Leu 5 artigos diferentes' });
   if (lidosCount >= 10) conquistas.push({ nome: '10 artigos', desc: 'Leu 10 artigos diferentes' });
   if (total > 0 && lidosCount === total) conquistas.push({ nome: 'Em dia', desc: 'Leu tudo que já foi publicado' });
 
+  // Conquista extra: ler todos os posts de uma mesma tag
   var porTag = {};
   posts.forEach(function (post) {
     if (!post.tag) return;
@@ -71,4 +71,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }).join('');
     document.getElementById('conquistas-secao').hidden = false;
   }
-});
+})();

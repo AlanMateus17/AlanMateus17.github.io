@@ -6,7 +6,7 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Grupo AMtech Digital</p>
-    <h1 class="page-hero__title">Três frentes,<br><em class="text-accent-label">uma empresa.</em></h1>
+    <h1 class="page-hero__title">Três frentes,<br><em class="page-hero__title-accent">uma empresa.</em></h1>
     <p class="page-hero__desc">Desenvolvimento de software, assistência técnica e formação em TI. Cada serviço alimentado pela experiência real dos outros.</p>
   </div>
 </header>
@@ -27,8 +27,8 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
             <li class="servico__item">Banco de dados PostgreSQL com segurança por Row-Level Security</li>
             <li class="servico__item">Deploy em VPS com CI/CD e monitoramento</li>
           </ul>
-          <a href="#orcamento" class="btn btn--brand btn-full" >Solicitar orçamento</a>
-          <a href="https://wa.me/{{ site.author.whatsapp }}?text={{ 'Olá! Vi seu site e quero um orçamento de desenvolvimento de sistema.' | url_encode }}" target="_blank" rel="noopener" class="btn btn--outline btn-full mt-1" >Chamar no WhatsApp</a>
+          <a href="#orcamento" class="btn btn--brand servico__btn">Solicitar orçamento</a>
+          <a href="https://wa.me/{{ site.author.whatsapp }}?text={{ 'Olá! Vi seu site e quero um orçamento de desenvolvimento de sistema.' | url_encode }}" target="_blank" rel="noopener" class="btn btn--outline servico__btn servico__btn--secundario">Chamar no WhatsApp</a>
         </div>
       </div>
 
@@ -45,9 +45,9 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
             <li class="servico__item">Recuperação de dados e backup seguro</li>
             <li class="servico__item">Manutenção preventiva e limpeza interna</li>
           </ul>
-          <p class="placeholder-note text-center mb-1">// em estruturação formal</p>
-          <a href="#orcamento" class="btn btn--ghost btn-full" >Solicitar orçamento</a>
-          <a href="https://wa.me/{{ site.author.whatsapp }}?text={{ 'Olá! Vi seu site e quero um orçamento de assistência técnica.' | url_encode }}" target="_blank" rel="noopener" class="btn btn--outline btn-full mt-1" >Chamar no WhatsApp</a>
+          <p class="servico__nota">// em estruturação formal</p>
+          <a href="#orcamento" class="btn btn--ghost servico__btn">Solicitar orçamento</a>
+          <a href="https://wa.me/{{ site.author.whatsapp }}?text={{ 'Olá! Vi seu site e quero um orçamento de assistência técnica.' | url_encode }}" target="_blank" rel="noopener" class="btn btn--outline servico__btn servico__btn--secundario">Chamar no WhatsApp</a>
         </div>
       </div>
 
@@ -64,7 +64,7 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
             <li class="servico__item">Treinamento in-company em ferramentas de TI</li>
             <li class="servico__item">Capacitação em desenvolvimento web básico</li>
           </ul>
-          <a href="{{ '/ensino/' | relative_url }}" class="btn btn--brand btn-full" >Ver materiais gratuitos</a>
+          <a href="{{ '/ensino/' | relative_url }}" class="btn btn--brand servico__btn">Ver materiais gratuitos</a>
         </div>
       </div>
     </div>
@@ -72,27 +72,27 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
 </section>
 
 <section id="orcamento">
-  <div class="container max-w-lg" >
-    <div class="divider-top mt-1">
-      <h2 class="mb-1">Solicitar orçamento</h2>
-      <p class="text-muted mb-2">Conta um pouco do que você precisa — respondo por e-mail ou WhatsApp, o que preferir.</p>
+  <div class="container container--narrow-sm">
+    <div class="orcamento-secao">
+      <h2 class="orcamento-titulo">Solicitar orçamento</h2>
+      <p class="orcamento-desc">Conta um pouco do que você precisa — respondo por e-mail ou WhatsApp, o que preferir.</p>
 
-      <form id="orcamento-form" action="https://formspree.io/f/{{ site.formspree_orcamento_id }}" method="POST" class="grid-gap-sm max-w-md">
-        <p class="visually-hidden">
+      <form id="orcamento-form" action="https://formspree.io/f/{{ site.formspree_orcamento_id }}" method="POST" class="orcamento-form">
+        <p class="comment-form__honeypot">
           <label>Não preencha este campo<input type="text" name="_gotcha"></label>
         </p>
 
-        <label class="text-xs font-weight-600" for="orc-name">Nome</label>
+        <label class="orcamento-label" for="orc-name">Nome</label>
         <input id="orc-name" name="name" type="text" required maxlength="80"
-               class="field-input field-input--sm">
+               class="orcamento-input">
 
-        <label class="text-xs font-weight-600" for="orc-contact">E-mail ou WhatsApp pra retorno</label>
+        <label class="orcamento-label" for="orc-contact">E-mail ou WhatsApp pra retorno</label>
         <input id="orc-contact" name="contato" type="text" required maxlength="120"
-               class="field-input field-input--sm">
+               class="orcamento-input">
 
-        <label class="text-xs font-weight-600" for="orc-servico">Serviço de interesse</label>
+        <label class="orcamento-label" for="orc-servico">Serviço de interesse</label>
         <select id="orc-servico" name="servico" required
-                class="field-input field-input--sm">
+                class="orcamento-input">
           <option value="">Selecione...</option>
           <option value="Desenvolvimento de sistemas">Desenvolvimento de sistemas</option>
           <option value="Assistência técnica">Assistência técnica</option>
@@ -100,42 +100,15 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
           <option value="Outro">Outro</option>
         </select>
 
-        <label class="text-xs font-weight-600" for="orc-msg">O que você precisa</label>
+        <label class="orcamento-label" for="orc-msg">O que você precisa</label>
         <textarea id="orc-msg" name="mensagem" rows="4" required maxlength="1500"
-                  class="field-input field-input--sm"></textarea>
+                  class="orcamento-input"></textarea>
 
-        <button type="submit" class="btn btn--primary mt-1" >Enviar pedido</button>
-        <p id="orcamento-status" class="text-xs text-muted mt-1" hidden></p>
+        <button type="submit" class="btn btn--primary orcamento-botao">Enviar pedido</button>
+        <p id="orcamento-status" class="orcamento-status" hidden></p>
       </form>
     </div>
   </div>
 </section>
 
-<script>
-(function () {
-  var form = document.getElementById('orcamento-form');
-  if (!form) return;
-  var status = document.getElementById('orcamento-status');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    status.hidden = false;
-    status.textContent = 'Enviando...';
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (res.ok) {
-        status.textContent = 'Pedido enviado! Você recebe uma resposta em breve.';
-        form.reset();
-      } else {
-        return res.json().then(function (data) {
-          throw new Error((data && data.error) || 'Erro ao enviar');
-        });
-      }
-    }).catch(function (err) {
-      status.textContent = 'Não deu pra enviar agora (' + err.message + '). Tenta de novo em instantes.';
-    });
-  });
-})();
-</script>
+<script src="{{ '/assets/js/pages/servicos.js' | relative_url }}" defer></script>

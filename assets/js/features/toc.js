@@ -1,24 +1,23 @@
-/**
- * === features/toc.js ===
- * Gera automaticamente o sumário ("Neste post") de um post, a partir dos
- * títulos `<h2>` e `<h3>` que existem no corpo dele. Só aparece se o post
- * tiver pelo menos 3 títulos — sumário de post curto não ajuda em nada.
+/*
+ * features/toc.js — monta automaticamente um sumário ("Neste post")
+ * a partir dos títulos (<h2> e <h3>) de um post, e só mostra esse
+ * sumário se o post tiver pelo menos 3 títulos (post curto não precisa).
  */
 (function () {
-  var corpo = document.querySelector('.post-body');
+  var body = document.querySelector('.post-body');
   var toc = document.getElementById('post-toc');
-  var lista = document.getElementById('post-toc-list');
-  if (!corpo || !toc || !lista) return;
+  var list = document.getElementById('post-toc-list');
+  if (!body || !toc || !list) return;
 
-  var titulos = corpo.querySelectorAll('h2, h3');
-  if (titulos.length < 3) return;
+  var headings = body.querySelectorAll('h2, h3');
+  if (headings.length < 3) return;
 
-  titulos.forEach(function (h) {
+  headings.forEach(function (h) {
+    // Cada título precisa de um "id" único pra poder ser linkado (#id).
+    // Se o título ainda não tiver um, criamos um a partir do próprio texto.
     if (!h.id) {
-      // Gera um id "fatiável" (slug) a partir do texto do título, removendo
-      // acentos e caracteres especiais, pra poder linkar com #id.
       h.id = h.textContent.toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
         .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
     var li = document.createElement('li');
@@ -27,7 +26,7 @@
     a.href = '#' + h.id;
     a.textContent = h.textContent;
     li.appendChild(a);
-    lista.appendChild(li);
+    list.appendChild(li);
   });
 
   toc.hidden = false;

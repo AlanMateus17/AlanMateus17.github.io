@@ -6,15 +6,15 @@ description: "Entre em contato com Alan Mateus — projetos de desenvolvimento, 
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Contato</p>
-    <h1 class="page-hero__title">Vamos<br><em class="text-accent-label">conversar.</em></h1>
+    <h1 class="page-hero__title">Vamos<br><em class="page-hero__title-accent">conversar.</em></h1>
     <p class="page-hero__desc">Projeto de desenvolvimento, parceria, dúvida sobre os materiais de ensino ou só um olá — qualquer motivo é válido.</p>
   </div>
 </header>
 <section>
-  <div class="container max-w-3xl" >
+  <div class="container container--contato">
     <div class="contact-grid">
       <div>
-        <h3 class="mb-2">Envie uma mensagem</h3>
+        <h3 class="titulo-com-margem-lg">Envie uma mensagem</h3>
         <form class="contact-form" action="https://formspree.io/f/mljedzov" method="POST">
           <div class="form-group">
             <label for="nome">Nome</label>
@@ -39,11 +39,11 @@ description: "Entre em contato com Alan Mateus — projetos de desenvolvimento, 
             <label for="mensagem">Mensagem</label>
             <textarea id="mensagem" name="mensagem" placeholder="Descreva o que você precisa..." required></textarea>
           </div>
-          <button type="submit" class="btn btn--brand self-start" >Enviar mensagem →</button>
+          <button type="submit" class="btn btn--brand contato-form__botao">Enviar mensagem →</button>
         </form>
       </div>
       <div>
-        <h3 class="mb-2">Links diretos</h3>
+        <h3 class="titulo-com-margem-lg">Links diretos</h3>
         <div class="contact-links">
           <a href="https://wa.me/5532984138614" class="contact-link" target="_blank" rel="noopener">
             <span class="contact-link__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21l1.4-4.2A8.5 8.5 0 1112 20.5c-1.3 0-2.6-.3-3.7-.9L3 21z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.5 9.5c0 3.5 2.5 6 6 6l1-2-2.5-1-1 1c-1-.5-2.5-2-3-3l1-1-1-2.5-2 1z" fill="currentColor"/></svg></span>
@@ -62,7 +62,7 @@ description: "Entre em contato com Alan Mateus — projetos de desenvolvimento, 
             <div><p class="contact-link__label">E-mail</p><p class="contact-link__value">alandesouzasilva04@gmail.com</p></div>
           </a>
         </div>
-        <div class="highlight-box mt-2">
+        <div class="contato-aviso">
           <strong>Tempo de resposta:</strong> geralmente em até 24 horas nos dias úteis.
         </div>
       </div>
@@ -71,9 +71,9 @@ description: "Entre em contato com Alan Mateus — projetos de desenvolvimento, 
 </section>
 
 <section>
-  <div class="container max-w-md text-center" >
-    <p class="text-muted text-sm">
-      Em evento ou reunião? <a href="{{ '/contato/cartao/' | relative_url }}" class="text-accent-text">Escaneie meu cartão de visita digital →</a>
+  <div class="container container--contato-rodape">
+    <p class="contato-rodape-texto">
+      Em evento ou reunião? <a href="{{ '/contato/cartao/' | relative_url }}" class="link-accent">Escaneie meu cartão de visita digital →</a>
     </p>
   </div>
 </section>

@@ -1,16 +1,16 @@
-/**
- * === core/animations.js ===
- * Animações puramente visuais, sem lógica de negócio: o efeito de máquina
- * de escrever no hero da home, e a revelação suave de blocos (`.fade-in`)
- * conforme a pessoa rola a página.
+/*
+ * core/animations.js — pequenas animações usadas em várias páginas:
+ * efeito de "máquina de escrever" no hero da home, elementos que
+ * aparecem suavemente ao rolar a página, e a barra de progresso
+ * de leitura no topo dos posts.
  */
 
-// --- Efeito "máquina de escrever" no hero da home ---
+// --- Efeito typewriter (máquina de escrever) no hero da home ---
 (function () {
   var el = document.querySelector('.hero__typewriter .text');
   if (!el) return;
 
-  var frases = [
+  var phrases = [
     'Desenvolvedor .NET / C#',
     'Professor de Informática — EMTI',
     'Construindo o ecossistema Aura',
@@ -19,46 +19,65 @@
     'Aprendendo em público'
   ];
 
-  var fraseIdx = 0, charIdx = 0, apagando = false, pausado = false;
+  var phraseIdx = 0, charIdx = 0, deleting = false, pause = false;
 
-  function digitar() {
-    if (pausado) return;
-    var frase = frases[fraseIdx];
+  function type() {
+    if (pause) return;
+    var phrase = phrases[phraseIdx];
 
-    if (!apagando) {
-      el.textContent = frase.slice(0, ++charIdx);
-      if (charIdx === frase.length) {
-        pausado = true;
-        setTimeout(function () { apagando = true; pausado = false; }, 2200);
+    if (!deleting) {
+      el.textContent = phrase.slice(0, ++charIdx);
+      if (charIdx === phrase.length) {
+        pause = true;
+        setTimeout(function () { deleting = true; pause = false; }, 2200);
       }
     } else {
-      el.textContent = frase.slice(0, --charIdx);
+      el.textContent = phrase.slice(0, --charIdx);
       if (charIdx === 0) {
-        apagando = false;
-        fraseIdx = (fraseIdx + 1) % frases.length;
+        deleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
       }
     }
-    setTimeout(digitar, apagando ? 45 : 80);
+    setTimeout(type, deleting ? 45 : 80);
   }
-  digitar();
+  type();
 })();
 
-// --- Revela elementos com a classe .fade-in conforme entram na tela ---
+// --- Elementos que aparecem suavemente conforme entram na tela ---
+// Basta adicionar a classe "fade-in" em qualquer elemento do HTML;
+// quando ele entra na área visível, ganha a classe "visible" (o CSS
+// cuida da transição — veja .fade-in em assets/css/main.css).
 (function () {
-  var itens = document.querySelectorAll('.fade-in');
-  if (!itens.length) return;
+  var items = document.querySelectorAll('.fade-in');
+  if (!items.length) return;
 
   var observer = new IntersectionObserver(
     function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          observer.unobserve(e.target);
+          observer.unobserve(e.target); // já apareceu, não precisa observar de novo
         }
       });
     },
     { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
   );
 
-  itens.forEach(function (el) { observer.observe(el); });
+  items.forEach(function (el) { observer.observe(el); });
+})();
+
+// --- Barra de progresso de leitura (só nas páginas de post) ---
+(function () {
+  var bar = document.querySelector('.reading-progress');
+  var body = document.querySelector('.post-body');
+  if (!bar || !body) return;
+
+  function update() {
+    var rect = body.getBoundingClientRect();
+    var total = body.offsetHeight - window.innerHeight;
+    var read = Math.max(0, -rect.top);
+    bar.style.width = Math.min(100, (read / total) * 100) + '%';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
 })();

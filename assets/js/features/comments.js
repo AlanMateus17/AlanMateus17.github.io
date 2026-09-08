@@ -1,14 +1,17 @@
-/**
- * === features/comments.js ===
- * Tudo que acontece no formulário e na lista de comentários
- * (`_includes/comments.html`):
- *  - contador de caracteres restantes no textarea;
- *  - clicar em "Responder" preenche o campo oculto `parent` (pra virar
- *    uma resposta em thread — ver README-COMENTARIOS.md);
- *  - "Ver comentário completo" em comentários longos;
- *  - curtidas por comentário (via `AMSite.counter`, o mesmo módulo usado
- *    pelas curtidas de post e de portfólio);
- *  - envio do formulário pro Formspree, sem recarregar a página.
+/*
+ * features/comments.js — três responsabilidades da seção de comentários
+ * de um post:
+ *
+ *   1) Contador de caracteres restantes no campo de mensagem.
+ *   2) Botões "Responder" (preenche o campo escondido "parent" com o id
+ *      do comentário respondido, pra virar uma resposta em thread quando
+ *      você publicar manualmente — veja README-COMENTARIOS.md) e o botão
+ *      "Ver comentário completo" (comentários muito longos começam
+ *      recolhidos).
+ *   3) Curtidas de cada comentário — reaproveita core/counter-widget.js,
+ *      igual ao botão de curtir do post.
+ *   4) Envio do formulário pro Formspree (que manda um e-mail pra você;
+ *      a publicação de fato é manual, como o README explica).
  */
 (function () {
   var form = document.getElementById('comment-form');
@@ -21,18 +24,19 @@
   var submitBtn = document.getElementById('comment-form-submit');
   var cancelReply = document.getElementById('comment-form-cancel-reply');
   var textarea = document.getElementById('cf-message');
-  var contador = document.getElementById('comment-form-counter');
+  var counter = document.getElementById('comment-form-counter');
   var LIMITE = 1000;
 
+  // --- Contador de caracteres ---
   function atualizarContador() {
     var restantes = LIMITE - textarea.value.length;
-    contador.textContent = restantes + ' caracteres restantes';
-    contador.classList.toggle('comment-form__counter--perto', restantes <= 100);
+    counter.textContent = restantes + ' caracteres restantes';
+    counter.classList.toggle('comment-form__counter--perto', restantes <= 100);
   }
   textarea.addEventListener('input', atualizarContador);
   atualizarContador();
 
-  // --- Responder a um comentário específico (preenche o campo "parent") ---
+  // --- Botão "Responder" em cada comentário ---
   document.querySelectorAll('.comment__reply-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       parentInput.value = btn.getAttribute('data-comment-id');
@@ -40,7 +44,7 @@
       replyingBox.hidden = false;
       submitBtn.textContent = 'Enviar resposta';
       form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      document.getElementById('cf-message').focus();
+      textarea.focus();
     });
   });
 
@@ -51,7 +55,7 @@
     submitBtn.textContent = 'Enviar comentário';
   });
 
-  // --- Expandir comentários longos ---
+  // --- "Ver comentário completo" nos comentários longos ---
   document.querySelectorAll('.comment__toggle-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var alvo = document.getElementById(btn.getAttribute('data-target'));
@@ -64,10 +68,10 @@
   document.querySelectorAll('.comment__like-btn').forEach(function (btn) {
     var key = btn.getAttribute('data-like-key');
     var countEl = btn.querySelector('.comment__like-count');
-    AMSite.counter.ligarBotaoCurtir(btn, countEl, key);
+    window.AMCounter.initLikeButton({ btn: btn, key: key, countEl: countEl });
   });
 
-  // --- Envio do formulário (Formspree, sem recarregar a página) ---
+  // --- Envio do formulário (via Formspree) ---
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     status.hidden = false;

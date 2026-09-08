@@ -1,25 +1,16 @@
-/**
- * === features/study-guide.js ===
- * Lê os dados de todos os posts (gerados em `_includes/study-guide-data.html`,
- * um `<script type="application/json">` só com dados, sem lógica) e cruza
- * com o histórico de leitura (`localStorage`, escrito por `post-status.js`).
+/*
+ * features/study-guide.js — widget "Continue seus estudos" que aparece
+ * no fim de cada post, sugerindo o próximo post ainda não lido (na
+ * mesma ordem cronológica do plano de estudos).
  *
- * Expõe `AMSite.studyGuide` com:
- *  - `.posts`              → lista de todos os posts, em ordem cronológica
- *  - `.lidos`              → slugs já lidos
- *  - `.proximoNaoLido()`   → próximo post ainda não lido (ou null se leu tudo)
- *  - `.renderizarContinuarWidget(containerId)` → desenha o card "continue
- *     seus estudos" dentro do elemento com esse id
- *
- * Usado por:
- *  - `_layouts/post.html` (widget de "continuar" no fim de cada post)
- *  - `/trilha/` (lista completa + barra de progresso + conquistas, em pages/trilha.js)
- *
- * Este arquivo já cuida sozinho de renderizar o widget "continuar estudos"
- * em qualquer página que tenha um elemento `#study-guide-widget` — não
- * precisa chamar nada manualmente depois de incluir este script.
+ * Os dados de TODOS os posts (slug, título, url) são gerados pelo Jekyll
+ * em formato JSON dentro de _includes/study-guide-data.html, num
+ * <script type="application/json" id="study-guide-data">. Isso é dado,
+ * não lógica — por isso continua embutido no HTML (o Jekyll precisa
+ * processá-lo com Liquid a cada build). Este arquivo só lê esse JSON
+ * e decide o que mostrar.
  */
-window.AMSite = window.AMSite || {};
+window.__studyGuide = window.__studyGuide || {};
 
 (function () {
   var dataEl = document.getElementById('study-guide-data');
@@ -28,14 +19,19 @@ window.AMSite = window.AMSite || {};
   var posts = JSON.parse(dataEl.textContent);
   var lidos = JSON.parse(localStorage.getItem('posts-lidos') || '[]');
 
-  function proximoNaoLido() {
+  window.__studyGuide.posts = posts;
+  window.__studyGuide.lidos = lidos;
+
+  /** Retorna o primeiro post (em ordem cronológica) que ainda não foi lido. */
+  window.__studyGuide.proximoNaoLido = function () {
     for (var i = 0; i < posts.length; i++) {
       if (lidos.indexOf(posts[i].slug) === -1) return posts[i];
     }
-    return null;
-  }
+    return null; // leu tudo!
+  };
 
-  function marcarLidosNaListagem() {
+  /** Marca com um selinho os posts já lidos, na listagem do blog. */
+  window.__studyGuide.marcarLidosNaListagem = function () {
     document.querySelectorAll('[data-slug]').forEach(function (card) {
       var slug = card.getAttribute('data-slug');
       if (lidos.indexOf(slug) !== -1) {
@@ -43,38 +39,42 @@ window.AMSite = window.AMSite || {};
         if (badge) badge.hidden = false;
       }
     });
-  }
+  };
 
-  function renderizarContinuarWidget(containerId) {
+  /** Desenha o widget "Continue seus estudos" dentro do elemento indicado. */
+  window.__studyGuide.renderizarContinuarWidget = function (containerId) {
     var el = document.getElementById(containerId);
     if (!el) return;
-    var proximo = proximoNaoLido();
+    var proximo = window.__studyGuide.proximoNaoLido();
+
     if (!proximo) {
       el.innerHTML = '<p class="study-guide__done">Você está em dia com todos os artigos publicados até agora!</p>';
     } else {
-      el.innerHTML = '<p class="study-guide__label">Continue seus estudos</p>' +
-        '<a href="' + proximo.url + '" class="study-guide__link">' + proximo.title + ' →</a>';
+      // Criamos os elementos com createElement (em vez de innerHTML com
+      // texto colado) só por segurança: assim, se um título de post algum
+      // dia tiver caracteres especiais, eles nunca são interpretados como HTML.
+      el.innerHTML = '';
+      var label = document.createElement('p');
+      label.className = 'study-guide__label';
+      label.textContent = 'Continue seus estudos';
+      var link = document.createElement('a');
+      link.className = 'study-guide__link';
+      link.href = proximo.url;
+      link.textContent = proximo.title + ' →';
+      el.appendChild(label);
+      el.appendChild(link);
     }
     el.hidden = false;
-  }
-
-  AMSite.studyGuide = {
-    posts: posts,
-    lidos: lidos,
-    proximoNaoLido: proximoNaoLido,
-    marcarLidosNaListagem: marcarLidosNaListagem,
-    renderizarContinuarWidget: renderizarContinuarWidget
   };
 
-  // Roda automaticamente em qualquer página: marca os cards já lidos
-  // (não faz nada se não houver nenhum elemento [data-slug] na página) e
-  // renderiza o widget "continuar estudos" se ele existir nesta página
-  // (existe em posts e na página /trilha/). Evita repetir essas chamadas
-  // manualmente em cada arquivo .html que usa esses recursos — e evita o
-  // problema de um <script> inline (que rodaria antes deste arquivo
-  // carregar, por causa do defer).
-  marcarLidosNaListagem();
-  if (document.getElementById('study-guide-widget')) {
-    renderizarContinuarWidget('study-guide-widget');
-  }
+  // Aproveita e já marca os posts lidos na listagem do blog, se houver
+  // algum '[data-slug]' na página (nas páginas que não têm listagem,
+  // isso simplesmente não encontra nada e não faz diferença).
+  window.__studyGuide.marcarLidosNaListagem();
+
+  // As três páginas que usam este widget (post, listagem do blog e a
+  // página /trilha/) sempre usam o mesmo id de container — por isso já
+  // desenhamos o widget aqui, sem precisar de mais um <script> em cada
+  // página chamando isso manualmente.
+  window.__studyGuide.renderizarContinuarWidget('study-guide-widget');
 })();

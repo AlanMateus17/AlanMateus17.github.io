@@ -1,22 +1,19 @@
-/**
- * === features/post-status.js ===
- * Ao abrir um post:
- *  1) verifica se esse post já foi lido antes (histórico em localStorage)
- *     e se já foi curtido, mostrando os selos correspondentes;
- *  2) se ainda não tinha sido lido, registra no histórico agora — esse
- *     histórico é a base de dados usada por `study-guide.js` (widget
- *     "continue seus estudos") e pela página `/trilha/`.
+/*
+ * features/post-status.js — mostra os selinhos "Você já leu este post"
+ * e "Você já curtiu este post" no topo do artigo, e registra a visita
+ * no histórico de leitura (usado também pelo study-guide.js pra saber
+ * qual é o "próximo post não lido").
  *
- * O slug do post vem de `data-post-slug` no próprio container
- * `#post-reading-status` (injetado pelo Jekyll em `_layouts/post.html`).
+ * O slug do post vem no atributo data-slug do próprio hero do post
+ * (veja _layouts/post.html).
  */
 (function () {
-  var container = document.getElementById('post-reading-status');
-  if (!container) return;
+  var hero = document.querySelector('.post-hero[data-slug]');
+  if (!hero) return;
 
-  var slug = container.getAttribute('data-post-slug');
-  var CHAVE_HISTORICO = 'posts-lidos';
-  var historico = JSON.parse(localStorage.getItem(CHAVE_HISTORICO) || '[]');
+  var slug = hero.dataset.slug;
+  var chaveHistorico = 'posts-lidos';
+  var historico = JSON.parse(localStorage.getItem(chaveHistorico) || '[]');
 
   var jaTinhaLido = historico.indexOf(slug) !== -1;
   var jaCurtiu = !!localStorage.getItem('liked:' + slug);
@@ -32,6 +29,16 @@
 
   if (!jaTinhaLido) {
     historico.push(slug);
-    localStorage.setItem(CHAVE_HISTORICO, JSON.stringify(historico));
+    localStorage.setItem(chaveHistorico, JSON.stringify(historico));
+  }
+
+  // --- Contador de visualizações (incrementa a cada visita, sem exigir clique) ---
+  var contadorEl = document.getElementById('post-view-count');
+  if (contadorEl) {
+    window.AMCounter.incrementViewCount(slug)
+      .then(function (n) {
+        contadorEl.textContent = n + (n === 1 ? ' visualização' : ' visualizações');
+      })
+      .catch(function () { contadorEl.textContent = ''; });
   }
 })();

@@ -1,18 +1,20 @@
-/**
- * === features/share-global.js ===
- * Botão flutuante presente em TODA página (`#page-share-story-btn`,
- * incluído globalmente por `_includes/global-story-share.html`) que gera
- * uma imagem vertical (1080x1920, formato Story) com um print da página +
- * QR code, pra compartilhar qualquer parte do site no Instagram/WhatsApp.
+/*
+ * features/share-global.js — botão flutuante que aparece em TODA página
+ * (não só posts) e gera uma imagem vertical (1080×1920, formato Story
+ * de Instagram/WhatsApp) com uma captura da página + QR code de volta
+ * pro site.
  *
- * Usa `AMSite.canvas.roundRect` (antes tinha sua própria cópia dessa função).
+ * Depende de:
+ *   - core/canvas-share.js (roundRect, baixarOuCompartilhar)
+ *   - html2canvas (script externo, carregado em _includes/scripts.html)
+ *   - vendor/qrcode.min.js (biblioteca de QR code)
  */
 (function () {
   var btn = document.getElementById('page-share-story-btn');
   if (!btn) return;
   var overlay = document.getElementById('page-share-overlay');
   var overlayText = document.getElementById('page-share-overlay-text');
-  var roundRect = AMSite.canvas.roundRect;
+  var S = window.AMCanvasShare;
 
   btn.addEventListener('click', function () {
     if (typeof html2canvas === 'undefined' || typeof QRCode === 'undefined') {
@@ -21,11 +23,7 @@
     }
     overlay.hidden = false;
     overlayText.textContent = 'Gerando sua imagem...';
-
-    var linkCopiado = false;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href).then(function () { linkCopiado = true; }).catch(function () {});
-    }
+    var getCopiado = S.copiarLinkAtual();
 
     // Funciona em qualquer tipo de página: post, página interna (page-hero) ou a Home (hero)
     var alvo = document.querySelector('.post-hero') ||
@@ -58,16 +56,20 @@
       var phoneH = Math.min(captura.height * escala, 1180);
 
       ctx.fillStyle = '#050f14';
-      roundRect(ctx, phoneX - 14, phoneY - 14, phoneW + 28, phoneH + 28, 46);
+      S.roundRect(ctx, phoneX - 14, phoneY - 14, phoneW + 28, phoneH + 28, 46);
       ctx.fill();
       ctx.save();
-      roundRect(ctx, phoneX, phoneY, phoneW, phoneH, 32);
+      S.roundRect(ctx, phoneX, phoneY, phoneW, phoneH, 32);
       ctx.clip();
       ctx.drawImage(captura, phoneX, phoneY, phoneW, phoneH);
       ctx.restore();
 
+      // O QRCode.js só sabe desenhar dentro de um elemento do DOM, então
+      // criamos um <div> temporário fora da tela, geramos o QR nele,
+      // "recortamos" a imagem gerada pro nosso canvas, e removemos o <div>.
       var qrContainer = document.createElement('div');
-      qrContainer.className = 'visually-hidden';
+      qrContainer.style.position = 'absolute';
+      qrContainer.style.left = '-9999px';
       document.body.appendChild(qrContainer);
       new QRCode(qrContainer, { text: window.location.href, width: 260, height: 260, correctLevel: QRCode.CorrectLevel.H });
 
@@ -75,7 +77,7 @@
         var qrEl = qrContainer.querySelector('img') || qrContainer.querySelector('canvas');
         var qrY = phoneY + phoneH + 60;
         ctx.fillStyle = '#fff';
-        roundRect(ctx, W / 2 - 150, qrY, 300, 300, 16);
+        S.roundRect(ctx, W / 2 - 150, qrY, 300, 300, 16);
         ctx.fill();
         if (qrEl) ctx.drawImage(qrEl, W / 2 - 130, qrY + 20, 260, 260);
         ctx.fillStyle = '#fff';
@@ -83,7 +85,7 @@
         ctx.fillText('Aponte a câmera pra conhecer', W / 2, qrY + 350);
         document.body.removeChild(qrContainer);
 
-        AMSite.canvas.baixarOuCompartilhar(canvas, overlay, overlayText, linkCopiado, 'alanmateus-site.png');
+        S.baixarOuCompartilhar(canvas, overlay, overlayText, getCopiado(), 'alanmateus-site.png');
       }, 400);
     }).catch(function () {
       overlay.hidden = true;

@@ -1,24 +1,26 @@
-/**
- * === features/quiz.js ===
- * Motor do quiz que aparece no fim de alguns posts (`_includes/quiz-post.html`).
+/*
+ * features/quiz.js — quiz de múltipla escolha que aparece no fim de
+ * alguns posts (só quando o post tem "quiz:" no front matter — veja
+ * _includes/quiz-post.html). Ao acertar todas as perguntas, oferece
+ * avisar o professor por e-mail (Formspree) com o nome de quem terminou.
  *
- * Os dados que só existem em tempo de build no Jekyll (slug do post, título,
- * ID do Formspree) chegam aqui via atributos `data-*` no container
- * `#quiz-post` — não por uma chamada de função inline, porque este arquivo
- * carrega com `defer` (só executa depois que a página inteira já carregou),
- * então um `<script>` inline mais acima no HTML rodaria ANTES deste arquivo
- * sequer existir. Ler os dados do próprio DOM evita esse problema de ordem.
+ * Os dados de cada pergunta (índice e resposta certa) vêm em atributos
+ * data-* no próprio HTML de cada pergunta, gerados pelo Jekyll a partir
+ * do front matter do post. O slug do post, o título e o ID do Formspree
+ * vêm em atributos data-* no container principal (#quiz-post).
  */
 (function () {
   var container = document.getElementById('quiz-post');
   if (!container) return;
 
-  var slug = container.getAttribute('data-post-slug');
-  var titulo = container.getAttribute('data-post-title');
-  var formspreeId = container.getAttribute('data-formspree-id');
-  var CHAVE_QUIZ = 'quizzes-concluidos';
+  var slug = container.dataset.slug;
+  var titulo = container.dataset.titulo;
+  var formspreeId = container.dataset.formspreeId;
+  var chaveQuiz = 'quizzes-concluidos';
 
-  var concluidos = JSON.parse(localStorage.getItem(CHAVE_QUIZ) || '[]');
+  // Se esse quiz já foi concluído antes (guardado no navegador), nem
+  // mostra as perguntas de novo — só a mensagem de "já concluído".
+  var concluidos = JSON.parse(localStorage.getItem(chaveQuiz) || '[]');
   if (concluidos.indexOf(slug) !== -1) {
     document.getElementById('quiz-post-perguntas').hidden = true;
     document.getElementById('quiz-post-concluido').hidden = false;
@@ -67,8 +69,11 @@
     var status = document.getElementById('quiz-post-status');
 
     concluidos.push(slug);
-    localStorage.setItem(CHAVE_QUIZ, JSON.stringify(concluidos));
+    localStorage.setItem(chaveQuiz, JSON.stringify(concluidos));
 
+    // Se não tiver nome, ou o Formspree do quiz ainda não estiver
+    // configurado em _config.yml, só marca como concluído e pronto —
+    // sem tentar avisar ninguém por e-mail.
     if (!nome || !formspreeId || formspreeId === 'SEU_ID_AQUI') {
       document.getElementById('quiz-post-nome-form').hidden = true;
       document.getElementById('quiz-post-concluido').hidden = false;

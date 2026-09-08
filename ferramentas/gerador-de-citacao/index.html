@@ -7,36 +7,34 @@ permalink: /ferramentas/gerador-de-citacao/
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Ferramenta gratuita</p>
-    <h1 class="page-hero__title">Gerador de<br><em class="text-accent-label">citação de aula.</em></h1>
+    <h1 class="page-hero__title">Gerador de<br><em class="page-hero__title-accent">citação de aula.</em></h1>
     <p class="page-hero__desc">Feito pra professores. Escreve uma frase, escolhe as cores, gera uma imagem pronta pra postar — sem cadastro, sem marca d'água.</p>
   </div>
 </header>
 
 <section>
-  <div class="container max-w-md" >
-    <div class="grid-gap-1">
-      <label class="field-label">Frase</label>
-      <textarea id="citacao-texto" rows="3" maxlength="200" placeholder="Escreva a frase aqui..."
-        class="field-input"></textarea>
+  <div class="container container--citacao">
+    <div class="citacao-form">
+      <label class="citacao-form__label">Frase</label>
+      <textarea id="citacao-texto" rows="3" maxlength="200" placeholder="Escreva a frase aqui..." class="citacao-form__input"></textarea>
 
-      <label class="field-label">Assinatura (opcional)</label>
-      <input id="citacao-assinatura" type="text" maxlength="60" placeholder="Ex: Escola Municipal Tal, Prof. Fulano"
-        class="field-input">
+      <label class="citacao-form__label">Assinatura (opcional)</label>
+      <input id="citacao-assinatura" type="text" maxlength="60" placeholder="Ex: Escola Municipal Tal, Prof. Fulano" class="citacao-form__input">
 
-      <label class="field-label">Cor de fundo</label>
-      <div class="flex-gap-sm">
-        <button type="button" class="citacao-cor color-swatch color-swatch--selected" data-cor1="#0E2E38" data-cor2="#0A161C" ></button>
-        <button type="button" class="citacao-cor color-swatch" data-cor1="#7C2D12" data-cor2="#431407" ></button>
-        <button type="button" class="citacao-cor color-swatch" data-cor1="#1E3A8A" data-cor2="#0F1E4A" ></button>
-        <button type="button" class="citacao-cor color-swatch" data-cor1="#166534" data-cor2="#052E16" ></button>
+      <label class="citacao-form__label">Cor de fundo</label>
+      <div class="citacao-cores">
+        <button type="button" class="citacao-cor citacao-cor--ativa" data-cor1="#0E2E38" data-cor2="#0A161C" style="background:#0E2E38;"></button>
+        <button type="button" class="citacao-cor" data-cor1="#7C2D12" data-cor2="#431407" style="background:#7C2D12;"></button>
+        <button type="button" class="citacao-cor" data-cor1="#1E3A8A" data-cor2="#0F1E4A" style="background:#1E3A8A;"></button>
+        <button type="button" class="citacao-cor" data-cor1="#166534" data-cor2="#052E16" style="background:#166534;"></button>
       </div>
 
-      <button type="button" id="citacao-gerar" class="btn btn--primary flex-center mt-1" >Gerar imagem</button>
+      <button type="button" id="citacao-gerar" class="btn btn--primary citacao-form__botao-gerar">Gerar imagem</button>
     </div>
 
-    <canvas id="citacao-canvas" width="1080" height="1080" class="hidden-js"></canvas>
-    <div id="citacao-preview" class="mt-2 text-center"></div>
+    <canvas id="citacao-canvas" width="1080" height="1080" class="citacao-canvas-oculto"></canvas>
+    <div id="citacao-preview" class="citacao-preview"></div>
   </div>
 </section>
 
-<script src="{{ '/assets/js/pages/citacao.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/pages/citation-generator.js' | relative_url }}" defer></script>
