@@ -8,24 +8,11 @@ backend:
 media_folder: "assets/img/posts"
 public_folder: "/assets/img/posts"
 
-editor_components:
-  - id: "youtube"
-    label: "Vídeo do YouTube"
-    fields: [{ name: "id", label: "ID do vídeo (ex: dQw4w9WgXcQ)", widget: "string" }]
-    pattern: /^<div class="video-embed"><iframe src="https:\/\/www\.youtube\.com\/embed\/(\S+)".*?<\/iframe><\/div>$/
-    fromBlock: match => ({ id: match[1] })
-    toBlock: obj => `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${obj.id}" title="Vídeo do YouTube" allowfullscreen></iframe></div>`
-    toPreview: obj => `🎬 Vídeo do YouTube: ${obj.id}`
-
-  - id: "callout"
-    label: "Caixa de destaque"
-    fields:
-      - { name: "tipo", label: "Tipo", widget: "select", options: ["tip", "warning", "important"] }
-      - { name: "texto", label: "Texto", widget: "text" }
-    pattern: /^<div class="callout callout--(tip|warning|important)">([\s\S]*?)<\/div>$/
-    fromBlock: match => ({ tipo: match[1], texto: match[2] })
-    toBlock: obj => `<div class="callout callout--${obj.tipo}">${obj.texto}</div>`
-    toPreview: obj => `📌 [${obj.tipo}] ${obj.texto}`
+# Os componentes de editor customizados (vídeo do YouTube, caixa de destaque)
+# são registrados de verdade em admin/index.html via CMS.registerEditorComponent().
+# YAML não pode conter funções JavaScript (fromBlock/toBlock), então um bloco
+# "editor_components:" aqui nunca funcionou — foi removido para não confundir
+# quem for editar este arquivo no futuro.
 
 collections:
   - name: "posts"

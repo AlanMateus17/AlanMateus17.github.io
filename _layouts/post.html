@@ -1,4 +1,4 @@
-﻿---
+---
 layout: default
 ---
 
@@ -9,52 +9,25 @@ layout: default
     {% assign categoria = page.categories | first | default: 'Blog' %}
     {% assign categoria_lower = categoria | downcase %}
     {% if categoria_lower contains 'segur' %}
-    <p class="post-hero__cat" style="color:var(--accent-security);">{{ categoria }}</p>
+    <p class="post-hero__cat text-security">{{ categoria }}</p>
     {% elsif categoria_lower contains 'educ' or categoria_lower contains 'ensino' %}
-    <p class="post-hero__cat" style="color:var(--accent-teaching);">{{ categoria }}</p>
+    <p class="post-hero__cat text-teaching">{{ categoria }}</p>
     {% else %}
     <p class="post-hero__cat">{{ categoria }}</p>
     {% endif %}
     <h1 class="post-hero__title">{{ page.title }}</h1>
     <div class="post-hero__meta">
-      <span>{{ page.date | date: "%d/%m/%Y" }}</span>
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d/%m/%Y" }}</time>
       <span>{{ page.content | number_of_words | divided_by: 200 | plus: 1 }} min de leitura</span>
       <span id="post-view-count" data-slug="{{ page.slug }}">– visualizações</span>
       {% if page.tags %}
       {% for tag in page.tags %}<span>#{{ tag }}</span>{% endfor %}
       {% endif %}
     </div>
-    <div class="post-hero__reading-status" id="post-reading-status">
+    <!-- data-post-slug: ponte com o Jekyll pro features/post-status.js (ver arquivo) -->
+    <div class="post-hero__reading-status" id="post-reading-status" data-post-slug="{{ page.slug }}">
       <span id="already-read-badge" class="reading-badge" hidden><svg width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Você já leu este post</span>
       <span id="already-liked-badge" class="reading-badge reading-badge--liked" hidden><svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 17.5s-6.5-4.2-8.5-8.2C-0.2 5.8 1.5 3 4.5 3c1.8 0 3 .9 3.7 1.9.2.3.6.3.8 0C9.7 3.9 10.9 3 12.7 3c3 0 4.7 2.8 3 6.3-2 4-8.5 8.2-8.5 8.2z"/></svg> Você já curtiu este post</span>
-    </div>
-  </div>
-</header>
-
-<script>
-(function () {
-  var slug = {{ page.slug | jsonify }};
-  var chaveHistorico = 'posts-lidos';
-  var historico = JSON.parse(localStorage.getItem(chaveHistorico) || '[]');
-
-  var jaTinhaLido = historico.indexOf(slug) !== -1;
-  var jaCurtiu = !!localStorage.getItem('liked:' + slug);
-
-  if (jaTinhaLido) {
-    var badgeLido = document.getElementById('already-read-badge');
-    if (badgeLido) badgeLido.hidden = false;
-  }
-  if (jaCurtiu) {
-    var badgeCurtido = document.getElementById('already-liked-badge');
-    if (badgeCurtido) badgeCurtido.hidden = false;
-  }
-
-  if (!jaTinhaLido) {
-    historico.push(slug);
-    localStorage.setItem(chaveHistorico, JSON.stringify(historico));
-  }
-})();
-</script>
     </div>
   </div>
 </header>
@@ -71,18 +44,15 @@ layout: default
 
 <div id="study-guide-widget" class="study-guide" hidden></div>
 {% include study-guide-data.html %}
-<script>
-  window.__studyGuide.renderizarContinuarWidget('study-guide-widget');
-</script>
 
 {% include related-posts.html %}
 {% include post-nav.html %}
 </article>
 
-<div style="max-width:var(--prose-max);margin:0 auto;padding:0 1.5rem 4rem;">
-  <div style="border-top:1.5px solid var(--border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+<div class="container container--prose mb-4">
+  <div class="divider-top flex-between">
     <a href="{{ '/blog/' | relative_url }}" class="btn btn--ghost">← Todos os posts</a>
-    <div style="display:flex;gap:0.5rem;">
+    <div class="flex-gap-sm">
       {% for tag in page.tags %}
       <span class="tag">{{ tag }}</span>
       {% endfor %}

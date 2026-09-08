@@ -1,11 +1,16 @@
-const CACHE_NAME = 'alanmateus-v1';
+const CACHE_NAME = 'alanmateus-v2';
 const OFFLINE_URL = '/404.html';
 
-// Arquivos essenciais pra sempre ter em cache
+// Arquivos essenciais pra sempre ter em cache. O JS agora está dividido em
+// vários arquivos pequenos (assets/js/core, features, pages) em vez de um
+// main.js só — pré-cachear cada um aqui não vale a pena (a lista mudaria
+// toda vez que um arquivo novo for criado). A estratégia de "rede primeiro,
+// cache como reserva" no evento fetch abaixo já cacheia sozinha qualquer
+// arquivo .js conforme a pessoa navega, então só precisamos garantir aqui o
+// mínimo pra abrir o site offline: a página inicial e o CSS.
 const PRECACHE = [
   '/',
   '/assets/css/main.css',
-  '/assets/js/main.js',
   '/assets/icons/icon-192.png',
 ];
 

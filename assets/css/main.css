@@ -164,6 +164,23 @@ pre {
 }
 pre code { background: none; color: inherit; padding: 0; }
 
+/* Botão "Copiar" injetado pelo JS (features/copy-code.js) em cada bloco de código */
+.pre-with-copy { position: relative; }
+.copy-code-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: var(--font-mono);
+}
+.copy-code-btn--copiado { color: #00C2A8; }
+
 blockquote {
   border-left: 3px solid var(--highlight);
   background: var(--highlight-bg);
@@ -182,8 +199,265 @@ blockquote {
 }
 .prose { max-width: var(--prose-max); }
 
+/* Variação do .container para blocos de texto corrido (ex.: rodapé de post,
+   nota final de uma página) que precisam do padding lateral do container
+   mas com a largura de leitura confortável do .prose, não a largura cheia. */
+.container--prose { max-width: var(--prose-max); }
+
 section { padding: 5rem 0; }
 section + section { padding-top: 0; }
+
+/* === UTILITÁRIOS ===
+   Classes pequenas e genéricas para substituir estilos inline repetidos
+   pelo HTML. Regra de uso: se o valor se repete em mais de um lugar E não
+   descreve um componente específico (ex.: "card de post"), vira uma classe
+   utilitária aqui. Se é uma cor/tamanho específico de UM componente,
+   a regra vai direto na seção daquele componente (ex. "=== TERMINAL ==="),
+   não aqui. */
+
+/* Texto */
+.text-muted   { color: var(--text-muted); }
+.text-center  { text-align: center; }
+.text-lg      { font-size: 1.1rem; }
+.text-sm      { font-size: 0.9rem; }
+.text-xs      { font-size: 0.85rem; }
+.text-mono-xs { font-family: var(--font-mono); font-size: 0.72rem; }
+.text-accent-label { font-weight: 300; color: var(--accent); } /* rótulos tipo "// categoria" usados 17x no site */
+.opacity-muted { opacity: 0.6; }
+
+/* Espaçamento (escala usada de fato no projeto, não a escala inteira) */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1.5rem; }
+.mt-3 { margin-top: 2.5rem; }
+.mt-4 { margin-top: 4rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1.5rem; }
+.mb-3 { margin-bottom: 3rem; }
+.mb-4 { margin-bottom: 4rem; }
+.mb-0 { margin-bottom: 0; }
+
+/* Cor de categoria (post/seção): cada área do site tem uma cor de destaque
+   própria. Antes cada página repetia `style="color:var(--accent-X)"` — agora
+   é uma classe, e o "-text" é a variação com melhor contraste para texto
+   corrido sobre fundo colorido. */
+.text-brand           { color: var(--accent); }
+.text-security         { color: var(--accent-security); }
+.text-security-text    { color: var(--accent-security-text); }
+.text-teaching          { color: var(--accent-teaching); }
+.text-teaching-text     { color: var(--accent-teaching-text); }
+.text-accent-text       { color: var(--accent-text); }
+
+/* Categoria de post via cor vinda do Liquid (front matter) — usa custom
+   property por instância em vez de `style="color:<valor>"` direto, então o
+   CSS continua no controle de COMO a cor é aplicada. */
+.cat-color { color: var(--cat-color); }
+
+/* Faixa de destaque de largura cheia (CTA no fim de uma seção) */
+.cta-band {
+  background: var(--brand);
+  padding: 5rem 0;
+  text-align: center;
+}
+/* Cartão de destaque (mesma ideia, mas como bloco arredondado dentro da página) */
+.cta-card {
+  background: var(--brand);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  color: #fff;
+  text-align: center;
+}
+.cta-band__lead, .cta-card__lead {
+  color: rgba(255,255,255,0.65);
+  margin: 0 auto 1.5rem;
+  max-width: 48ch;
+}
+
+/* Caixa de aviso/destaque (ex.: confirmação de envio de formulário) */
+.highlight-box {
+  padding: 1.25rem;
+  background: var(--highlight-bg);
+  border: 1.5px solid var(--highlight);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+}
+
+/* === COMPONENTE: TERMINAL (simulação de terminal, usado em /terminal/) === */
+.terminal-window {
+  width: 100%;
+  max-width: 700px;
+  background: #0F1613;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+.terminal-window__wrap {
+  min-height: 100vh;
+  background: #0A0F0D;
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.terminal-header {
+  background: #1A211E;
+  padding: 0.6rem 1rem;
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.terminal-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.terminal-dot--red    { background: #FF5F56; }
+.terminal-dot--yellow { background: #FFBD2E; }
+.terminal-dot--green  { background: #27C93F; }
+.terminal-body {
+  padding: 1.25rem;
+  color: #7FE6C4;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  height: 400px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem 1.25rem;
+  color: #7FE6C4;
+  font-size: 0.85rem;
+}
+.terminal-prompt { color: #00C2A8; margin-right: 0.5rem; }
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #7FE6C4;
+  font-family: inherit;
+  font-size: inherit;
+}
+.terminal-hint { color: #6B7A72; font-size: 0.75rem; margin-left: 1rem; }
+
+/* === COMPONENTE: SELETOR DE COR (gerador de citação) === */
+.color-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+}
+.color-swatch--selected { border-color: var(--accent); }
+
+/* Larguras de leitura usadas em blocos de texto isolados (fora do .prose padrão) */
+.max-w-sm  { max-width: 420px; }
+.max-w-md  { max-width: 600px; }
+.max-w-lg  { max-width: 640px; }
+.max-w-xl  { max-width: 760px; }
+.max-w-2xl { max-width: 860px; }
+.max-w-3xl { max-width: 900px; }
+
+/* Flexbox — os três arranjos que se repetem no site inteiro */
+.flex-center       { display: flex; align-items: center; justify-content: center; }
+.flex-between      { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.flex-between-end  { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; }
+.flex-gap-sm       { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.btn-full          { width: 100%; justify-content: center; }
+
+/* Estado vazio (usado em listas filtradas: blog, portfólio, busca) */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-muted);
+}
+.empty-state--lg { padding: 5rem 2rem; border-radius: var(--radius-xl); }
+
+/* Campo de formulário (inputs/textareas fora do form principal de contato) */
+.field-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: inherit;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+/* Link "pill" sem sublinhado (badges, tags clicáveis) */
+.link-plain { display: inline-block; text-decoration: none; }
+
+/* Esconde visualmente mas mantém acessível a leitor de tela (labels de formulário) */
+.visually-hidden { position: absolute; left: -9999px; }
+
+.field-label { font-weight: 600; font-size: 0.9rem; }
+/* Estado inicial "escondido" de algo que o JS mostra depois (ex.: canvas
+   que só aparece depois de gerado, preview antes de ter conteúdo).
+   Diferente de [hidden]: essa classe é para casos fora do fluxo do
+   atributo `hidden` nativo, quando o próprio JS troca `display`. */
+.hidden-js { display: none; }
+.display-block { display: block; }
+.grid-gap-1  { display: grid; gap: 1rem; }
+.grid-gap-sm { display: grid; gap: 0.6rem; }
+.citacao-preview-img { max-width: 100%; border-radius: 12px; }
+
+.self-start { align-self: flex-start; }
+.flex-col        { display: flex; flex-direction: column; gap: 1rem; }
+.flex-col-sm     { display: flex; flex-direction: column; gap: 0.5rem; }
+.flex-col-sm-tight { display: flex; flex-direction: column; gap: 0.75rem; }
+.flex-col-end    { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; text-align: right; }
+.flex-row-between-sm {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.6rem 0.9rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.875rem;
+}
+
+/* Nota tipo "comentário de terminal" usada como placeholder em seções ainda
+   sem conteúdo (blog, portfólio, writeups) — "// em construção" etc. */
+.placeholder-note {
+  font-family: var(--font-mono);
+  color: var(--text-light);
+  font-size: 0.8rem;
+}
+
+/* Divisor com espaço acima (fim de post, fim de formulário) */
+.divider-top { border-top: 1.5px solid var(--border); padding-top: 2.5rem; }
+
+/* Cartão elevado simples (writeups de segurança, blocos de destaque) */
+.surface-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+}
+.surface-card--quote {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+/* Cartão branco pequeno centralizado (ex.: fundo do QR code no cartão de contato) */
+.card-on-color {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: var(--radius-xl);
+  display: inline-block;
+}
+
+.text-white { color: #fff; }
+/* Anima a troca de forma do polígono do radar de skills (curriculo/index.html)
+   quando os dados mudam — "points" é um atributo SVG, não uma propriedade
+   CSS comum, mas navegadores modernos aceitam transicionar ele mesmo assim. */
+.radar-chart-line { transition: points 0.4s ease; }
+.avatar-round { width: 88px; height: 88px; border-radius: 50%; object-fit: cover; }
+
+/* Ajustes do cartão de contato (/contato/cartao/) quando detectado que quem
+   está vendo a página está no próprio celular (ver pages/cartao.js) */
+.cartao-qr-link--discreto { opacity: 0.55; transform: scale(0.8); transform-origin: center top; }
+.cartao-btn--destaque { font-size: 1.05rem; padding: 1rem 1.75rem; }
+.icon-inline  { vertical-align: -1px; margin-right: 2px; }
+.icon-inline--tight { vertical-align: -2px; }
+.pad-lg { padding: 3rem 2.5rem; }
 
 /* === NAVEGAÇÃO === */
 .nav {

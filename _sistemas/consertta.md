@@ -1,6 +1,7 @@
 ---
 layout: sistema
 name: "AM Consertta"
+order: 5
 excerpt: "Assistência técnica — ordens de serviço, diagnóstico e histórico."
 status: "plan"
 stack:

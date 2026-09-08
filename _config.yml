@@ -1,4 +1,4 @@
-﻿title: Alan Mateus
+title: Alan Mateus
 tagline: Desenvolvedor · Professor · Red Team em formação
 description: "Portfólio de Alan Mateus — sistemas de gestão, educação em TI e segurança ofensiva."
 url: "https://AlanMateus17.github.io"
@@ -41,6 +41,12 @@ formspree_orcamento_id: "SEU_ID_AQUI"
 
 # Formspree do quiz dos posts (crie um formulário novo em formspree.io e cole o ID aqui)
 formspree_quiz_id: "SEU_ID_AQUI"
+
+# Namespace da conta no CounterAPI (contador de visualizações/curtidas).
+# Antes estava copiado à mão em 5 lugares (main.js, likes.html, comments.html);
+# agora é lido daqui e injetado no <body> por _layouts/default.html, então só
+# precisa mudar em UM lugar se a conta do CounterAPI mudar um dia.
+counterapi_namespace: "alanmateus17-github-io"
 
 # Coleções
 collections:

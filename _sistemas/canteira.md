@@ -1,6 +1,7 @@
 ---
 layout: sistema
 name: "AM Canteira"
+order: 9
 excerpt: "Controle de obras e construção civil — cronograma, custos, equipes."
 status: "plan"
 stack:

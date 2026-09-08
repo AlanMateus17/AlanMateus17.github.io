@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!--
+    Este script continua inline (e não em assets/js/core/theme.js) de propósito:
+    ele PRECISA rodar antes do CSS pintar a página, senão a página pisca
+    branca por uma fração de segundo antes de virar escura pra quem usa
+    modo escuro. Um <script src> externo com "defer" chegaria tarde demais
+    pra isso. É a única exceção no site a "todo JS mora em assets/js/".
+  -->
   <script>
     (function () {
       var tema = localStorage.getItem('theme');
@@ -33,22 +40,15 @@
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 
   {% seo %}
-  <!-- MailerLite Universal -->
-  <script>
-    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-    ml('account', '2609452');
-  </script>
-  <!-- End MailerLite Universal -->
+  <!-- MailerLite Universal (código em assets/js/vendor/mailerlite.js) -->
+  <script src="{{ '/assets/js/vendor/mailerlite.js' | relative_url }}"></script>
   <!-- Analytics privado, sem cookies (GoatCounter) -->
   {% if site.goatcounter_username != "SEU_USUARIO_AQUI" %}
   <script data-goatcounter="https://{{ site.goatcounter_username }}.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
   {% endif %}
 </head>
-<body>
+<body data-counter-namespace="{{ site.counterapi_namespace }}">
 
   <!-- NAVEGAÇÃO -->
   <nav class="nav" role="navigation" aria-label="Navegação principal">
@@ -88,7 +88,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <a href="{{ '/' | relative_url }}" class="nav__logo">Alan Mateus<span class="nav__logo-sub"> | AMtech Digital</span></a>
-          <p class="footer__desc" style="margin-top:0.5rem;">
+          <p class="footer__desc mt-1" >
             Desenvolvedor, professor e eterno estudante.<br>
             Construindo em público desde 2026.
           </p>
@@ -139,7 +139,7 @@
 
       <div class="footer__bottom">
         <p>© {{ 'now' | date: "%Y" }} <a href="{{ '/' | relative_url }}" style="color:var(--accent)">Alan Mateus | AMtech Digital</a>. Feito com Jekyll + GitHub Pages.</p>
-        <p style="font-family:var(--font-mono);font-size:0.72rem;">{{ site.author.location }}</p>
+        <p class="text-mono-xs">{{ site.author.location }}</p>
       </div>
     </div>
   </footer>
@@ -159,12 +159,12 @@
         <li>Escolhe <strong>"Adicionar à Tela de Início"</strong></li>
         <li>Toca em <strong>"Adicionar"</strong> — pronto!</li>
       </ol>
-      <button type="button" id="ios-install-done" class="btn btn--primary" style="width:100%;margin-top:1.25rem;justify-content:center;">Já instalei</button>
+      <button type="button" id="ios-install-done" class="btn btn--primary btn-full mt-2" >Já instalei</button>
     </div>
   </div>
 
   {% include global-story-share.html %}
 
-  <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+  {% include scripts.html %}
 </body>
 </html>

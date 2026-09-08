@@ -1,58 +1,13 @@
 <div class="likes">
-  <button type="button" class="likes__btn" id="like-btn" aria-pressed="false" disabled>
+  <!--
+    data-post-slug carrega o slug do post (só existe em tempo de build, no
+    Jekyll) até o JS. A lógica de curtir de verdade mora em
+    assets/js/features/likes-widget.js — aqui só passamos o dado adiante.
+  -->
+  <button type="button" class="likes__btn" id="like-btn" data-post-slug="{{ page.slug }}" aria-pressed="false" disabled>
     <span class="likes__icon" aria-hidden="true">♥</span>
     <span class="likes__count" id="like-count">–</span>
   </button>
   <span class="likes__label">curtidas</span>
 </div>
 
-<script>
-(function () {
-  var btn = document.getElementById('like-btn');
-  if (!btn) return;
-  var slug = {{ page.slug | jsonify }};
-  var namespace = 'alanmateus17-github-io';
-  var storageKey = 'liked:' + slug;
-  var countEl = document.getElementById('like-count');
-  var baseUrl = 'https://counterapi.com/api/' + namespace + '/like/' + slug;
-
-  // Carrega o valor atual sem incrementar (readOnly=true)
-  fetch(baseUrl + '?readOnly=true')
-    .then(function (res) { return res.json(); })
-    .then(function (data) {
-      countEl.textContent = data.value || 0;
-      btn.disabled = false;
-      if (localStorage.getItem(storageKey)) {
-        btn.setAttribute('aria-pressed', 'true');
-        btn.classList.add('is-liked');
-      }
-    })
-    .catch(function () {
-      countEl.textContent = '0';
-      btn.disabled = false;
-    });
-
-  btn.addEventListener('click', function () {
-    if (localStorage.getItem(storageKey)) return; // já curtiu neste navegador
-
-    btn.disabled = true;
-    fetch(baseUrl)
-      .then(function (res) {
-        if (!res.ok) throw new Error('falhou');
-        return res.json();
-      })
-      .then(function (data) {
-        localStorage.setItem(storageKey, '1');
-        btn.setAttribute('aria-pressed', 'true');
-        btn.classList.add('is-liked');
-        countEl.textContent = data.value || (parseInt(countEl.textContent, 10) || 0) + 1;
-      })
-      .catch(function () {
-        // silencioso: curtida é algo leve, não vale interromper a leitura com erro
-      })
-      .finally(function () {
-        btn.disabled = false;
-      });
-  });
-})();
-</script>

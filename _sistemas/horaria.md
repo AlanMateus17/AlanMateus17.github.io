@@ -1,6 +1,7 @@
 ---
 layout: sistema
 name: "AM Horaria"
+order: 11
 excerpt: "Agendamentos online para qualquer tipo de serviço com recorrência."
 status: "plan"
 stack:

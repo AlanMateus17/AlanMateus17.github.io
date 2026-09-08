@@ -7,60 +7,36 @@ permalink: /contato/cartao/
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Contato</p>
-    <h1 class="page-hero__title">Cartão de<br><em style="font-weight:300;color:var(--accent)">visita digital.</em></h1>
+    <h1 class="page-hero__title">Cartão de<br><em class="text-accent-label">visita digital.</em></h1>
     <p class="page-hero__desc" id="cartao-instrucao">Aponte a câmera do celular pro QR code, ou baixe o contato direto.</p>
   </div>
 </header>
 
 <section>
-  <div class="container" style="max-width:420px;text-align:center;">
+  <div class="container max-w-sm text-center" >
 
-    <p id="cartao-dica-mobile" style="display:none;background:var(--accent-soft, rgba(0,0,0,.04));border-radius:var(--radius-lg,12px);padding:.85rem 1rem;color:var(--text-muted);font-size:.9rem;margin-bottom:1.25rem;">
+    <p id="cartao-dica-mobile" class="highlight-box mb-2">
       Você já está no seu celular — não precisa escanear nada. É só tocar no botão abaixo.
     </p>
 
-    <a id="cartao-qr-link" href="/assets/alan-mateus.vcf" download="alan-mateus.vcf" aria-label="Tocar no QR code também baixa o contato diretamente" style="display:inline-block;text-decoration:none;">
-      <div id="vcard-qr" style="background:#fff;padding:1.5rem;border-radius:var(--radius-xl);display:inline-block;"></div>
+    <a id="cartao-qr-link" href="{{ '/assets/alan-mateus.vcf' | relative_url }}" download="alan-mateus.vcf" aria-label="Tocar no QR code também baixa o contato diretamente" class="link-plain">
+      <div id="vcard-qr" class="card-on-color"></div>
     </a>
 
-    <p id="cartao-legenda-qr" style="margin-top:1.5rem;color:var(--text-muted);font-size:.9rem;">
+    <p id="cartao-legenda-qr" class="text-muted text-sm mt-2">
       Escaneando, o contato já é salvo direto na agenda — sem precisar digitar nada.
     </p>
 
-    <a href="/assets/alan-mateus.vcf" download="alan-mateus.vcf" id="cartao-btn-principal" class="btn btn--primary" style="margin-top:1rem;">
+    <a href="{{ '/assets/alan-mateus.vcf' | relative_url }}" download="alan-mateus.vcf" id="cartao-btn-principal" class="btn btn--primary mt-1" >
       Baixar contato (.vcf)
     </a>
   </div>
 </section>
 
-<script src="/assets/js/gerador-visual.js"></script>
-<script>
-  var vcard = "BEGIN:VCARD\nVERSION:3.0\nN:Mateus;Alan;;;\nFN:Alan Mateus\nORG:Grupo AMtech Digital\nTITLE:Professor de Informática & Desenvolvedor\nTEL;TYPE=CELL:+5532984138614\nURL:https://alanmateus17.github.io\nADR:;;Barbacena;MG;;;Brasil\nEND:VCARD";
-
-  new QRCode(document.getElementById("vcard-qr"), {
-    text: vcard,
-    width: 260,
-    height: 260,
-    correctLevel: QRCode.CorrectLevel.M
-  });
-
-  // Detecta se quem está vendo a página está num celular/tablet (toque como entrada principal).
-  // Nesse caso, o QR code não faz sentido (a pessoa não vai escanear a própria tela),
-  // então damos destaque ao botão de download direto.
-  var ehTelaDeToque = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-
-  if (ehTelaDeToque) {
-    document.getElementById("cartao-dica-mobile").style.display = "block";
-    document.getElementById("cartao-instrucao").textContent = "Toque no botão abaixo pra salvar o contato direto na sua agenda.";
-    document.getElementById("cartao-legenda-qr").style.display = "none";
-
-    var qrWrapper = document.getElementById("cartao-qr-link");
-    qrWrapper.style.opacity = "0.55";
-    qrWrapper.style.transform = "scale(0.8)";
-    qrWrapper.style.transformOrigin = "center top";
-
-    var botaoPrincipal = document.getElementById("cartao-btn-principal");
-    botaoPrincipal.style.fontSize = "1.05rem";
-    botaoPrincipal.style.padding = "1rem 1.75rem";
-  }
-</script>
+<!--
+  Carrega gerador-visual.js de novo aqui (fora do defer global) porque esta
+  página precisa do QR code imediatamente — ver o comentário no topo de
+  assets/js/pages/cartao.js pra entender por quê.
+-->
+<script src="{{ '/assets/js/vendor/gerador-visual.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/pages/cartao.js' | relative_url }}"></script>

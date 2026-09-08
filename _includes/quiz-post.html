@@ -3,7 +3,10 @@
   Ao acertar, pede o nome e manda um e-mail (Formspree) avisando que a pessoa concluiu.
 {% endcomment %}
 {% if page.quiz %}
-<div class="quiz-post" id="quiz-post">
+<div class="quiz-post" id="quiz-post"
+     data-post-slug="{{ page.slug }}"
+     data-post-title="{{ page.title }}"
+     data-formspree-id="{{ site.formspree_quiz_id }}">
   <p class="quiz-post__eyebrow">Teste o que você aprendeu</p>
   <h3 class="quiz-post__titulo">Quiz rápido</h3>
 
@@ -31,99 +34,7 @@
   </div>
 
   <div id="quiz-post-concluido" hidden>
-    <p class="quiz-post__concluido-msg"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="vertical-align:-2px;"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Quiz concluído!</p>
+    <p class="quiz-post__concluido-msg"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="icon-inline--tight"><path d="M4 10.5L8 14.5L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Quiz concluído!</p>
   </div>
 </div>
-
-<script>
-(function () {
-  var container = document.getElementById('quiz-post');
-  if (!container) return;
-
-  var slug = {{ page.slug | jsonify }};
-  var titulo = {{ page.title | jsonify }};
-  var formspreeId = {{ site.formspree_quiz_id | jsonify }};
-  var chaveQuiz = 'quizzes-concluidos';
-
-  var concluidos = JSON.parse(localStorage.getItem(chaveQuiz) || '[]');
-  if (concluidos.indexOf(slug) !== -1) {
-    document.getElementById('quiz-post-perguntas').hidden = true;
-    document.getElementById('quiz-post-concluido').hidden = false;
-    return;
-  }
-
-  var perguntas = container.querySelectorAll('.quiz-post__pergunta');
-  var respondidasCorretamente = {};
-
-  perguntas.forEach(function (pergunta) {
-    var indice = pergunta.dataset.indice;
-    var correta = parseInt(pergunta.dataset.correta, 10);
-    var botoes = pergunta.querySelectorAll('.quiz-post__opcao');
-    var feedback = pergunta.querySelector('.quiz-post__feedback');
-
-    botoes.forEach(function (botao) {
-      botao.addEventListener('click', function () {
-        var escolhida = parseInt(botao.dataset.opcao, 10);
-        botoes.forEach(function (b) { b.disabled = true; });
-
-        if (escolhida === correta) {
-          botao.classList.add('quiz-post__opcao--certa');
-          feedback.textContent = 'Certinho!';
-          feedback.className = 'quiz-post__feedback quiz-post__feedback--certa';
-          respondidasCorretamente[indice] = true;
-        } else {
-          botao.classList.add('quiz-post__opcao--errada');
-          botoes[correta].classList.add('quiz-post__opcao--certa');
-          feedback.textContent = 'Não foi dessa vez — a certa está destacada.';
-          feedback.className = 'quiz-post__feedback quiz-post__feedback--errada';
-          respondidasCorretamente[indice] = false;
-        }
-        feedback.hidden = false;
-
-        var todasRespondidas = perguntas.length === Object.keys(respondidasCorretamente).length;
-        var todasCertas = todasRespondidas && Object.values(respondidasCorretamente).every(function (v) { return v; });
-        if (todasCertas) {
-          document.getElementById('quiz-post-nome-form').hidden = false;
-        }
-      });
-    });
-  });
-
-  document.getElementById('quiz-post-enviar').addEventListener('click', function () {
-    var nome = document.getElementById('quiz-post-nome').value.trim();
-    var status = document.getElementById('quiz-post-status');
-
-    concluidos.push(slug);
-    localStorage.setItem(chaveQuiz, JSON.stringify(concluidos));
-
-    if (!nome || !formspreeId || formspreeId === "SEU_ID_AQUI") {
-      document.getElementById('quiz-post-nome-form').hidden = true;
-      document.getElementById('quiz-post-concluido').hidden = false;
-      return;
-    }
-
-    status.textContent = 'Enviando...';
-
-    var dados = new FormData();
-    dados.append('nome', nome);
-    dados.append('post', titulo);
-    dados.append('mensagem', nome + ' concluiu o quiz do post: ' + titulo);
-
-    fetch('https://formspree.io/f/' + formspreeId, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: dados
-    }).then(function () {
-      document.getElementById('quiz-post-nome-form').hidden = true;
-      document.getElementById('quiz-post-concluido').hidden = false;
-    }).catch(function () {
-      status.textContent = 'Não deu pra avisar o professor agora, mas seu progresso foi salvo.';
-      setTimeout(function () {
-        document.getElementById('quiz-post-nome-form').hidden = true;
-        document.getElementById('quiz-post-concluido').hidden = false;
-      }, 1500);
-    });
-  });
-})();
-</script>
 {% endif %}

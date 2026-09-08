@@ -6,7 +6,7 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Grupo AMtech Digital</p>
-    <h1 class="page-hero__title">Três frentes,<br><em style="font-weight:300;color:var(--accent)">uma empresa.</em></h1>
+    <h1 class="page-hero__title">Três frentes,<br><em class="text-accent-label">uma empresa.</em></h1>
     <p class="page-hero__desc">Desenvolvimento de software, assistência técnica e formação em TI. Cada serviço alimentado pela experiência real dos outros.</p>
   </div>
 </header>
@@ -27,8 +27,8 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
             <li class="servico__item">Banco de dados PostgreSQL com segurança por Row-Level Security</li>
             <li class="servico__item">Deploy em VPS com CI/CD e monitoramento</li>
           </ul>
-          <a href="#orcamento" class="btn btn--brand" style="width:100%;justify-content:center;">Solicitar orçamento</a>
-          <a href="https://wa.me/{{ site.author.whatsapp }}?text={{ 'Olá! Vi seu site e quero um orçamento de desenvolvimento de sistema.' | url_encode }}" target="_blank" rel="noopener" class="btn btn--outline" style="width:100%;justify-content:center;margin-top:.6rem;">Chamar no WhatsApp</a>
+          <a href="#orcamento" class="btn btn--brand btn-full" >Solicitar orçamento</a>
+          <a href="https://wa.me/{{ site.author.whatsapp }}?text={{ 'Olá! Vi seu site e quero um orçamento de desenvolvimento de sistema.' | url_encode }}" target="_blank" rel="noopener" class="btn btn--outline btn-full mt-1" >Chamar no WhatsApp</a>
         </div>
       </div>
 
@@ -45,9 +45,9 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
             <li class="servico__item">Recuperação de dados e backup seguro</li>
             <li class="servico__item">Manutenção preventiva e limpeza interna</li>
           </ul>
-          <p style="font-size:.8rem;color:var(--text-light);text-align:center;margin-bottom:1rem;font-family:var(--font-mono);">// em estruturação formal</p>
-          <a href="#orcamento" class="btn btn--ghost" style="width:100%;justify-content:center;">Solicitar orçamento</a>
-          <a href="https://wa.me/{{ site.author.whatsapp }}?text={{ 'Olá! Vi seu site e quero um orçamento de assistência técnica.' | url_encode }}" target="_blank" rel="noopener" class="btn btn--outline" style="width:100%;justify-content:center;margin-top:.6rem;">Chamar no WhatsApp</a>
+          <p class="placeholder-note text-center mb-1">// em estruturação formal</p>
+          <a href="#orcamento" class="btn btn--ghost btn-full" >Solicitar orçamento</a>
+          <a href="https://wa.me/{{ site.author.whatsapp }}?text={{ 'Olá! Vi seu site e quero um orçamento de assistência técnica.' | url_encode }}" target="_blank" rel="noopener" class="btn btn--outline btn-full mt-1" >Chamar no WhatsApp</a>
         </div>
       </div>
 
@@ -64,7 +64,7 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
             <li class="servico__item">Treinamento in-company em ferramentas de TI</li>
             <li class="servico__item">Capacitação em desenvolvimento web básico</li>
           </ul>
-          <a href="/ensino/" class="btn btn--brand" style="width:100%;justify-content:center;">Ver materiais gratuitos</a>
+          <a href="{{ '/ensino/' | relative_url }}" class="btn btn--brand btn-full" >Ver materiais gratuitos</a>
         </div>
       </div>
     </div>
@@ -72,27 +72,27 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
 </section>
 
 <section id="orcamento">
-  <div class="container" style="max-width:640px;">
-    <div style="border-top:1.5px solid var(--border);padding-top:2.5rem;margin-top:1rem;">
-      <h2 style="margin-bottom:.5rem;">Solicitar orçamento</h2>
-      <p style="color:var(--text-muted);margin-bottom:1.5rem;">Conta um pouco do que você precisa — respondo por e-mail ou WhatsApp, o que preferir.</p>
+  <div class="container max-w-lg" >
+    <div class="divider-top mt-1">
+      <h2 class="mb-1">Solicitar orçamento</h2>
+      <p class="text-muted mb-2">Conta um pouco do que você precisa — respondo por e-mail ou WhatsApp, o que preferir.</p>
 
-      <form id="orcamento-form" action="https://formspree.io/f/{{ site.formspree_orcamento_id }}" method="POST" style="display:grid;gap:.6rem;max-width:480px;">
-        <p style="position:absolute;left:-9999px;">
+      <form id="orcamento-form" action="https://formspree.io/f/{{ site.formspree_orcamento_id }}" method="POST" class="grid-gap-sm max-w-md">
+        <p class="visually-hidden">
           <label>Não preencha este campo<input type="text" name="_gotcha"></label>
         </p>
 
-        <label style="font-size:.85rem;font-weight:600;" for="orc-name">Nome</label>
+        <label class="text-xs font-weight-600" for="orc-name">Nome</label>
         <input id="orc-name" name="name" type="text" required maxlength="80"
-               style="padding:.65rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);color:inherit;font-family:inherit;">
+               class="field-input field-input--sm">
 
-        <label style="font-size:.85rem;font-weight:600;" for="orc-contact">E-mail ou WhatsApp pra retorno</label>
+        <label class="text-xs font-weight-600" for="orc-contact">E-mail ou WhatsApp pra retorno</label>
         <input id="orc-contact" name="contato" type="text" required maxlength="120"
-               style="padding:.65rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);color:inherit;font-family:inherit;">
+               class="field-input field-input--sm">
 
-        <label style="font-size:.85rem;font-weight:600;" for="orc-servico">Serviço de interesse</label>
+        <label class="text-xs font-weight-600" for="orc-servico">Serviço de interesse</label>
         <select id="orc-servico" name="servico" required
-                style="padding:.65rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);color:inherit;font-family:inherit;">
+                class="field-input field-input--sm">
           <option value="">Selecione...</option>
           <option value="Desenvolvimento de sistemas">Desenvolvimento de sistemas</option>
           <option value="Assistência técnica">Assistência técnica</option>
@@ -100,12 +100,12 @@ description: "Desenvolvimento de sistemas sob medida, assistência técnica Appl
           <option value="Outro">Outro</option>
         </select>
 
-        <label style="font-size:.85rem;font-weight:600;" for="orc-msg">O que você precisa</label>
+        <label class="text-xs font-weight-600" for="orc-msg">O que você precisa</label>
         <textarea id="orc-msg" name="mensagem" rows="4" required maxlength="1500"
-                  style="padding:.65rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius);background:var(--surface);color:inherit;font-family:inherit;"></textarea>
+                  class="field-input field-input--sm"></textarea>
 
-        <button type="submit" class="btn btn--primary" style="margin-top:.5rem;">Enviar pedido</button>
-        <p id="orcamento-status" style="font-size:.85rem;color:var(--text-muted);margin-top:.5rem;" hidden></p>
+        <button type="submit" class="btn btn--primary mt-1" >Enviar pedido</button>
+        <p id="orcamento-status" class="text-xs text-muted mt-1" hidden></p>
       </form>
     </div>
   </div>

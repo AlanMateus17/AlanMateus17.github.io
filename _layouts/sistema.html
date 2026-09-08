@@ -1,123 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <script>
-    (function () {
-      var tema = localStorage.getItem('theme');
-      if (tema === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-    })();
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0E2E38">
-  <link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
-  <link rel="icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
-  <link rel="apple-touch-icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
-  <title>{{ page.name }} — Alan Mateus</title>
-  <meta name="description" content="{{ page.excerpt }}">
-  <meta name="author" content="Alan Mateus">
-  <meta property="og:title" content="{{ page.name }}">
-  <meta property="og:description" content="{{ page.excerpt }}">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="{{ '/assets/img/og-default.png' | absolute_url }}">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
-  {% seo %}
-</head>
-<body>
-  <nav class="nav" role="navigation" aria-label="Navegação principal">
-    <div class="nav__inner">
-      <a href="/" class="nav__logo">Alan Mateus<span class="nav__logo-sub"> | AMtech Digital</span></a>
-      <ul class="nav__links" id="nav-links" role="list">
-        <li><a href="/sobre/" class="nav__link">Sobre</a></li>
-        <li><a href="/portfolio/" class="nav__link">Portfólio</a></li>
-        <li><a href="/blog/" class="nav__link">Blog</a></li>
-        <li><a href="/ensino/" class="nav__link">Ensino</a></li>
-        <li><a href="/seguranca/" class="nav__link">Segurança</a></li>
-        <li><a href="/curriculo/" class="nav__link">Currículo</a></li>
-        <li><a href="/contato/" class="nav__cta">Contato</a></li>
-      </ul>
-      <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
+---
+layout: default
+---
+{% comment %}
+  Layout "sistema": usado pelas páginas de detalhe de cada projeto do
+  portfólio (collection `_sistemas`). Antes duplicava inteiro o
+  <head>/nav/footer/PWA de `default.html` — agora só define o conteúdo
+  específico (hero + artigo) e herda tudo o resto de `default.html`,
+  então qualquer mudança de navegação/rodapé/PWA feita lá passa a valer
+  aqui também (era esse o bug que fazia o botão de dark mode sumir
+  nas páginas de portfólio).
+{% endcomment %}
 
-  <main id="main" tabindex="-1">
-    <header class="post-hero">
-      <div class="container">
-        <p class="post-hero__cat">Portfólio</p>
-        <h1 class="post-hero__title">{{ page.name }}</h1>
-        <div class="post-hero__meta">
-          {% if page.status == "dev" %}
-            <span class="sistema-card__status status--dev">Em desenvolvimento</span>
-          {% else %}
-            <span class="sistema-card__status status--plan">Planejado</span>
-          {% endif %}
-          {% for tech in page.stack %}<span>#{{ tech }}</span>{% endfor %}
-        </div>
-      </div>
-    </header>
-
-    <article class="post-body ruled-paper">
-      <p style="font-size:1.1rem;color:var(--text-muted);">{{ page.excerpt }}</p>
-      {% if page.repo_url and page.repo_url != "" %}
-      <p>
-        <a href="{{ page.repo_url }}" target="_blank" rel="noopener" class="btn btn--brand">
-          Ver código no GitHub
-        </a>
-      </p>
+<header class="post-hero">
+  <div class="container">
+    <p class="post-hero__cat">Portfólio</p>
+    <h1 class="post-hero__title">{{ page.name }}</h1>
+    <div class="post-hero__meta">
+      {% if page.status == "dev" %}
+        <span class="sistema-card__status status--dev">Em desenvolvimento</span>
+      {% else %}
+        <span class="sistema-card__status status--plan">Planejado</span>
       {% endif %}
-      {{ content }}
-
-      {% assign sistema_slug = page.name | remove: "AM " | slugify %}
-      {% assign posts_relacionados = site.posts | where_exp: "post", "post.tags contains sistema_slug" %}
-      {% if posts_relacionados.size > 0 %}
-      <h2>Documentado no blog</h2>
-      <p style="color:var(--text-muted);">Antes de virar código, cada decisão de arquitetura desse sistema passa pelo blog. Acompanhe o raciocínio:</p>
-      <ul>
-        {% for post in posts_relacionados %}
-        <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </article>
-
-    <div style="max-width:var(--prose-max);margin:2rem auto 4rem;padding:0 1.5rem;">
-      <a href="/portfolio/" class="btn btn--ghost">← Voltar pro Portfólio</a>
-    </div>
-  </main>
-
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer__bottom">
-        <p>© {{ 'now' | date: "%Y" }} <a href="/" style="color:var(--accent)">Alan Mateus | AMtech Digital</a>. Feito com Jekyll + GitHub Pages.</p>
-      </div>
-    </div>
-  </footer>
-
-  <button type="button" id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" hidden>↑</button>
-
-  <button type="button" id="install-app-btn" class="install-app-btn" hidden>
-    <span aria-hidden="true">⬇</span> Instalar app
-  </button>
-
-  <div id="ios-install-modal" class="ios-install-modal" hidden>
-    <div class="ios-install-modal__box">
-      <button type="button" id="ios-install-close" class="ios-install-modal__close" aria-label="Fechar">✕</button>
-      <p class="ios-install-modal__title">Instalar no iPhone/iPad</p>
-      <ol class="ios-install-modal__steps">
-        <li>Toca no ícone de compartilhar <strong>⬆️</strong> na barra do Safari</li>
-        <li>Escolhe <strong>"Adicionar à Tela de Início"</strong></li>
-        <li>Toca em <strong>"Adicionar"</strong> — pronto!</li>
-      </ol>
-      <button type="button" id="ios-install-done" class="btn btn--primary" style="width:100%;margin-top:1.25rem;justify-content:center;">Já instalei</button>
+      {% for tech in page.stack %}<span>#{{ tech }}</span>{% endfor %}
     </div>
   </div>
-  {% include global-story-share.html %}
+</header>
 
-  <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
-</body>
-</html>
+<article class="post-body ruled-paper">
+  <p class="text-muted text-lg">{{ page.excerpt }}</p>
+  {% if page.repo_url and page.repo_url != "" %}
+  <p>
+    <a href="{{ page.repo_url }}" target="_blank" rel="noopener" class="btn btn--brand">
+      Ver código no GitHub
+    </a>
+  </p>
+  {% endif %}
+  {{ content }}
+
+  {% assign sistema_slug = page.name | remove: "AM " | slugify %}
+  {% assign posts_relacionados = site.posts | where_exp: "post", "post.tags contains sistema_slug" %}
+  {% if posts_relacionados.size > 0 %}
+  <h2>Documentado no blog</h2>
+  <p class="text-muted">Antes de virar código, cada decisão de arquitetura desse sistema passa pelo blog. Acompanhe o raciocínio:</p>
+  <ul>
+    {% for post in posts_relacionados %}
+    <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</article>
+
+<div class="container container--prose mt-2 mb-4">
+  <a href="{{ '/portfolio/' | relative_url }}" class="btn btn--ghost">← Voltar pro Portfólio</a>
+</div>

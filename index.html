@@ -26,8 +26,8 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
         </p>
 
         <div class="hero__actions">
-          <a href="/portfolio/" class="btn btn--primary">Ver portfólio</a>
-          <a href="/blog/" class="btn btn--outline">Ler o blog</a>
+          <a href="{{ '/portfolio/' | relative_url }}" class="btn btn--primary">Ver portfólio</a>
+          <a href="{{ '/blog/' | relative_url }}" class="btn btn--outline">Ler o blog</a>
         </div>
       </div>
 
@@ -132,12 +132,12 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 <!-- ===== ÚLTIMOS POSTS ===== -->
 <section class="blog-section">
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;" >
+    <div class="flex-between-end mb-2" >
       <div>
         <p class="section-eyebrow">Blog</p>
-        <h2 class="section-title" style="margin-bottom:0">Últimas publicações</h2>
+        <h2 class="section-title mb-0" >Últimas publicações</h2>
       </div>
-      <a href="/blog/" class="btn btn--ghost">Ver todos</a>
+      <a href="{{ '/blog/' | relative_url }}" class="btn btn--ghost">Ver todos</a>
     </div>
 
     {% if site.posts.size > 0 %}
@@ -146,7 +146,7 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
       <article class="post-card {% if forloop.first %}post-card--featured{% endif %}">
         <p class="post-card__category">{{ post.categories | first | default: 'Blog' }}</p>
         <h3 class="post-card__title">
-          <a href="{{ post.url | relative_url }}" style="display:block;">{{ post.title }}</a>
+          <a href="{{ post.url | relative_url }}" class="display-block">{{ post.title }}</a>
         </h3>
         {% if post.excerpt %}
         <p class="post-card__excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
@@ -159,8 +159,8 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
       {% endfor %}
     </div>
     {% else %}
-    <div style="text-align:center;padding:3rem;border:1.5px dashed var(--border);border-radius:var(--radius-lg);">
-      <p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.875rem;">// primeiros posts chegando em breve</p>
+    <div class="empty-state">
+      <p class="placeholder-note text-sm">// primeiros posts chegando em breve</p>
     </div>
     {% endif %}
   </div>
@@ -169,12 +169,12 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 <!-- ===== PORTFÓLIO PREVIEW ===== -->
 <section class="portfolio-section">
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;" >
+    <div class="flex-between-end mb-2" >
       <div>
         <p class="section-eyebrow">Portfólio</p>
-        <h2 class="section-title" style="margin-bottom:0">Sistemas em construção</h2>
+        <h2 class="section-title mb-0" >Sistemas em construção</h2>
       </div>
-      <a href="/portfolio/" class="btn btn--ghost">Ver todos</a>
+      <a href="{{ '/portfolio/' | relative_url }}" class="btn btn--ghost">Ver todos</a>
     </div>
 
     <div class="portfolio-log">
@@ -213,7 +213,7 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 </section>
 
 <section>
-  <div class="container" style="max-width:760px;">
+  <div class="container max-w-xl" >
     <p class="section-eyebrow">Prova ao vivo</p>
     <h2 class="section-title">Atividade recente no GitHub</h2>
     <div id="github-atividade" class="github-atividade">
@@ -223,22 +223,22 @@ description: "Desenvolvedor .NET, Professor de TI e Red Teamer em formação. Co
 </section>
 
 <section>
-  <div class="container" style="max-width:640px;">
+  <div class="container max-w-lg" >
     {% include newsletter.html %}
   </div>
 </section>
 
 <!-- ===== CTA FINAL ===== -->
-<section style="background:var(--brand);padding:5rem 0;text-align:center;">
+<section class="cta-band">
   <div class="container">
     <div>
-      <h2 style="color:#fff;margin-bottom:1rem;">Construindo em público.<br><em style="font-weight:300;color:var(--accent)">Aprendendo em voz alta.</em></h2>
-      <p style="color:rgba(255,255,255,0.65);margin:0 auto 2.5rem;max-width:50ch;font-size:1.05rem;">
+      <h2 class="text-white mb-1">Construindo em público.<br><em class="text-accent-label">Aprendendo em voz alta.</em></h2>
+      <p class="cta-band__lead">
         Cada decisão técnica, cada erro e cada avanço vai para o blog. Acompanhe a jornada ou entre em contato se quiser colaborar.
       </p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a href="/blog/" class="btn btn--primary">Acompanhar o blog</a>
-        <a href="/contato/" class="btn btn--outline">Entrar em contato</a>
+      <div class="flex-gap-sm flex-center">
+        <a href="{{ '/blog/' | relative_url }}" class="btn btn--primary">Acompanhar o blog</a>
+        <a href="{{ '/contato/' | relative_url }}" class="btn btn--outline">Entrar em contato</a>
       </div>
     </div>
   </div>

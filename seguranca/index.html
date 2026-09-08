@@ -5,16 +5,16 @@ description: "Trilha de estudos em segurança ofensiva — eJPT, OSCP e além. W
 ---
 <header class="page-hero">
   <div class="container">
-    <p class="page-hero__eyebrow" style="color:var(--accent-security);">Segurança Ofensiva</p>
-    <h1 class="page-hero__title">Red Team<br><em style="font-weight:300;color:var(--accent-security)">em formação.</em></h1>
+    <p class="page-hero__eyebrow text-security" >Segurança Ofensiva</p>
+    <h1 class="page-hero__title">Red Team<br><em class="text-accent-label text-security">em formação.</em></h1>
     <p class="page-hero__desc">Trilha eJPT → OSCP → CRTO → além. Cada sistema que construo passa por threat modeling. Aqui ficam os writeups e notas de estudo.</p>
   </div>
 </header>
 <section>
-  <div class="container" style="max-width:860px;">
-    <div class="seguranca-grid" style="margin-bottom:4rem;">
-      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;">
-        <p style="font-family:var(--font-display);font-style:italic;font-size:1rem;color:var(--accent-security-text);margin-bottom:0.75rem;">Trilha de certificações</p>
+  <div class="container max-w-2xl" >
+    <div class="seguranca-grid mb-4" >
+      <div class="surface-card">
+        <p class="surface-card--quote text-security-text mb-1">Trilha de certificações</p>
         <div class="trail">
           {% assign certs = "eJPT|INE — pentest básico e metodologia|active;OSCP|OffSec PEN-200 — metodologia completa e AD|plan;CRTO|Zero-Point Security — C2 e red team|plan;CRTP|Altered Security — AD kill chain|plan;OSEP|OffSec PEN-300 — evasion avançada|plan" | split: ";" %}
           {% for cert in certs %}
@@ -31,15 +31,15 @@ description: "Trilha de estudos em segurança ofensiva — eJPT, OSCP e além. W
         </div>
       </div>
       <div>
-        <p class="section-eyebrow" style="color:var(--accent-security-text);">Laboratório</p>
-        <h3 style="margin-bottom:1rem;">Setup de estudos</h3>
-        <div style="display:flex;flex-direction:column;gap:.75rem;">
+        <p class="section-eyebrow text-security-text" >Laboratório</p>
+        <h3 class="mb-1">Setup de estudos</h3>
+        <div class="flex-col-sm-tight">
           {% assign lab = "Kali Linux|VM no Acer Nitro AN515-45;BloodHound CE|via Docker no WSL2;TryHackMe|trilha Jr Pentester;PortSwigger Web Academy|labs de web security;HackTheBox|máquinas ativas" | split: ";" %}
           {% for item in lab %}
             {% assign i = item | split: "|" %}
-            <div style="display:flex;justify-content:space-between;padding:.6rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);font-size:.875rem;">
-              <span style="font-weight:500;">{{ i[0] }}</span>
-              <span style="color:var(--text-muted);font-family:var(--font-mono);font-size:.78rem;">{{ i[1] }}</span>
+            <div class="flex-row-between-sm">
+              <span class="font-weight-500">{{ i[0] }}</span>
+              <span class="text-muted placeholder-note">{{ i[1] }}</span>
             </div>
           {% endfor %}
         </div>
@@ -47,11 +47,11 @@ description: "Trilha de estudos em segurança ofensiva — eJPT, OSCP e além. W
     </div>
 
     <div>
-      <p class="section-eyebrow" style="color:var(--accent-security-text);">Writeups</p>
-      <h3 style="margin-bottom:1.5rem;">Notas de laboratório</h3>
-      <div style="text-align:center;padding:3rem 2rem;border:1.5px dashed var(--border);border-radius:var(--radius-xl);">
-        <p style="font-family:var(--font-mono);color:var(--text-light);font-size:.8rem;">// writeups chegando à medida que avanço na trilha</p>
-        <p style="color:var(--text-muted);margin-top:.75rem;max-width:42ch;margin:1rem auto 0;">Cada máquina resolvida ou técnica documentada vai aparecer aqui. Comece acompanhando o blog.</p>
+      <p class="section-eyebrow text-security-text" >Writeups</p>
+      <h3 class="mb-2">Notas de laboratório</h3>
+      <div class="empty-state empty-state--lg">
+        <p class="placeholder-note">// writeups chegando à medida que avanço na trilha</p>
+        <p class="text-muted mt-1 max-w-sm mx-auto">Cada máquina resolvida ou técnica documentada vai aparecer aqui. Comece acompanhando o blog.</p>
       </div>
     </div>
   </div>

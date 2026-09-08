@@ -103,7 +103,7 @@
     <input type="hidden" name="post_url" value="{{ page.url | absolute_url }}">
     <input type="hidden" name="parent" id="comment-form-parent" value="">
     <!-- honeypot simples anti-spam -->
-    <p style="position:absolute;left:-9999px;">
+    <p class="visually-hidden">
       <label>Não preencha este campo<input type="text" name="_gotcha"></label>
     </p>
 
@@ -115,7 +115,7 @@
     <label class="comment-form__label" for="cf-name">Nome</label>
     <input class="comment-form__input" id="cf-name" name="name" type="text" required maxlength="80">
 
-    <label class="comment-form__label" for="cf-email">E-mail <span style="opacity:.6;">(não é publicado, só de contato)</span></label>
+    <label class="comment-form__label" for="cf-email">E-mail <span class="opacity-muted">(não é publicado, só de contato)</span></label>
     <input class="comment-form__input" id="cf-email" name="email" type="email" maxlength="120">
 
     <label class="comment-form__label" for="cf-message">Comentário</label>
@@ -129,112 +129,3 @@
   </form>
 </section>
 
-<script>
-(function () {
-  var form = document.getElementById('comment-form');
-  if (!form) return;
-  var status = document.getElementById('comment-form-status');
-  var parentInput = document.getElementById('comment-form-parent');
-  var replyingBox = document.getElementById('comment-form-replying');
-  var replyingName = document.getElementById('comment-form-replying-name');
-  var submitBtn = document.getElementById('comment-form-submit');
-  var cancelReply = document.getElementById('comment-form-cancel-reply');
-  var textarea = document.getElementById('cf-message');
-  var counter = document.getElementById('comment-form-counter');
-  var LIMITE = 1000;
-
-  function atualizarContador() {
-    var restantes = LIMITE - textarea.value.length;
-    counter.textContent = restantes + ' caracteres restantes';
-    counter.classList.toggle('comment-form__counter--perto', restantes <= 100);
-  }
-  textarea.addEventListener('input', atualizarContador);
-  atualizarContador();
-
-  document.querySelectorAll('.comment__reply-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      parentInput.value = btn.getAttribute('data-comment-id');
-      replyingName.textContent = btn.getAttribute('data-comment-name');
-      replyingBox.hidden = false;
-      submitBtn.textContent = 'Enviar resposta';
-      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      document.getElementById('cf-message').focus();
-    });
-  });
-
-  cancelReply.addEventListener('click', function (e) {
-    e.preventDefault();
-    parentInput.value = '';
-    replyingBox.hidden = true;
-    submitBtn.textContent = 'Enviar comentário';
-  });
-
-  document.querySelectorAll('.comment__toggle-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var alvo = document.getElementById(btn.getAttribute('data-target'));
-      var recolhido = alvo.classList.toggle('comment__body--collapsed');
-      btn.textContent = recolhido ? 'Ver comentário completo' : 'Ver menos';
-    });
-  });
-
-  // Curtidas individuais de cada comentário
-  var namespace = 'alanmateus17-github-io';
-  document.querySelectorAll('.comment__like-btn').forEach(function (btn) {
-    var key = btn.getAttribute('data-like-key');
-    var storageKey = 'liked:' + key;
-    var countEl = btn.querySelector('.comment__like-count');
-    var baseUrl = 'https://counterapi.com/api/' + namespace + '/like/' + key;
-
-    fetch(baseUrl + '?readOnly=true')
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
-        countEl.textContent = data.value || 0;
-        if (localStorage.getItem(storageKey)) {
-          btn.setAttribute('aria-pressed', 'true');
-          btn.classList.add('is-liked');
-        }
-      })
-      .catch(function () { countEl.textContent = '0'; });
-
-    btn.addEventListener('click', function () {
-      if (localStorage.getItem(storageKey)) return;
-      btn.disabled = true;
-      fetch(baseUrl)
-        .then(function (res) { if (!res.ok) throw new Error('falhou'); return res.json(); })
-        .then(function (data) {
-          localStorage.setItem(storageKey, '1');
-          btn.setAttribute('aria-pressed', 'true');
-          btn.classList.add('is-liked');
-          countEl.textContent = data.value || (parseInt(countEl.textContent, 10) || 0) + 1;
-        })
-        .catch(function () {})
-        .finally(function () { btn.disabled = false; });
-    });
-  });
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    status.hidden = false;
-    status.textContent = 'Enviando...';
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(function (res) {
-      if (res.ok) {
-        status.textContent = 'Comentário enviado! Ele aparece aqui assim que for aprovado.';
-        form.reset();
-        parentInput.value = '';
-        replyingBox.hidden = true;
-        submitBtn.textContent = 'Enviar comentário';
-      } else {
-        return res.json().then(function (data) {
-          throw new Error((data && data.error) || 'Erro ao enviar');
-        });
-      }
-    }).catch(function (err) {
-      status.textContent = 'Não deu pra enviar agora (' + err.message + '). Tenta de novo em instantes.';
-    });
-  });
-})();
-</script>

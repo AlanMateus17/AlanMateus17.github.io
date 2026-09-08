@@ -7,12 +7,12 @@ permalink: /depoimentos/
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow">Depoimentos</p>
-    <h1 class="page-hero__title">O que dizem<br><em style="font-weight:300;color:var(--accent)">sobre o trabalho.</em></h1>
+    <h1 class="page-hero__title">O que dizem<br><em class="text-accent-label">sobre o trabalho.</em></h1>
   </div>
 </header>
 
 <section>
-  <div class="container" style="max-width:900px;">
+  <div class="container max-w-3xl" >
     {% if site.depoimentos.size > 0 %}
       <div class="depoimentos-grid">
         {% for d in site.depoimentos %}
@@ -24,7 +24,7 @@ permalink: /depoimentos/
         {% endfor %}
       </div>
     {% else %}
-      <p style="color:var(--text-muted);">Ainda não tem depoimentos publicados.</p>
+      <p class="text-muted">Ainda não tem depoimentos publicados.</p>
     {% endif %}
   </div>
 </section>

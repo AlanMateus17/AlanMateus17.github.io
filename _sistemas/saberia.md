@@ -1,6 +1,7 @@
 ---
 layout: sistema
 name: "AM Saberia"
+order: 10
 excerpt: "Plataforma educacional — cursos, aulas, progresso e certificados."
 status: "plan"
 stack:
