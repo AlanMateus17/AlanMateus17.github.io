@@ -914,7 +914,7 @@ section + section { padding-top: 0; }
   color: #fff;
   border-color: var(--brand);
 }
-.portfolio-log {
+.entry-list {
   display: flex;
   flex-direction: column;
 }

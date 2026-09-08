@@ -47,7 +47,7 @@ description: "13 sistemas de gestão que venho construindo — PDV, delivery, sa
       <button class="filter-btn" data-filter="dev">Em desenvolvimento</button>
       <button class="filter-btn" data-filter="plan">Planejados</button>
     </div>
-    <div class="portfolio-log">
+    <div class="entry-list" id="portfolio-lista">
       {% for sistema in sistemas %}
         {% assign project_slug = sistema.name | remove: "AM " | slugify %}
         {% assign proj_like_key = 'portfolio--' | append: project_slug %}

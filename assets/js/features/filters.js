@@ -1,18 +1,25 @@
 /**
  * === features/filters.js ===
- * Botões de filtro (`.filter-btn`) usados em duas páginas diferentes:
- *  - Portfólio: filtra `.log-entry` por `data-status` (em desenvolvimento / planejado)
+ * Botões de filtro (`.filter-btn`) usados em três páginas diferentes:
+ *  - Portfólio (`#portfolio-lista`): filtra `.log-entry` por `data-status`
+ *    (em desenvolvimento / planejado)
+ *  - Ensino (`#materias-lista`): filtra `.log-entry` por `data-curso`
+ *    (qual curso técnico aquela matéria pertence)
  *  - Blog: filtra `.blog-post-item` por `data-categoria`, e mostra um aviso
  *    de "nenhum resultado" (`#blog-filter-empty`) quando o filtro zera a lista
- * O mesmo botão serve pras duas páginas porque cada uma só tem os elementos
- * que lhe dizem respeito — os `querySelectorAll` que não encontram nada
- * simplesmente não fazem nada (listas vazias).
+ *
+ * Portfólio e Ensino reaproveitam a mesma classe visual `.log-entry` (é o
+ * mesmo componente de "linha de log"), então cada busca é escopada pelo
+ * container da própria página (`#portfolio-lista`, `#materias-lista`) —
+ * sem isso, filtrar o portfólio também esconderia as matérias do ensino
+ * (e vice-versa), já que os elementos têm a mesma classe.
  */
 (function () {
   var botoes = document.querySelectorAll('.filter-btn');
   if (!botoes.length) return;
 
-  var itensPortfolio = document.querySelectorAll('.log-entry');
+  var itensPortfolio = document.querySelectorAll('#portfolio-lista .log-entry');
+  var itensEnsino = document.querySelectorAll('#materias-lista .log-entry');
   var itensBlog = document.querySelectorAll('.blog-post-item');
   var avisoVazioBlog = document.getElementById('blog-filter-empty');
 
@@ -25,6 +32,11 @@
 
       itensPortfolio.forEach(function (card) {
         var bate = filtro === 'all' || card.dataset.status === filtro;
+        card.style.display = bate ? '' : 'none';
+      });
+
+      itensEnsino.forEach(function (card) {
+        var bate = filtro === 'all' || card.dataset.curso === filtro;
         card.style.display = bate ? '' : 'none';
       });
 

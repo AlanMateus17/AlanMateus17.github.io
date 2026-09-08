@@ -1,0 +1,133 @@
+# Matérias dos cursos técnicos, organizadas por curso e série.
+#
+# Cada matéria tem:
+#   ano       → série do curso técnico (1, 2 ou 3)
+#   nome      → nome que aparece na página /ensino/
+#   icone     → chave usada em _includes/icon-materia.html
+#   desc      → descrição curta (revise o texto — são descrições genéricas
+#               baseadas só no nome da matéria, escreva a sua se tiver algo
+#               mais específico em mente)
+#   status    → "disponivel" (já tem apostilas prontas) ou "em-producao"
+#               (ainda não tem material publicado)
+#
+# Pra adicionar uma matéria nova: adiciona um item na lista do curso certo
+# e (se for um ícone novo) registra ele em _includes/icon-materia.html.
+
+cursos:
+  - id: tecnico-em-informatica
+    nome: "Técnico em Informática"
+    materias:
+      - ano: 2
+        nome: "Lógica de Programação"
+        icone: logica
+        status: disponivel
+        desc: "Variáveis, condicionais, loops, funções e algoritmos do zero."
+      - ano: 3
+        nome: "Arquitetura e Manutenção"
+        icone: hardware
+        status: disponivel
+        desc: "Hardware de computadores — componentes, montagem e diagnóstico."
+      - ano: 2
+        nome: "HTML e CSS"
+        icone: web
+        status: disponivel
+        desc: "Desenvolvimento web do zero — estrutura, estilo e responsividade."
+      - ano: 2
+        nome: "Sistemas Operacionais"
+        icone: so
+        status: disponivel
+        desc: "Windows e Linux — uso, configuração e linha de comando."
+      - ano: 2
+        nome: "POO com Java"
+        icone: poo
+        status: disponivel
+        desc: "Orientação a objetos na prática com Java — classes, herança e polimorfismo."
+      - ano: 2
+        nome: "Programação Web"
+        icone: webprog
+        status: disponivel
+        desc: "Backend com Java Servlets, banco de dados e APIs REST básicas."
+      - ano: 2
+        nome: "Noções de Robótica"
+        icone: robotica
+        status: disponivel
+        desc: "Fundamentos de automação, Arduino e projetos práticos."
+      - ano: 3
+        nome: "Laboratório de Hardware"
+        icone: labhard
+        status: disponivel
+        desc: "Bancada prática — montagem, troubleshooting e manutenção preventiva."
+      - ano: 3
+        nome: "Laboratório de Software"
+        icone: labsoft
+        status: disponivel
+        desc: "Configuração de ambientes, virtualização e ferramentas profissionais."
+
+  - id: tecnico-em-desenvolvimento-de-sistemas
+    nome: "Técnico em Desenvolvimento de Sistemas"
+    materias:
+      - ano: 1
+        nome: "Introdução à Lógica"
+        icone: logica
+        status: em-producao
+        desc: "Base de raciocínio lógico antes de qualquer linguagem de programação."
+      - ano: 1
+        nome: "Introdução ao Pensamento Computacional e Carreira"
+        icone: carreira
+        status: em-producao
+        desc: "Como pensar como programador, e panorama das carreiras em desenvolvimento."
+      - ano: 2
+        nome: "Algoritmos e Estrutura de Dados"
+        icone: algoritmos
+        status: em-producao
+        desc: "Listas, pilhas, filas, árvores e a complexidade por trás de cada escolha."
+      - ano: 2
+        nome: "Arquitetura de Sistemas"
+        icone: arquitetura
+        status: em-producao
+        desc: "Como sistemas são organizados em camadas e componentes que se comunicam."
+      - ano: 2
+        nome: "Banco de Dados"
+        icone: banco
+        status: em-producao
+        desc: "Modelagem relacional, SQL na prática e normalização."
+      - ano: 2
+        nome: "Desenvolvimento Front-end I"
+        icone: frontend
+        status: em-producao
+        desc: "Interfaces web modernas — componentização e interatividade no navegador."
+      - ano: 2
+        nome: "Matemática Discreta"
+        icone: matematica
+        status: em-producao
+        desc: "Lógica proposicional, conjuntos e grafos — a matemática por trás da computação."
+      - ano: 3
+        nome: "Conceitos Avançados de Arquitetura de Sistemas"
+        icone: arquitetura
+        status: em-producao
+        desc: "Microsserviços, escalabilidade e padrões de arquitetura de software."
+      - ano: 3
+        nome: "Desenvolvimento Back-end"
+        icone: backend
+        status: em-producao
+        desc: "APIs, regras de negócio e integração com banco de dados no servidor."
+      - ano: 3
+        nome: "Desenvolvimento de Aplicativos"
+        icone: apps
+        status: em-producao
+        desc: "Construção de aplicativos móveis do zero até a publicação."
+      - ano: 3
+        nome: "Desenvolvimento de Softwares"
+        icone: devsoft
+        status: em-producao
+        desc: "Ciclo de vida de software, metodologias ágeis e boas práticas de engenharia."
+      - ano: 3
+        nome: "Desenvolvimento Front-end II"
+        icone: frontend
+        status: em-producao
+        desc: "Aprofundamento em frameworks modernos e arquitetura de interfaces."
+      - ano: 3
+        nome: "Fundamentos de Segurança de Softwares"
+        icone: seguranca
+        status: em-producao
+        desc: "Vulnerabilidades comuns, boas práticas defensivas e pensamento de atacante."
