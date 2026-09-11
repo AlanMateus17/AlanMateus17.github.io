@@ -1,7 +1,10 @@
 # Matérias dos cursos técnicos, organizadas por curso e série.
 #
 # Cada matéria tem:
-#   ano       → série do curso técnico (1, 2 ou 3)
+#   ano       → série do curso técnico (1, 2 ou 3). Nos cursos de Matemática
+#               e Física (que não têm "série" de verdade, é estudo pessoal
+#               seguindo os livros do VHSlins), esse número é só a ORDEM de
+#               estudo (1 = Matemática Básica antes de 2 = Cálculo).
 #   nome      → nome que aparece na página /ensino/
 #   icone     → chave usada em _includes/icon-materia.html
 #   desc      → descrição curta (revise o texto — são descrições genéricas
@@ -17,26 +20,36 @@ cursos:
   - id: tecnico-em-informatica
     nome: "Técnico em Informática"
     materias:
-      - ano: 2
+      - ano: 1
+        nome: "Informática Básica"
+        icone: introducao
+        status: disponivel
+        desc: "Primeiro contato com o computador — hardware, sistema operacional e ferramentas do dia a dia."
+      - ano: 1
         nome: "Lógica de Programação"
         icone: logica
         status: disponivel
         desc: "Variáveis, condicionais, loops, funções e algoritmos do zero."
-      - ano: 3
-        nome: "Arquitetura e Manutenção"
+      - ano: 2
+        nome: "Arquitetura e Manutenção de Computadores"
         icone: hardware
         status: disponivel
         desc: "Hardware de computadores — componentes, montagem e diagnóstico."
+      - ano: 2
+        nome: "Gestão do Tempo"
+        icone: gestao
+        status: disponivel
+        desc: "Organização, priorização e produtividade para a vida de estudante e profissional."
       - ano: 2
         nome: "HTML e CSS"
         icone: web
         status: disponivel
         desc: "Desenvolvimento web do zero — estrutura, estilo e responsividade."
       - ano: 2
-        nome: "Sistemas Operacionais"
-        icone: so
+        nome: "Noções de Robótica"
+        icone: robotica
         status: disponivel
-        desc: "Windows e Linux — uso, configuração e linha de comando."
+        desc: "Fundamentos de automação, Arduino e projetos práticos."
       - ano: 2
         nome: "POO com Java"
         icone: poo
@@ -48,10 +61,20 @@ cursos:
         status: disponivel
         desc: "Backend com Java Servlets, banco de dados e APIs REST básicas."
       - ano: 2
-        nome: "Noções de Robótica"
-        icone: robotica
+        nome: "Sistemas Operacionais"
+        icone: so
         status: disponivel
-        desc: "Fundamentos de automação, Arduino e projetos práticos."
+        desc: "Windows e Linux — uso, configuração e linha de comando."
+      - ano: 3
+        nome: "Design"
+        icone: design
+        status: disponivel
+        desc: "Fundamentos de design para telas — hierarquia visual, cor e usabilidade."
+      - ano: 3
+        nome: "Gerenciador de Conteúdo e Banco de Dados"
+        icone: banco
+        status: disponivel
+        desc: "Modelagem de dados na prática e administração de CMS."
       - ano: 3
         nome: "Laboratório de Hardware"
         icone: labhard
@@ -62,6 +85,21 @@ cursos:
         icone: labsoft
         status: disponivel
         desc: "Configuração de ambientes, virtualização e ferramentas profissionais."
+      - ano: 3
+        nome: "Laboratório Web"
+        icone: labweb
+        status: disponivel
+        desc: "Projetos web práticos, do design à publicação."
+      - ano: 3
+        nome: "Programação Web II"
+        icone: webprog
+        status: disponivel
+        desc: "Aprofundamento em backend, frameworks e integração de sistemas."
+      - ano: 3
+        nome: "Rede de Computadores"
+        icone: redes
+        status: disponivel
+        desc: "Fundamentos de redes — protocolos, endereçamento e infraestrutura."
 
   - id: tecnico-em-desenvolvimento-de-sistemas
     nome: "Técnico em Desenvolvimento de Sistemas"
@@ -131,3 +169,86 @@ cursos:
         icone: seguranca
         status: em-producao
         desc: "Vulnerabilidades comuns, boas práticas defensivas e pensamento de atacante."
+
+  - id: matematica
+    nome: "Matemática"
+    materias:
+      - ano: 1
+        nome: "Lógica (Matemática Básica)"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 1 de 10 de Matemática Básica (Victor H. S. Lins) — proposições, conectivos e argumentação."
+      - ano: 1
+        nome: "Teoria dos Números"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 2 de 10 — divisibilidade, números primos e propriedades dos inteiros."
+      - ano: 1
+        nome: "Estatística Descritiva"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 3 de 10 — medidas de tendência central, dispersão e organização de dados."
+      - ano: 1
+        nome: "Álgebra"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 4 de 10 — equações, expressões algébricas e funções."
+      - ano: 1
+        nome: "Espaço"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 5 de 10 — geometria plana e espacial."
+      - ano: 1
+        nome: "Números Complexos"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 6 de 10 — representação, operações e aplicações dos números complexos."
+      - ano: 1
+        nome: "Contagem"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 7 de 10 — análise combinatória e princípios de contagem."
+      - ano: 1
+        nome: "Representações"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 8 de 10 — formas de representar objetos e relações matemáticas."
+      - ano: 1
+        nome: "Símbolos Matemáticos"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 9 de 10 — a linguagem formal da matemática."
+      - ano: 1
+        nome: "Orientações para Estudar Matemática"
+        icone: matematica
+        status: em-producao
+        desc: "Parte 10 de 10 — método de estudo para o resto do livro e além."
+      - ano: 2
+        nome: "Cálculo 1"
+        icone: matematica
+        status: em-producao
+        desc: "Volume 1 de 4 de Cálculo Diferencial e Integral (Victor H. S. Lins)."
+      - ano: 2
+        nome: "Cálculo 2"
+        icone: matematica
+        status: em-producao
+        desc: "Volume 2 de 4."
+      - ano: 2
+        nome: "Cálculo 3"
+        icone: matematica
+        status: em-producao
+        desc: "Volume 3 de 4."
+      - ano: 2
+        nome: "Cálculo 4"
+        icone: matematica
+        status: em-producao
+        desc: "Volume 4 de 4."
+
+  - id: fisica
+    nome: "Física"
+    materias:
+      - ano: 1
+        nome: "Termodinâmica Clássica"
+        icone: fisica
+        status: em-producao
+        desc: "Leis da termodinâmica, energia e calor — livro de referência a definir."
