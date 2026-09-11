@@ -182,6 +182,7 @@ passo completo (incluindo como fazer respostas em thread) está em
 | Analytics (GoatCounter) | `_config.yml` → `goatcounter_username` |
 | Formulário de comentários / orçamento / quiz | `_config.yml` → `formspree_*` |
 | Um sistema do portfólio | `_sistemas/<nome>.md` |
+| Uma matéria/curso da página de Ensino | `_data/ensino.yml` |
 | Um post do blog | `_posts/AAAA-MM-DD-titulo.md` |
 | Uma cor ou espaçamento do site inteiro | `assets/css/main.css` → seção `:root` (tokens) |
 | O comportamento de um botão/widget | o arquivo certo em `assets/js/` (veja a tabela acima) |

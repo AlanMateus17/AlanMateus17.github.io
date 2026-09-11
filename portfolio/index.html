@@ -49,7 +49,7 @@ description: "13 sistemas de gestão que venho construindo — PDV, delivery, sa
       {% for sistema in sistemas %}
         {% assign sistema_slug = sistema.name | remove: "AM " | slugify %}
         {% assign proj_like_key = 'portfolio--' | append: sistema_slug %}
-        <div class="log-entry" data-status="{{ sistema.status }}">
+        <div class="log-entry" data-category="{{ sistema.status }}">
           <div class="log-entry__marker">
             {% if sistema.status == "dev" %}
             <span class="sistema-card__status status--dev">Em dev</span>

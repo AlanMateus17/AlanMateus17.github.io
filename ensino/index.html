@@ -1,39 +1,70 @@
 ---
 layout: default
 title: Ensino
-description: "Apostilas gratuitas das 9 matérias do EMTI — Lógica, Web, Hardware, POO, Redes, Robótica e mais. Materiais criados por Alan Mateus para seus alunos."
+description: "Apostilas gratuitas dos cursos Técnico em Informática e Técnico em Desenvolvimento de Sistemas. Materiais criados por Alan Mateus para seus alunos."
 ---
+{% comment %}
+  Esta página lê as matérias direto de _data/ensino.yml (organizado por
+  curso), em vez de ter a lista colada aqui dentro — assim, pra adicionar
+  ou editar uma matéria, você mexe só no ensino.yml, sem tocar neste
+  arquivo. O filtro por curso usa a mesma lógica de assets/js/features/filters.js
+  já usada no Portfólio (cards com data-category).
+{% endcomment %}
 <header class="page-hero">
   <div class="container">
     <p class="page-hero__eyebrow page-hero__eyebrow--ensino">Ensino</p>
     <h1 class="page-hero__title">Materiais<br><em class="page-hero__title-accent page-hero__title-accent--ensino">gratuitos.</em></h1>
-    <p class="page-hero__desc">Apostilas, tutoriais e roteiros criados para os alunos do EMTI em Barbacena. Tudo livre para usar, adaptar e distribuir.</p>
+    <p class="page-hero__desc">Apostilas, tutoriais e roteiros dos cursos técnicos que leciono. Tudo livre para usar, adaptar e distribuir.</p>
   </div>
 </header>
 <section>
   <div class="container">
     <div>
-      <p class="section-eyebrow section-eyebrow--ensino">EMTI — 9 matérias</p>
-      <h2 class="section-title">Apostilas por matéria</h2>
-      <p class="section-subtitle">20 aulas por matéria, organizadas por bimestre. Cada apostila cobre teoria, exercícios e atividade prática.</p>
+      <p class="section-eyebrow section-eyebrow--ensino">{{ site.data.ensino.cursos.size }} cursos técnicos</p>
+      <h2 class="section-title">Apostilas por curso</h2>
+      <p class="section-subtitle">Organizadas por série. Cada apostila cobre teoria, exercícios e atividade prática.</p>
     </div>
-    <div class="portfolio-log">
-      {% assign materias = "logica|Lógica de Programação|Variáveis, condicionais, loops, funções e algoritmos do zero.|20 apostilas;hardware|Arquitetura e Manutenção|Hardware de computadores — componentes, montagem e diagnóstico.|20 apostilas;web|HTML e CSS|Desenvolvimento web do zero — estrutura, estilo e responsividade.|20 apostilas;so|Sistemas Operacionais|Windows e Linux — uso, configuração e linha de comando.|20 apostilas;poo|POO com Java|Orientação a objetos na prática com Java — classes, herança e polimorfismo.|20 apostilas;webprog|Programação Web|Backend com Java Servlets, banco de dados e APIs REST básicas.|20 apostilas;robotica|Noções de Robótica|Fundamentos de automação, Arduino e projetos práticos.|20 apostilas;labhard|Laboratório de Hardware|Bancada prática — montagem, troubleshooting e manutenção preventiva.|20 apostilas;labsoft|Laboratório de Software|Configuração de ambientes, virtualização e ferramentas profissionais.|20 apostilas" | split: ";" %}
-      {% for materia in materias %}
-        {% assign p = materia | split: "|" %}
-        {% assign materia_icone = p[0] %}
-        <div class="log-entry">
-          <div class="log-entry__marker log-entry__marker--ensino">{% include icon-materia.html nome=materia_icone %}</div>
-          <div class="log-entry__body">
-            <h3 class="log-entry__name">{{ p[1] }}</h3>
-            <p class="log-entry__desc">{{ p[2] }} <span class="log-entry__desc-extra">— {{ p[3] }}</span></p>
-          </div>
-          <div class="log-entry__actions">
-            <a href="{{ '/contato/' | relative_url }}" class="sistema-card__link">Solicitar material</a>
-          </div>
-        </div>
+
+    {% assign total_materias = 0 %}
+    {% for curso in site.data.ensino.cursos %}{% assign total_materias = total_materias | plus: curso.materias.size %}{% endfor %}
+
+    <div class="portfolio-filters">
+      <button class="filter-btn active" data-filter="all">Todas ({{ total_materias }})</button>
+      {% for curso in site.data.ensino.cursos %}
+      <button class="filter-btn" data-filter="{{ curso.id }}">{{ curso.nome }} ({{ curso.materias.size }})</button>
       {% endfor %}
     </div>
+
+    <div class="portfolio-log">
+      {% for curso in site.data.ensino.cursos %}
+        {% assign materias_ordenadas = curso.materias | sort: "ano" %}
+        {% for materia in materias_ordenadas %}
+        <div class="log-entry" data-category="{{ curso.id }}">
+          <div class="log-entry__marker log-entry__marker--ensino">{% include icon-materia.html nome=materia.icone %}</div>
+          <div class="log-entry__body">
+            <h3 class="log-entry__name">{{ materia.nome }}</h3>
+            <p class="log-entry__desc">{{ materia.desc }}</p>
+            <div class="log-entry__stack">
+              <span class="tag">{{ materia.ano }}º ano</span>
+              {% if materia.status == "disponivel" %}
+              <span class="sistema-card__status status--dev">Apostilas disponíveis</span>
+              {% else %}
+              <span class="sistema-card__status status--plan">Em produção</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="log-entry__actions">
+            {% if materia.status == "disponivel" %}
+            <a href="{{ '/contato/' | relative_url }}" class="sistema-card__link">Solicitar material</a>
+            {% else %}
+            <a href="{{ '/contato/' | relative_url }}" class="sistema-card__link">Avisem quando sair</a>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+
     <div class="ensino-cta">
       <h3 class="ensino-cta__titulo">Você é professor?</h3>
       <p class="ensino-cta__desc">Todos os materiais são livres para adaptar e usar em suas aulas. Entre em contato se quiser o pacote completo ou colaborar.</p>
