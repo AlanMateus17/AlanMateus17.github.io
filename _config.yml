@@ -75,5 +75,8 @@ exclude:
   - Gemfile.lock
   - node_modules
   - README-DEV.md
+  - README-COMENTARIOS.md
+  - README-COMO-USAR.md
+  - ARQUITETURA.md
 
 future: true
