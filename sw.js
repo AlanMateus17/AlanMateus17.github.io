@@ -1,11 +1,11 @@
-const CACHE_NAME = 'alanmateus-v1';
+const CACHE_NAME = 'alanmateus-v2';
 const OFFLINE_URL = '/404.html';
 
 // Arquivos essenciais pra sempre ter em cache
 const PRECACHE = [
   '/',
   '/assets/css/main.css',
-  '/assets/js/main.js',
+  '/assets/js/site-config.js',
   '/assets/icons/icon-192.png',
 ];
 

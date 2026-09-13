@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 <!--
   _layouts/default.html — layout-base de TODO o site.
 
@@ -5,7 +7,7 @@
   ou indiretamente: ele desenha o <head>, a navegação, o rodapé, os
   botões flutuantes (voltar ao topo, instalar app) e carrega todo o
   JavaScript e CSS do site. O conteúdo específico de cada página entra
-  no lugar de {{ content }}.
+  dentro da tag main, mais abaixo neste arquivo.
 
   Se um dia outra página parecer "diferente demais" pra caber aqui,
   o jeito certo é criar um layout que ESTENDE este (com `layout: default`
@@ -14,8 +16,6 @@
   erro que existia antes em sistema.html, e por isso o dark mode não
   aparecia nas páginas do portfólio.
 -->
-<!DOCTYPE html>
-<html lang="pt-BR">
 <head>
   <!--
     Este script PRECISA continuar aqui, inline, bem no topo do <head> —
