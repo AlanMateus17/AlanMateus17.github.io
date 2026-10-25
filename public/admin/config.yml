@@ -1,0 +1,161 @@
+backend:
+  name: github
+  repo: AlanMateus17/AlanMateus17.github.io
+  branch: main
+  base_url: "https://script.google.com/macros/s/AKfycbyt3T9Wa7c89szgKypyZ4eTC9d-JX39uhs2txwe4ifTF3KNiSaTnQL5GyIF72aukRA-yg/exec"
+  auth_endpoint: ""
+
+media_folder: "public/assets/img/posts"
+public_folder: "/assets/img/posts"
+
+# Depois da migração pro Next.js, todo o conteúdo mora na pasta content/
+# (mesmo formato de antes). Cada publicação pelo editor vira um commit na
+# branch main, e o GitHub Actions publica o site de novo sozinho.
+#
+# Os componentes customizados do editor (vídeo do YouTube, caixa de destaque)
+# NÃO podem ser registrados aqui em YAML — o Decap CMS exige que sejam
+# registrados via JavaScript, com CMS.registerEditorComponent().
+# O registro real e funcional está em admin/index.html.
+# (Havia uma cópia divergente desse bloco aqui antes; foi removida porque
+# nunca funcionou e gerava um HTML de saída diferente do que o index.html gera.)
+
+collections:
+  - name: "posts"
+    label: "📝 Posts do Blog"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - label: "Categoria"
+        name: "categories"
+        widget: "select"
+        options: ["desenvolvimento", "ensino", "seguranca", "carreira"]
+        multiple: true
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Resumo", name: "excerpt", widget: "text" }
+      - label: "Quiz de fixação (opcional, mas recomendado)"
+        name: "quiz"
+        widget: "list"
+        required: false
+        summary: "{{fields.pergunta}}"
+        fields:
+          - { label: "Pergunta", name: "pergunta", widget: "string" }
+          - { label: "Opções (uma por linha)", name: "opcoes", widget: "list" }
+          - { label: "Posição da opção certa (0 = primeira, 1 = segunda...)", name: "correta", widget: "number", min: 0 }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "sistemas"
+    label: "💼 Portfólio"
+    folder: "content/sistemas"
+    create: true
+    fields:
+      - { label: "Nome do sistema", name: "name", widget: "string" }
+      - { label: "Resumo curto (aparece no card)", name: "excerpt", widget: "text" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: [{ label: "Em desenvolvimento", value: "dev" }, { label: "Planejado", value: "plan" }]
+      - { label: "Stack (tecnologias)", name: "stack", widget: "list" }
+      - { label: "Link do repositório no GitHub (deixe em branco até o repositório existir)", name: "repo_url", widget: "string", required: false }
+      - { label: "Estudo de caso completo", name: "body", widget: "markdown" }
+
+  - name: "produtos"
+    label: "🛒 Loja"
+    folder: "content/produtos"
+    create: true
+    fields:
+      - { label: "Nome do produto", name: "title", widget: "string" }
+      - { label: "Preço", name: "price", widget: "string", hint: "Ex: R$ 19,90" }
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        options: ["Apostila", "Mentoria", "Curso", "Outro"]
+      - { label: "Link de compra", name: "checkout_url", widget: "string", hint: "Cole o link do Hotmart/Kiwify/Gumroad. Deixe # se ainda não tiver." }
+      - { label: "Imagem (opcional)", name: "image", widget: "image", required: false }
+      - { label: "Resumo curto (aparece no card)", name: "excerpt", widget: "text" }
+      - { label: "Descrição completa", name: "body", widget: "markdown" }
+
+  - name: "depoimentos"
+    label: "💬 Depoimentos"
+    folder: "content/depoimentos"
+    create: true
+    fields:
+      - { label: "Nome", name: "nome", widget: "string" }
+      - { label: "Papel (ex: Aluno de X)", name: "papel", widget: "string" }
+      - { label: "Texto do depoimento", name: "texto", widget: "text" }
+
+  - name: "config"
+    label: "⚙️ Configurações do Site"
+    files:
+      - label: "Status Atual (aparece no Hero)"
+        name: "status"
+        file: "content/site.yml"
+        fields:
+          - label: "Status agora"
+            name: "status_now"
+            widget: "object"
+            fields:
+              - { label: "Construindo", name: "building", widget: "string" }
+              - { label: "Estudando", name: "studying", widget: "string" }
+              - { label: "Lendo", name: "reading", widget: "string" }
+
+      - label: "Currículo"
+        name: "curriculo"
+        file: "content/curriculo.yml"
+        fields:
+          - { label: "Nome", name: "nome", widget: "string" }
+          - { label: "Cargo / título", name: "cargo", widget: "string" }
+          - { label: "Localização e e-mail", name: "localizacao", widget: "string" }
+          - { label: "Foto (opcional)", name: "foto", widget: "image", required: false }
+          - { label: "Link do GitHub", name: "github", widget: "string" }
+          - { label: "Link do LinkedIn", name: "linkedin", widget: "string" }
+          - { label: "Mostrar \"Aberto a oportunidades\"?", name: "aberto_a_oportunidades", widget: "boolean" }
+          - { label: "Resumo", name: "resumo", widget: "text" }
+          - label: "Experiência"
+            name: "experiencia"
+            widget: "list"
+            fields:
+              - { label: "Cargo", name: "cargo", widget: "string" }
+              - { label: "Período", name: "periodo", widget: "string" }
+              - { label: "Local", name: "local", widget: "string" }
+              - { label: "Descrição", name: "descricao", widget: "text" }
+          - label: "Formação Acadêmica"
+            name: "formacao_academica"
+            widget: "list"
+            fields:
+              - { label: "Curso", name: "curso", widget: "string" }
+              - { label: "Período", name: "periodo", widget: "string" }
+              - { label: "Local", name: "local", widget: "string" }
+          - label: "Competências Técnicas"
+            name: "competencias"
+            widget: "list"
+            fields:
+              - { label: "Categoria", name: "categoria", widget: "string" }
+              - { label: "Itens (um por linha)", name: "itens", widget: "list" }
+          - label: "Certificações"
+            name: "certificacoes"
+            widget: "list"
+            fields:
+              - { label: "Nome da certificação", name: "nome", widget: "string" }
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options: [{ label: "Obtida", value: "obtida" }, { label: "Em andamento", value: "em-andamento" }, { label: "Planejada", value: "planejada" }]
+          - label: "Projetos em Destaque"
+            name: "projetos_destaque"
+            widget: "list"
+            fields:
+              - { label: "Nome do projeto", name: "nome", widget: "string" }
+              - { label: "Período", name: "periodo", widget: "string" }
+              - { label: "Descrição", name: "descricao", widget: "text" }
+              - { label: "Link do repositório (deixe em branco até existir)", name: "repo_url", widget: "string", required: false }
+          - label: "Formação Complementar"
+            name: "formacao_complementar"
+            widget: "list"
+            fields:
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Período", name: "periodo", widget: "string" }
+              - { label: "Onde", name: "onde", widget: "string" }
+              - { label: "Descrição", name: "descricao", widget: "text" }

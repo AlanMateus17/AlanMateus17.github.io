@@ -1,0 +1,446 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+ * Aura Design System — identidade visual da Grupo AMtech Digital.
+ * Os valores abaixo são os tokens oficiais (tema escuro e claro).
+ * O site abre no tema escuro; o botão de tema troca para o claro.
+ * Regra da Aura: separar camadas com borda fina (line), nunca com sombra.
+ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-aura: var(--aura-900);
+  --color-on-aura: var(--on-aura);
+  --color-gold: var(--gold-500);
+  --color-gold-ink: var(--gold-ink);
+  --color-aura-tint: var(--aura-tint);
+  --color-gold-tint: var(--gold-tint);
+  --color-success: var(--success);
+  --color-success-tint: var(--success-tint);
+  --color-warning: var(--warning);
+  --color-warning-tint: var(--warning-tint);
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-tint);
+
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* Tema escuro (padrão) */
+:root,
+[data-theme="dark"] {
+  --aura-900: #7fc4c9;
+  --gold-500: #d9a85e;
+  --gold-ink: #e3b877;
+  --paper: #0b1a1e;
+  --surface: #112429;
+  --ink: #e9eeec;
+  --muted: #9aaeb0;
+  --line: #24414a;
+  --aura-tint: #163238;
+  --gold-tint: #3a2d18;
+  --success: #7ccb9a;
+  --success-tint: #16301f;
+  --warning: #e8b46a;
+  --warning-tint: #3a2a12;
+  --danger: #ee9a9a;
+  --danger-tint: #3a1c1c;
+  --on-aura: #0b1a1e;
+  color-scheme: dark;
+}
+
+/* Tema claro */
+[data-theme="light"] {
+  --aura-900: #0e3a45;
+  --gold-500: #c08a3e;
+  --gold-ink: #8a5e22;
+  --paper: #f7f5f0;
+  --surface: #ffffff;
+  --ink: #13262b;
+  --muted: #5b6b6e;
+  --line: #dcd8ce;
+  --aura-tint: #e2ecec;
+  --gold-tint: #f3e7d3;
+  --success: #2f7a4f;
+  --success-tint: #e3f1e8;
+  --warning: #9a5b12;
+  --warning-tint: #fbebd2;
+  --danger: #a33a3a;
+  --danger-tint: #f8e3e3;
+  --on-aura: #f7f5f0;
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--gold-tint);
+    color: var(--ink);
+  }
+
+  /* Anel de foco da Aura: dourado, afastado 2px */
+  :focus-visible {
+    outline: 2px solid var(--gold-500);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+@layer components {
+  /* Rótulo em caixa alta acima dos títulos (eyebrow) */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1;
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: transparent;
+    white-space: nowrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid transparent;
+    transition:
+      background-color 0.15s,
+      border-color 0.15s,
+      color 0.15s;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--aura-900);
+    color: var(--on-aura);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.08);
+  }
+  .btn-gold {
+    background: var(--gold-500);
+    color: var(--on-aura);
+  }
+  [data-theme="light"] .btn-gold {
+    color: #13262b;
+  }
+  .btn-gold:hover {
+    filter: brightness(1.06);
+  }
+  .btn-outline {
+    border-color: var(--gold-500);
+    color: var(--ink);
+  }
+  .btn-outline:hover {
+    background: var(--gold-tint);
+  }
+  .btn-ghost {
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  .btn-ghost:hover {
+    background: var(--aura-tint);
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .field {
+    width: 100%;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+  }
+  .field::placeholder {
+    color: var(--muted);
+  }
+  .field:focus {
+    border-color: var(--aura-900);
+    outline: none;
+  }
+  .label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .link {
+    color: var(--aura-900);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, var(--aura-900) 40%, transparent);
+  }
+  .link:hover {
+    text-decoration-color: var(--aura-900);
+  }
+
+  /* Corpo dos posts e estudos de caso */
+  .post-body {
+    color: var(--ink);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+  }
+  .post-body > * + * {
+    margin-top: 1.25rem;
+  }
+  .post-body h2 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1.2;
+    font-weight: 600;
+    margin-top: 3rem;
+    scroll-margin-top: 96px;
+  }
+  .post-body h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.3;
+    font-weight: 600;
+    margin-top: 2.25rem;
+    scroll-margin-top: 96px;
+  }
+  .post-body p {
+    color: var(--ink);
+  }
+  .post-body a {
+    color: var(--aura-900);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, var(--aura-900) 40%, transparent);
+  }
+  .post-body a:hover {
+    text-decoration-color: var(--aura-900);
+  }
+  .post-body strong {
+    font-weight: 600;
+  }
+  .post-body ul,
+  .post-body ol {
+    padding-left: 1.4rem;
+  }
+  .post-body ul {
+    list-style: disc;
+  }
+  .post-body ol {
+    list-style: decimal;
+  }
+  .post-body li + li {
+    margin-top: 0.4rem;
+  }
+  .post-body li::marker {
+    color: var(--gold-500);
+  }
+  .post-body hr {
+    border: 0;
+    border-top: 1px dashed var(--gold-500);
+    margin: 2.5rem 0;
+  }
+  .post-body blockquote {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 1rem 1.25rem;
+    color: var(--ink);
+  }
+  .post-body :not(pre) > code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--aura-tint);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+  }
+  .post-body pre {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    background: var(--surface) !important;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+  }
+  .post-body pre code {
+    background: none;
+    border: 0;
+    padding: 0;
+  }
+  .post-body img {
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+  .post-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    display: block;
+    overflow-x: auto;
+  }
+  .post-body th,
+  .post-body td {
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  .post-body th {
+    background: var(--aura-tint);
+  }
+  .post-body .video-embed {
+    position: relative;
+    padding-top: 56.25%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .post-body .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .post-body .callout {
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--line);
+  }
+  .post-body .callout--tip {
+    background: var(--success-tint);
+  }
+  .post-body .callout--warning {
+    background: var(--warning-tint);
+  }
+  .post-body .callout--important {
+    background: var(--gold-tint);
+  }
+
+  /* Destaque de código (shiki, tema duplo) */
+  .post-body pre [data-line] {
+    color: var(--shiki-dark);
+  }
+  [data-theme="light"] .post-body pre [data-line],
+  [data-theme="light"] .post-body pre [data-line] span {
+    color: var(--shiki-light) !important;
+  }
+  .post-body pre [data-line] span {
+    color: var(--shiki-dark);
+  }
+}
+
+/* Impressão: currículo e posts saem limpos, sem navegação e sem fundo escuro */
+@media print {
+  [data-print-hide] {
+    display: none !important;
+  }
+  :root,
+  [data-theme="dark"],
+  [data-theme="light"] {
+    --paper: #ffffff;
+    --surface: #ffffff;
+    --ink: #13262b;
+    --muted: #5b6b6e;
+    --line: #dcd8ce;
+    --aura-900: #0e3a45;
+    --gold-ink: #8a5e22;
+    --gold-500: #c08a3e;
+    --aura-tint: #e2ecec;
+    --gold-tint: #f3e7d3;
+    color-scheme: light;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Paleta de comandos (cmdk) */
+[cmdk-group-heading] {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+  padding: 10px 12px 6px;
+}

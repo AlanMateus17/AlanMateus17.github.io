@@ -1,0 +1,54 @@
+{
+  "name": "alanmateus17-site",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Site de Alan Mateus — Next.js + Tailwind no tema escuro do Aura Design System (Grupo AMtech Digital). Base: Magic UI Portfolio (MIT).",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "preview": "npx serve out",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.2.0",
+    "@fontsource/ibm-plex-mono": "^5.2.0",
+    "@fontsource/ibm-plex-sans": "^5.2.0",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "gray-matter": "^4.0.3",
+    "html2canvas-pro": "^2.0.0",
+    "js-yaml": "^4.1.0",
+    "jspdf": "^4.0.0",
+    "lucide-react": "^0.562.0",
+    "motion": "^12.23.27",
+    "next": "^16.1.1",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "rehype-pretty-code": "^0.14.1",
+    "rehype-raw": "^7.0.0",
+    "rehype-slug": "^6.0.0",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "shiki": "^3.20.0",
+    "tailwind-merge": "^3.4.0",
+    "unified": "^11.0.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.10.0",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  }
+}

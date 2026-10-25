@@ -1,0 +1,102 @@
+# Currículo — dados da página /curriculo/
+# Edite aqui (ou pelo editor em /admin/ → Configurações do Site → Currículo).
+# A página lê este arquivo no build; nada de HTML pra mexer.
+
+nome: "Alan Mateus"
+cargo: "Desenvolvedor .NET · Professor de TI · Fundador AMtech Digital"
+localizacao: "Barbacena, MG — Brasil — alandesouzasilva04@gmail.com"
+foto: ""
+github: "https://github.com/AlanMateus17"
+linkedin: "https://linkedin.com/in/alan-souza-dev"
+aberto_a_oportunidades: true
+
+objetivo: "Oportunidade como Desenvolvedor .NET Júnior ou Estágio em Desenvolvimento — com abertura pra crescer também em segurança ofensiva."
+disponibilidade: "Meio período (concilia com aulas no EMTI e faculdade) — aberto a ajustar conforme a vaga."
+
+resumo: "Desenvolvedor fullstack com foco em .NET/C# e Next.js, professor de informática no EMTI e fundador do Grupo AMtech Digital. Especializado em sistemas de gestão multi-tenant com Clean Architecture e segurança aplicada. Em formação em segurança ofensiva (trilha eJPT → OSCP)."
+
+idiomas:
+  - idioma: "Português"
+    nivel: "Nativo"
+  - idioma: "Inglês"
+    nivel: "Fase A — em estudo (leitura técnica já fluente)"
+
+experiencia:
+  - cargo: "Fundador & Desenvolvedor Principal"
+    periodo: "2024 — presente"
+    local: "Grupo AMtech Digital · Barbacena, MG"
+    descricao: "Construção de um conjunto de 13 sistemas SaaS. AM Kaixara (em desenvolvimento): PDV multi-tenant com Clean Architecture, RLS no PostgreSQL, API .NET 10 e frontend Next.js. Fundador nas frentes de desenvolvimento, assistência técnica e educação."
+  - cargo: "Professor de Informática — EMTI"
+    periodo: "2025 — presente"
+    local: "Escola Estadual · Barbacena, MG"
+    descricao: "Ensino de 9 matérias: Lógica de Programação, Arquitetura e Manutenção, HTML/CSS, Sistemas Operacionais, POO/Java, Programação Web, Robótica, Lab. Hardware e Lab. Software. Produção de 180 apostilas e material didático completo."
+  - cargo: "Técnico em Assistência Técnica"
+    periodo: "2021 — presente"
+    local: "Autônomo · Barbacena, MG"
+    descricao: "Reparo de dispositivos Apple e Xiaomi (tela, bateria, conector), notebooks e desktops. Formatação, diagnóstico e recuperação de dados."
+
+formacao_academica:
+  - curso: "Análise e Desenvolvimento de Sistemas (ADS)"
+    periodo: "Em andamento"
+    local: "Graduação tecnológica"
+  - curso: "Licenciatura em Matemática"
+    periodo: "Em andamento"
+    local: "Graduação — simultânea ao ADS"
+
+competencias:
+  - categoria: "Backend"
+    itens:
+      - "C# · .NET 10 · ASP.NET Core"
+      - "Entity Framework Core"
+      - "PostgreSQL · Redis"
+      - "Clean Architecture · DDD"
+  - categoria: "Frontend"
+    itens:
+      - "Next.js · TypeScript"
+      - "Tailwind CSS"
+      - "React Query · Zustand"
+      - "HTML5 · CSS3"
+  - categoria: "DevOps"
+    itens:
+      - "Docker · Docker Compose"
+      - "GitHub Actions (CI/CD)"
+      - "Linux (Ubuntu · Debian)"
+      - "Git · Conventional Commits"
+  - categoria: "Segurança & Outros"
+    itens:
+      - "OWASP Top 10 · JWT"
+      - "Burp Suite · Nmap"
+      - "Python (automação)"
+      - "Java · POO"
+
+nivel_seguranca: 1
+
+certificacoes:
+  - nome: "CompTIA A+"
+    status: "planejada"
+  - nome: "CompTIA Network+"
+    status: "planejada"
+  - nome: "CompTIA Security+"
+    status: "planejada"
+  - nome: "CCNA (Cisco)"
+    status: "planejada"
+  - nome: "eJPT (INE)"
+    status: "planejada"
+  - nome: "OSCP (OffSec)"
+    status: "planejada"
+
+projetos_destaque:
+  - nome: "AM Kaixara — PDV Multi-tenant"
+    periodo: "2026 — presente"
+    descricao: "Sistema de ponto de venda construído em Clean Architecture com .NET 10, PostgreSQL + RLS para isolamento por tenant, API RESTful com JWT e frontend Next.js com design system próprio. Em desenvolvimento ativo."
+    repo_url: ""
+  - nome: "Material Didático EMTI"
+    periodo: "2025 — presente"
+    descricao: "180 apostilas em PDF cobrindo 9 matérias de informática para ensino médio técnico integrado. Conteúdo progressivo, com exercícios e avaliações."
+    repo_url: ""
+
+formacao_complementar:
+  - titulo: "Trilha de Segurança Ofensiva"
+    periodo: "2026 — presente"
+    onde: "eJPT (INE) → OSCP (OffSec)"
+    descricao: "Estudo de pentest, Active Directory attacks, web security (OWASP Top 10) e red team operations em laboratório próprio com Kali Linux e VMs."

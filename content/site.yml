@@ -1,0 +1,53 @@
+# Configurações gerais do site (substitui o antigo _config.yml do Jekyll).
+# Tudo aqui é lido no build — muda aqui, faz commit, e o site é publicado
+# de novo sozinho pelo GitHub Actions.
+
+title: Alan Mateus
+tagline: Desenvolvedor · Professor · Red Team em formação
+description: "Portfólio de Alan Mateus — sistemas de gestão, educação em TI e segurança ofensiva."
+url: "https://alanmateus17.github.io"
+
+author:
+  name: Alan Mateus
+  email: alandesouzasilva04@gmail.com
+  github: AlanMateus17
+  linkedin: alan-souza-dev
+  location: Barbacena, MG — Brasil
+  whatsapp: "5532984138614"
+
+# Status atual (aparece no card "status --agora" da Home)
+status_now:
+  building: "AM Kaixara — sistema de PDV multi-tenant"
+  studying: "Akitando #36 · Fase 0 do plano de estudos"
+  reading: "TCP/IP Illustrated Vol.1 — Stevens"
+
+# Ano em que começou a lecionar — usado pra calcular "X anos ensinando" sozinho
+teaching_start_year: 2025
+
+# Frases do título que se escreve sozinho, na Home
+typewriter:
+  - "Desenvolvedor .NET / C#"
+  - "Professor de Informática — EMTI"
+  - "Construindo o ecossistema Aura"
+  - "Red Team em formação (eJPT → OSCP)"
+  - "Fundador do Grupo AMtech Digital"
+  - "Aprendendo em público"
+
+# Formspree — comentários (chegam por e-mail; você aprova e publica em content/comments/)
+formspree_id: "xaeyqrzd"
+# Formspree — formulário da página de contato
+formspree_contato_id: "mljedzov"
+# Formspree — formulário de orçamento (crie um formulário novo em formspree.io e cole o ID aqui)
+formspree_orcamento_id: "SEU_ID_AQUI"
+# Formspree — aviso de quiz concluído (crie um formulário novo em formspree.io e cole o ID aqui)
+formspree_quiz_id: "SEU_ID_AQUI"
+
+# Namespace do CounterAPI (curtidas e visualizações) — troque só aqui se um dia mudar
+counterapi_namespace: "alanmateus17-github-io"
+
+# Analytics privado (GoatCounter) — cria conta grátis em goatcounter.com e troca abaixo
+goatcounter_username: "SEU_USUARIO_AQUI"
+
+# Newsletter (MailerLite)
+mailerlite_account: "2609452"
+mailerlite_form: "aIMuvp"
