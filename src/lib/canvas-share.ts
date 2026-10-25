@@ -91,3 +91,8 @@ export async function loadFonts() {
     ]);
   } catch {}
 }
+
+/** Espera o navegador desenhar a tela (o aviso "Gerando…") antes de começar um trabalho pesado. */
+export function nextPaint(): Promise<void> {
+  return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(r, 0))));
+}

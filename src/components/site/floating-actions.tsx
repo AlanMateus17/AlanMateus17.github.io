@@ -8,7 +8,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { ArrowUp, Download, Smartphone, X } from "lucide-react";
-import { AURA, copyCurrentLink, loadFonts, paintBackground, roundRect, shareOrDownload } from "@/lib/canvas-share";
+import { AURA, copyCurrentLink, loadFonts, nextPaint, paintBackground, roundRect, shareOrDownload } from "@/lib/canvas-share";
 import { KEYS, getItem, setItem } from "@/lib/storage";
 
 type BeforeInstallPrompt = Event & { prompt: () => void; userChoice: Promise<{ outcome: string }> };
@@ -91,6 +91,7 @@ export default function FloatingActions() {
     if (busy) return;
     setBusy("Gerando sua imagem…");
     try {
+      await nextPaint();
       const copied = copyCurrentLink();
       const [{ default: html2canvas }, QR] = await Promise.all([import("html2canvas-pro"), import("qrcode")]);
       await loadFonts();

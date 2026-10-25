@@ -26,7 +26,7 @@ export default function Footer() {
               <ul className="flex flex-col gap-1">
                 {col.links.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="inline-flex min-h-9 items-center text-sm text-muted transition-colors hover:text-ink">
+                    <Link href={l.href} prefetch={false} className="inline-flex min-h-9 items-center text-sm text-muted transition-colors hover:text-ink">
                       {l.label}
                     </Link>
                   </li>

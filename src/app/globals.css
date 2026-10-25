@@ -444,3 +444,8 @@
   color: var(--gold-ink);
   padding: 10px 12px 6px;
 }
+
+/* Piscadas (cursor, "online") rodam na GPU, sem redesenhar a página */
+.animate-pulse {
+  will-change: opacity;
+}

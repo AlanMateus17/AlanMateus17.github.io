@@ -6,7 +6,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { Download, Link2, Linkedin, Quote } from "lucide-react";
-import { AURA, copyCurrentLink, loadFonts, paintBackground, roundRect, shareOrDownload, wrapText } from "@/lib/canvas-share";
+import { AURA, copyCurrentLink, loadFonts, nextPaint, paintBackground, roundRect, shareOrDownload, wrapText } from "@/lib/canvas-share";
 
 const btn =
   "inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 text-sm text-ink transition-colors hover:border-gold hover:bg-gold-tint";
@@ -38,6 +38,7 @@ export default function ShareButtons({ url, title }: { url: string; title: strin
     if (busy) return;
     setBusy("Gerando sua imagem…");
     try {
+      await nextPaint();
       const copiedLink = copyCurrentLink();
       const { default: html2canvas } = await import("html2canvas-pro");
       await loadFonts();
@@ -94,6 +95,7 @@ export default function ShareButtons({ url, title }: { url: string; title: strin
     setQuote(null);
     if (!texto || busy) return;
     setBusy("Gerando sua imagem…");
+    await nextPaint();
     const copiedLink = copyCurrentLink();
     await loadFonts();
     const W = 1080;

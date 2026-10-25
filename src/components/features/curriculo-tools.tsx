@@ -6,6 +6,7 @@
  */
 import { useEffect, useState } from "react";
 import { Download, Printer } from "lucide-react";
+import { nextPaint } from "@/lib/canvas-share";
 
 export function CurriculoActions() {
   const [busy, setBusy] = useState(false);
@@ -15,6 +16,7 @@ export function CurriculoActions() {
     if (!el || busy) return;
     setBusy(true);
     try {
+      await nextPaint();
       const [{ default: html2canvas }, { jsPDF }] = await Promise.all([import("html2canvas-pro"), import("jspdf")]);
       const canvas = await html2canvas(el, {
         scale: 2,
@@ -55,6 +57,11 @@ export function CurriculoActions() {
 
   return (
     <>
+      {busy && (
+        <div role="status" className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 p-4">
+          <p className="card max-w-sm px-6 py-5 text-center text-ink">Gerando o PDF do currículo…</p>
+        </div>
+      )}
       <button type="button" onClick={() => window.print()} className="btn btn-ghost">
         <Printer className="size-4" aria-hidden="true" /> Imprimir
       </button>
