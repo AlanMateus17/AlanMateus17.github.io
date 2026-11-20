@@ -78,5 +78,8 @@ exclude:
   - README-COMENTARIOS.md
   - README-COMO-USAR.md
   - ARQUITETURA.md
+  - CHANGELOG.md
+  - docs
+  - scripts
 
 future: true
