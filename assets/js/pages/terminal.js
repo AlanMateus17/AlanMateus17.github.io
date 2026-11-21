@@ -14,9 +14,9 @@
   var comandos = {
     help: "Comandos disponíveis:\n  whoami       — quem sou eu\n  stack        — tecnologias que uso\n  sudo hire-me — bom, tenta\n  ls           — lista o que tem por aqui\n  cat plano.txt — meu plano de estudos\n  clear        — limpa a tela\n  exit         — sai (mentira, não sai de verdade)",
     whoami: "Alan Mateus — professor de TI, desenvolvedor .NET/Next.js, e um dia vou ser pentester também.\nSe você achou essa página, provavelmente é do tipo que aperta F12 antes de perguntar. Respeito.",
-    stack: ".NET 10 · C# · PostgreSQL · Next.js · TypeScript · Docker · Clean Architecture\nAinda estudando: eJPT → OSCP (segurança ofensiva)",
+    stack: "TypeScript · Next.js · Python · PostgreSQL · Docker · Clean Architecture (C#/.NET como reserva)\nAinda estudando: eJPT → OSCP (segurança ofensiva)",
     ls: "sobre/  portfolio/  blog/  ensino/  seguranca/  curriculo/  contato/\n(e você achou a pasta que não estava na lista)",
-    "cat plano.txt": "Passo 1: Lógica de Programação + Matemática Cap 1-2\nCritério de pronto: 3 exercícios sem travar\nDepois disso: AM Kaixara, o primeiro dos 13 sistemas",
+    "cat plano.txt": "Passo 1: Lógica de Programação + Matemática Cap 1-2\nCritério de pronto: 3 exercícios sem travar\nDepois disso: AM Gestão · Caixa, o primeiro módulo do AM Gestão sistemas",
     "sudo hire-me": "[sudo] password for recrutador: \n\nAcesso negado. Mas o link do currículo funciona sem senha: /curriculo/",
     clear: null,
     exit: "Você não sai de um terminal só fechando ele. Aperta Ctrl+W ou vive aqui pra sempre."

@@ -1,6 +1,6 @@
 ---
 layout: sistema
-name: "AM Vendra"
+name: "AM Gestão · Loja online"
 excerpt: "E-commerce completo com catálogo, carrinho e pagamento integrado."
 status: "plan"
 stack:

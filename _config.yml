@@ -13,7 +13,7 @@ author:
 
 # Status atual (atualiza aqui, aparece no site automaticamente)
 status_now:
-  building: "AuraPOS — sistema de PDV multi-tenant"
+  building: "AM Gestão — caixa, pedidos e financeiro para pequenos negócios"
   studying: "Akitando #36 · Fase 0 do plano de estudos"
   reading: "TCP/IP Illustrated Vol.1 — Stevens"
 
@@ -78,5 +78,8 @@ exclude:
   - README-COMENTARIOS.md
   - README-COMO-USAR.md
   - ARQUITETURA.md
+  - CHANGELOG.md
+  - docs
+  - scripts
 
 future: true
