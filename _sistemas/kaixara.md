@@ -1,6 +1,6 @@
 ---
 layout: sistema
-name: "AM Kaixara"
+name: "AM Gestão · Caixa"
 excerpt: "PDV multi-tenant com RLS. Vendas, estoque, fiscal."
 status: "dev"
 # Assim que criar o repositório de verdade no GitHub, cola o link aqui — o botão "Ver código" aparece sozinho

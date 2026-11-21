@@ -1,6 +1,6 @@
 ---
 layout: sistema
-name: "AM Rendara"
+name: "AM Gestão · Financeiro"
 excerpt: "Finanças pessoais e empresariais com rebalanceamento ARCA automático."
 status: "dev"
 repo_url: ""

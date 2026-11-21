@@ -157,7 +157,7 @@ do portfólio, porque ninguém lembrou de atualizar a cópia também.
 
 ## Portfólio: uma fonte de verdade só
 
-Os 13 sistemas do portfólio (`portfolio/index.html`) são lidos direto da
+Os sistemas do portfólio (`portfolio/index.html`) são lidos direto da
 collection `_sistemas/` — cada sistema é um arquivo `_sistemas/nome.md`
 com `name`, `excerpt`, `status`, `stack`, etc. **Pra atualizar um
 sistema, edite só o arquivo dele em `_sistemas/`** — a página do
